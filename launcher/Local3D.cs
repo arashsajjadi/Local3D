@@ -19,6 +19,7 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using System.Management;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
 using Microsoft.Win32;
@@ -424,6 +425,7 @@ namespace Local3D
                 if (!EnsureRuntime()) return;
                 if (!EnsureModels()) return;
                 if (!StartServer()) return;
+                KillProfileBrowsers();   // a leftover window of ours would swallow the new one
                 OpenBrowser(port);
                 form.Set("Local3D is running", browser != null ? "You can close this window; Local3D stops when the app window is closed."
                                                                 : "Local3D is open in your web browser. Keep THIS window open and click Quit when you are done.");
@@ -833,8 +835,8 @@ namespace Local3D
                 Process.Start(url);
                 return;
             }
-            string profile = Path.Combine(env.DataDir, "browser-profile");
-            string a = "--app=" + Proc.Q(url) + " --user-data-dir=" + Proc.Q(profile) + " --window-size=1440,920 --no-first-run --no-default-browser-check" +
+            string profile = ProfileDir;
+            string a = "--app=" + Proc.Q(url) + " --user-data-dir=" + Proc.Q(profile) + " --window-size=1440,920 --no-first-run --no-default-browser-check --edge-skip-compat-layer-relaunch" +
                        " --disable-features=msEdgeSidebarV2,msShoppingAssistant --disable-sync" +
                        " --host-resolver-rules=\"MAP api.comfy.org ~NOTFOUND, MAP *.sentry.io ~NOTFOUND, MAP *.posthog.com ~NOTFOUND, MAP *.mixpanel.com ~NOTFOUND, MAP *.segment.io ~NOTFOUND, MAP *.amplitude.com ~NOTFOUND, MAP *.googletagmanager.com ~NOTFOUND\"";
             string extra = Environment.GetEnvironmentVariable("LOCAL3D_BROWSER_ARGS");   // developer hook, e.g. --remote-debugging-port=9333
@@ -842,7 +844,41 @@ namespace Local3D
             ProcessStartInfo psi = new ProcessStartInfo(edge, a);
             psi.UseShellExecute = false;
             browser = Process.Start(psi);
+            if (job != IntPtr.Zero) Native.AssignProcessToJobObject(job, browser.Handle);   // the window dies with the launcher, never orphaned on a dead engine
             Log.Write("Edge app window opened, pid " + browser.Id);
+        }
+
+        private string ProfileDir { get { return Path.Combine(env.DataDir, "browser-profile"); } }
+
+        // Edge hands the window to a different process and the one we started exits within a second, so the started process
+        // says nothing about the window. The browser is ours when its command line names Local3D's own profile folder.
+        private List<Process> ProfileBrowsers()
+        {
+            List<Process> r = new List<Process>();
+            try
+            {
+                using (ManagementObjectSearcher q = new ManagementObjectSearcher("SELECT ProcessId, CommandLine FROM Win32_Process WHERE Name = 'msedge.exe'"))
+                    foreach (ManagementObject o in q.Get())
+                    {
+                        string cl = Convert.ToString(o["CommandLine"]);
+                        if (cl != null && cl.IndexOf(ProfileDir, StringComparison.OrdinalIgnoreCase) >= 0)
+                            try { r.Add(Process.GetProcessById(Convert.ToInt32(o["ProcessId"]))); } catch { }
+                    }
+            }
+            catch (Exception ex) { Log.Write("WARNING: could not list browser processes: " + ex.Message); }
+            return r;
+        }
+
+        private bool WindowAlive()
+        {
+            foreach (Process p in ProfileBrowsers()) { try { if (!p.HasExited) return true; } catch { } }
+            return false;
+        }
+
+        // Only Local3D's own browser processes (its private profile), never the person's Edge.
+        private void KillProfileBrowsers()
+        {
+            foreach (Process p in ProfileBrowsers()) { try { if (!p.HasExited) p.Kill(); } catch { } }
         }
 
         private static string EdgePath()
@@ -860,9 +896,14 @@ namespace Local3D
         private void WaitForExit()
         {
             if (browser == null) { while (!form.CancelRequested && !server.HasExited) Thread.Sleep(500); return; }
-            while (!browser.HasExited && !server.HasExited) Thread.Sleep(500);
-            Log.Write(browser.HasExited ? "App window closed" : "Engine exited");
-            if (server.HasExited && !browser.HasExited)
+            int missing = 0;
+            while (!server.HasExited)
+            {
+                if (WindowAlive()) missing = 0; else if (++missing >= 3) break;   // no browser process of ours for ~3 s: the window is closed
+                Thread.Sleep(1000);
+            }
+            Log.Write(server.HasExited ? "Engine exited" : "App window closed");
+            if (server.HasExited && WindowAlive())
                 Invoke(delegate { Ui.Error("Local3D's engine stopped unexpectedly.", "Close the Local3D window and start Local3D again.", Tail(Path.Combine(env.LogDir, "comfyui.log"), 40)); return null; });
         }
 
