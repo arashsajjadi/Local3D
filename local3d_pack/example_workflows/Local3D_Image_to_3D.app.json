@@ -1,8 +1,8 @@
 {
  "id": "39f5fdc0-0b0f-5871-a2e5-263a05bafa71",
  "revision": 0,
- "last_node_id": 395,
- "last_link_id": 1412,
+ "last_node_id": 404,
+ "last_link_id": 1428,
  "nodes": [
   {
    "id": 3,
@@ -42,7 +42,7 @@
     {
      "name": "seed",
      "type": "INT",
-     "link": 1396,
+     "link": 1412,
      "widget": {
       "name": "seed"
      }
@@ -166,7 +166,7 @@
     {
      "name": "seed",
      "type": "INT",
-     "link": 1399,
+     "link": 1415,
      "widget": {
       "name": "seed"
      }
@@ -293,7 +293,7 @@
     {
      "name": "seed",
      "type": "INT",
-     "link": 1397,
+     "link": 1413,
      "widget": {
       "name": "seed"
      }
@@ -371,7 +371,7 @@
     {
      "name": "seed",
      "type": "INT",
-     "link": 1398,
+     "link": 1414,
      "widget": {
       "name": "seed"
      }
@@ -802,7 +802,7 @@
     {
      "name": "target_resolution",
      "type": "INT",
-     "link": 1382,
+     "link": 1398,
      "widget": {
       "name": "target_resolution"
      }
@@ -1128,15 +1128,15 @@
      "links": [
       1298,
       1300,
-      1315,
-      1328
+      1321,
+      1341
      ]
     },
     {
      "name": "MASK",
      "type": "MASK",
      "links": [
-      1330
+      1343
      ]
     }
    ],
@@ -1277,7 +1277,7 @@
      "widget": {
       "name": "texture_size"
      },
-     "link": 1395
+     "link": 1411
     }
    ],
    "outputs": [
@@ -1376,7 +1376,7 @@
     {
      "name": "target_face_count",
      "type": "INT",
-     "link": 1387,
+     "link": 1403,
      "widget": {
       "name": "target_face_count"
      }
@@ -1431,7 +1431,7 @@
     {
      "name": "image",
      "type": "IMAGE",
-     "link": 1401
+     "link": 1417
     }
    ],
    "outputs": [
@@ -1439,8 +1439,8 @@
      "name": "mask",
      "type": "MASK",
      "links": [
-      1403,
-      1408
+      1419,
+      1424
      ]
     }
    ],
@@ -1525,7 +1525,7 @@
      "widget": {
       "name": "resolution"
      },
-     "link": 1394
+     "link": 1410
     }
    ],
    "outputs": [
@@ -1816,7 +1816,7 @@
     {
      "name": "resolution",
      "type": "INT",
-     "link": 1391,
+     "link": 1407,
      "widget": {
       "name": "resolution"
      }
@@ -1913,7 +1913,7 @@
     {
      "name": "resolution",
      "type": "INT",
-     "link": 1393,
+     "link": 1409,
      "widget": {
       "name": "resolution"
      }
@@ -2053,7 +2053,7 @@
     {
      "name": "resolution",
      "type": "INT",
-     "link": 1384,
+     "link": 1400,
      "widget": {
       "name": "resolution"
      }
@@ -2378,17 +2378,17 @@
     {
      "name": "on_false",
      "type": "MASK",
-     "link": 1410
+     "link": 1426
     },
     {
      "name": "on_true",
      "type": "MASK",
-     "link": 1411
+     "link": 1427
     },
     {
      "name": "switch",
      "type": "BOOLEAN",
-     "link": 1412,
+     "link": 1428,
      "widget": {
       "name": "switch"
      }
@@ -2926,7 +2926,7 @@
     {
      "name": "images",
      "type": "IMAGE",
-     "link": 1402
+     "link": 1418
     },
     {
      "name": "masks",
@@ -3022,7 +3022,7 @@
      "widget": {
       "name": "switch"
      },
-     "link": 1378
+     "link": 1394
     }
    ],
    "outputs": [
@@ -3078,7 +3078,7 @@
      "widget": {
       "name": "switch"
      },
-     "link": 1379
+     "link": 1395
     }
    ],
    "outputs": [
@@ -3134,7 +3134,7 @@
      "widget": {
       "name": "switch"
      },
-     "link": 1380
+     "link": 1396
     }
    ],
    "outputs": [
@@ -3402,7 +3402,7 @@
      "type": "INT",
      "localized_name": "INDEX",
      "links": [
-      1376
+      1392
      ]
     }
    ],
@@ -3460,12 +3460,12 @@
      "type": "INT",
      "localized_name": "INDEX",
      "links": [
-      1381,
-      1383,
-      1385,
-      1388,
-      1390,
-      1392
+      1397,
+      1399,
+      1401,
+      1404,
+      1406,
+      1408
      ]
     }
    ],
@@ -3523,8 +3523,8 @@
      "type": "INT",
      "localized_name": "INDEX",
      "links": [
-      1405,
-      1406
+      1421,
+      1422
      ]
     }
    ],
@@ -3582,8 +3582,8 @@
      "type": "INT",
      "localized_name": "INDEX",
      "links": [
-      1386,
-      1389
+      1402,
+      1405
      ]
     }
    ],
@@ -3634,10 +3634,10 @@
      "type": "INT",
      "localized_name": "INT",
      "links": [
-      1396,
-      1397,
-      1398,
-      1399
+      1412,
+      1413,
+      1414,
+      1415
      ]
     }
    ],
@@ -3690,9 +3690,10 @@
      "type": "INT",
      "localized_name": "INDEX",
      "links": [
-      1320,
-      1335,
-      1340
+      1326,
+      1337,
+      1348,
+      1353
      ]
     }
    ],
@@ -4013,7 +4014,10 @@
      "name": "STRING",
      "type": "STRING",
      "links": [
-      1307
+      1307,
+      1315,
+      1317,
+      1319
      ]
     }
    ],
@@ -4025,7 +4029,7 @@
    "title": "+ 'nothing found' fallback",
    "widgets_values": [
     "",
-    "{\"y\": -1, \"height\": -1, \"score\": 0}",
+    "{\"y\": -1, \"width\": -1, \"height\": -1, \"score\": 0}",
     " "
    ]
   },
@@ -4152,7 +4156,7 @@
    "title": "+ 'nothing found' fallback",
    "widgets_values": [
     "",
-    "{\"y\": -1, \"height\": -1, \"score\": 0}",
+    "{\"y\": -1, \"width\": -1, \"height\": -1, \"score\": 0}",
     " "
    ]
   },
@@ -4226,9 +4230,9 @@
      "name": "FLOAT",
      "type": "FLOAT",
      "links": [
-      1317,
-      1338,
-      1355
+      1323,
+      1351,
+      1368
      ]
     },
     {
@@ -4314,9 +4318,9 @@
      "name": "FLOAT",
      "type": "FLOAT",
      "links": [
-      1316,
-      1339,
-      1354
+      1322,
+      1352,
+      1367
      ]
     },
     {
@@ -4402,7 +4406,8 @@
      "name": "FLOAT",
      "type": "FLOAT",
      "links": [
-      1322
+      1328,
+      1333
      ]
     },
     {
@@ -4488,9 +4493,10 @@
      "name": "FLOAT",
      "type": "FLOAT",
      "links": [
-      1318,
-      1323,
-      1341
+      1324,
+      1329,
+      1334,
+      1354
      ]
     },
     {
@@ -4508,6 +4514,264 @@
   },
   {
    "id": 348,
+   "type": "JsonExtractString",
+   "pos": [
+    -3520,
+    500
+   ],
+   "size": [
+    300,
+    100
+   ],
+   "flags": {},
+   "order": 348,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "json_string",
+     "type": "STRING",
+     "link": 1315,
+     "widget": {
+      "name": "json_string"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1316
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "JsonExtractString"
+   },
+   "title": "Read 'y'",
+   "widgets_values": [
+    "",
+    "y"
+   ]
+  },
+  {
+   "id": 349,
+   "type": "ComfyNumberConvert",
+   "pos": [
+    -3200,
+    500
+   ],
+   "size": [
+    220,
+    60
+   ],
+   "flags": {},
+   "order": 349,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "INT,FLOAT,STRING,BOOLEAN",
+     "link": 1316
+    }
+   ],
+   "outputs": [
+    {
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": [
+      1330
+     ]
+    },
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyNumberConvert"
+   },
+   "title": "'y' as a number"
+  },
+  {
+   "id": 350,
+   "type": "JsonExtractString",
+   "pos": [
+    -3520,
+    640
+   ],
+   "size": [
+    300,
+    100
+   ],
+   "flags": {},
+   "order": 350,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "json_string",
+     "type": "STRING",
+     "link": 1317,
+     "widget": {
+      "name": "json_string"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1318
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "JsonExtractString"
+   },
+   "title": "Read 'height'",
+   "widgets_values": [
+    "",
+    "height"
+   ]
+  },
+  {
+   "id": 351,
+   "type": "ComfyNumberConvert",
+   "pos": [
+    -3200,
+    640
+   ],
+   "size": [
+    220,
+    60
+   ],
+   "flags": {},
+   "order": 351,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "INT,FLOAT,STRING,BOOLEAN",
+     "link": 1318
+    }
+   ],
+   "outputs": [
+    {
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": [
+      1331
+     ]
+    },
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyNumberConvert"
+   },
+   "title": "'height' as a number"
+  },
+  {
+   "id": 352,
+   "type": "JsonExtractString",
+   "pos": [
+    -3520,
+    780
+   ],
+   "size": [
+    300,
+    100
+   ],
+   "flags": {},
+   "order": 352,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "json_string",
+     "type": "STRING",
+     "link": 1319,
+     "widget": {
+      "name": "json_string"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1320
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "JsonExtractString"
+   },
+   "title": "Read 'width'",
+   "widgets_values": [
+    "",
+    "width"
+   ]
+  },
+  {
+   "id": 353,
+   "type": "ComfyNumberConvert",
+   "pos": [
+    -3200,
+    780
+   ],
+   "size": [
+    220,
+    60
+   ],
+   "flags": {},
+   "order": 353,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "INT,FLOAT,STRING,BOOLEAN",
+     "link": 1320
+    }
+   ],
+   "outputs": [
+    {
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": [
+      1332
+     ]
+    },
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyNumberConvert"
+   },
+   "title": "'width' as a number"
+  },
+  {
+   "id": 354,
    "type": "GetImageSize",
    "pos": [
     -5100,
@@ -4518,13 +4782,13 @@
     80
    ],
    "flags": {},
-   "order": 348,
+   "order": 354,
    "mode": 0,
    "inputs": [
     {
      "name": "image",
      "type": "IMAGE",
-     "link": 1315
+     "link": 1321
     }
    ],
    "outputs": [
@@ -4532,19 +4796,19 @@
      "name": "width",
      "type": "INT",
      "links": [
-      1326,
-      1331
+      1339,
+      1344
      ]
     },
     {
      "name": "height",
      "type": "INT",
      "links": [
-      1319,
-      1324,
-      1337,
-      1342,
-      1357
+      1325,
+      1335,
+      1350,
+      1355,
+      1370
      ]
     },
     {
@@ -4561,7 +4825,7 @@
    "title": "Picture size"
   },
   {
-   "id": 349,
+   "id": 355,
    "type": "ComfyMathExpression",
    "pos": [
     -5100,
@@ -4572,152 +4836,7 @@
     120
    ],
    "flags": {},
-   "order": 349,
-   "mode": 0,
-   "inputs": [
-    {
-     "label": "a",
-     "localized_name": "values.a",
-     "name": "values.a",
-     "type": "FLOAT,INT,BOOLEAN",
-     "link": 1316
-    },
-    {
-     "label": "b",
-     "localized_name": "values.b",
-     "name": "values.b",
-     "type": "FLOAT,INT,BOOLEAN",
-     "shape": 7,
-     "link": 1317
-    },
-    {
-     "label": "c",
-     "localized_name": "values.c",
-     "name": "values.c",
-     "type": "FLOAT,INT,BOOLEAN",
-     "shape": 7,
-     "link": 1318
-    },
-    {
-     "label": "d",
-     "localized_name": "values.d",
-     "name": "values.d",
-     "type": "FLOAT,INT,BOOLEAN",
-     "shape": 7,
-     "link": 1319
-    }
-   ],
-   "outputs": [
-    {
-     "localized_name": "FLOAT",
-     "name": "FLOAT",
-     "type": "FLOAT",
-     "links": []
-    },
-    {
-     "localized_name": "INT",
-     "name": "INT",
-     "type": "INT",
-     "links": [
-      1321
-     ]
-    },
-    {
-     "localized_name": "BOOL",
-     "name": "BOOL",
-     "type": "BOOLEAN",
-     "links": []
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "ComfyMathExpression"
-   },
-   "title": "Auto: is it a person?",
-   "widgets_values": [
-    "1 if (a >= 0.5 and c >= 0.09 * d and (b >= 0.6 or c >= 0.35 * d)) else 0"
-   ]
-  },
-  {
-   "id": 350,
-   "type": "ComfyMathExpression",
-   "pos": [
-    -4700,
-    460
-   ],
-   "size": [
-    360,
-    120
-   ],
-   "flags": {},
-   "order": 350,
-   "mode": 0,
-   "inputs": [
-    {
-     "label": "a",
-     "localized_name": "values.a",
-     "name": "values.a",
-     "type": "FLOAT,INT,BOOLEAN",
-     "link": 1320
-    },
-    {
-     "label": "b",
-     "localized_name": "values.b",
-     "name": "values.b",
-     "type": "FLOAT,INT,BOOLEAN",
-     "shape": 7,
-     "link": 1321
-    }
-   ],
-   "outputs": [
-    {
-     "localized_name": "FLOAT",
-     "name": "FLOAT",
-     "type": "FLOAT",
-     "links": []
-    },
-    {
-     "localized_name": "INT",
-     "name": "INT",
-     "type": "INT",
-     "links": [
-      1325,
-      1333,
-      1334,
-      1377
-     ]
-    },
-    {
-     "localized_name": "BOOL",
-     "name": "BOOL",
-     "type": "BOOLEAN",
-     "links": []
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "ComfyMathExpression"
-   },
-   "title": "Subject (resolved)",
-   "widgets_values": [
-    "1 if a == 2 else (0 if a == 1 else (2 if a == 3 else b))"
-   ]
-  },
-  {
-   "id": 351,
-   "type": "ComfyMathExpression",
-   "pos": [
-    -4700,
-    640
-   ],
-   "size": [
-    360,
-    120
-   ],
-   "flags": {},
-   "order": 351,
+   "order": 355,
    "mode": 0,
    "inputs": [
     {
@@ -4764,10 +4883,258 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      1327,
-      1332,
+      1327
+     ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "title": "Auto: is it a person?",
+   "widgets_values": [
+    "1 if (a >= 0.5 and c >= 0.09 * d and (b >= 0.6 or c >= 0.35 * d)) else 0"
+   ]
+  },
+  {
+   "id": 356,
+   "type": "ComfyMathExpression",
+   "pos": [
+    -4700,
+    460
+   ],
+   "size": [
+    360,
+    120
+   ],
+   "flags": {},
+   "order": 356,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1326
+    },
+    {
+     "label": "b",
+     "localized_name": "values.b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1327
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
       1336,
-      1356
+      1346,
+      1347,
+      1393
+     ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "title": "Subject (resolved)",
+   "widgets_values": [
+    "1 if a == 2 else (0 if a == 1 else (2 if a == 3 else b))"
+   ]
+  },
+  {
+   "id": 357,
+   "type": "ComfyMathExpression",
+   "pos": [
+    -4300,
+    460
+   ],
+   "size": [
+    360,
+    120
+   ],
+   "flags": {},
+   "order": 357,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1328
+    },
+    {
+     "label": "b",
+     "localized_name": "values.b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1329
+    },
+    {
+     "label": "c",
+     "localized_name": "values.c",
+     "name": "values.c",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1330
+    },
+    {
+     "label": "d",
+     "localized_name": "values.d",
+     "name": "values.d",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1331
+    },
+    {
+     "label": "e",
+     "localized_name": "values.e",
+     "name": "values.e",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1332
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      1338
+     ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "title": "Bust cut makes the subject larger for the model?",
+   "widgets_values": [
+    "1 if max(e, d) >= 1.25 * max(e, a + 2.7 * b - c) else 0"
+   ]
+  },
+  {
+   "id": 358,
+   "type": "ComfyMathExpression",
+   "pos": [
+    -4700,
+    640
+   ],
+   "size": [
+    360,
+    120
+   ],
+   "flags": {},
+   "order": 358,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1333
+    },
+    {
+     "label": "b",
+     "localized_name": "values.b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1334
+    },
+    {
+     "label": "c",
+     "localized_name": "values.c",
+     "name": "values.c",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1335
+    },
+    {
+     "label": "d",
+     "localized_name": "values.d",
+     "name": "values.d",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1336
+    },
+    {
+     "label": "e",
+     "localized_name": "values.e",
+     "name": "values.e",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1337
+    },
+    {
+     "label": "f",
+     "localized_name": "values.f",
+     "name": "values.f",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1338
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      1340,
+      1345,
+      1349,
+      1369
      ]
     },
     {
@@ -4784,11 +5151,11 @@
    },
    "title": "Bust cut: last picture row kept",
    "widgets_values": [
-    "c if (d != 1 or b <= 0 or a + 2.7 * b >= 0.95 * c) else int(a + 2.7 * b)"
+    "c if (d != 1 or b <= 0 or a + 2.7 * b >= 0.95 * c or (e == 0 and f == 0)) else int(a + 2.7 * b)"
    ]
   },
   {
-   "id": 352,
+   "id": 359,
    "type": "PrimitiveBoundingBox",
    "pos": [
     -4300,
@@ -4799,13 +5166,13 @@
     130
    ],
    "flags": {},
-   "order": 352,
+   "order": 359,
    "mode": 0,
    "inputs": [
     {
      "name": "width",
      "type": "INT",
-     "link": 1326,
+     "link": 1339,
      "widget": {
       "name": "width"
      }
@@ -4813,7 +5180,7 @@
     {
      "name": "height",
      "type": "INT",
-     "link": 1327,
+     "link": 1340,
      "widget": {
       "name": "height"
      }
@@ -4824,7 +5191,7 @@
      "name": "BOUNDING_BOX",
      "type": "BOUNDING_BOX",
      "links": [
-      1329
+      1342
      ]
     }
    ],
@@ -4842,7 +5209,7 @@
    ]
   },
   {
-   "id": 353,
+   "id": 360,
    "type": "ImageCropV2",
    "pos": [
     -3980,
@@ -4853,18 +5220,18 @@
     120
    ],
    "flags": {},
-   "order": 353,
+   "order": 360,
    "mode": 0,
    "inputs": [
     {
      "name": "image",
      "type": "IMAGE",
-     "link": 1328
+     "link": 1341
     },
     {
      "name": "crop_region",
      "type": "BOUNDING_BOX",
-     "link": 1329,
+     "link": 1342,
      "widget": {
       "name": "crop_region"
      }
@@ -4875,8 +5242,8 @@
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
-      1401,
-      1402
+      1417,
+      1418
      ]
     }
    ],
@@ -4901,7 +5268,7 @@
    ]
   },
   {
-   "id": 354,
+   "id": 361,
    "type": "CropMask",
    "pos": [
     -3980,
@@ -4912,18 +5279,18 @@
     130
    ],
    "flags": {},
-   "order": 354,
+   "order": 361,
    "mode": 0,
    "inputs": [
     {
      "name": "mask",
      "type": "MASK",
-     "link": 1330
+     "link": 1343
     },
     {
      "name": "width",
      "type": "INT",
-     "link": 1331,
+     "link": 1344,
      "widget": {
       "name": "width"
      }
@@ -4931,7 +5298,7 @@
     {
      "name": "height",
      "type": "INT",
-     "link": 1332,
+     "link": 1345,
      "widget": {
       "name": "height"
      }
@@ -4942,7 +5309,7 @@
      "name": "MASK",
      "type": "MASK",
      "links": [
-      1400
+      1416
      ]
     }
    ],
@@ -4960,7 +5327,7 @@
    ]
   },
   {
-   "id": 355,
+   "id": 362,
    "type": "ComfyMathExpression",
    "pos": [
     -5100,
@@ -4971,7 +5338,7 @@
     120
    ],
    "flags": {},
-   "order": 355,
+   "order": 362,
    "mode": 0,
    "inputs": [
     {
@@ -4979,7 +5346,7 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1333
+     "link": 1346
     }
    ],
    "outputs": [
@@ -5000,8 +5367,9 @@
      "name": "BOOL",
      "type": "BOOLEAN",
      "links": [
-      1350,
-      1369
+      1363,
+      1373,
+      1385
      ]
     }
    ],
@@ -5016,7 +5384,7 @@
    ]
   },
   {
-   "id": 356,
+   "id": 363,
    "type": "ComfyMathExpression",
    "pos": [
     -5100,
@@ -5027,7 +5395,7 @@
     120
    ],
    "flags": {},
-   "order": 356,
+   "order": 363,
    "mode": 0,
    "inputs": [
     {
@@ -5035,125 +5403,7 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1334
-    }
-   ],
-   "outputs": [
-    {
-     "localized_name": "FLOAT",
-     "name": "FLOAT",
-     "type": "FLOAT",
-     "links": []
-    },
-    {
-     "localized_name": "INT",
-     "name": "INT",
-     "type": "INT",
-     "links": []
-    },
-    {
-     "localized_name": "BOOL",
-     "name": "BOOL",
-     "type": "BOOLEAN",
-     "links": [
-      1347
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "ComfyMathExpression"
-   },
-   "title": "Subject is Complex?",
-   "widgets_values": [
-    "a == 2"
-   ]
-  },
-  {
-   "id": 357,
-   "type": "ComfyMathExpression",
-   "pos": [
-    -5100,
-    1360
-   ],
-   "size": [
-    360,
-    120
-   ],
-   "flags": {},
-   "order": 357,
-   "mode": 0,
-   "inputs": [
-    {
-     "label": "a",
-     "localized_name": "values.a",
-     "name": "values.a",
-     "type": "FLOAT,INT,BOOLEAN",
-     "link": 1335
-    }
-   ],
-   "outputs": [
-    {
-     "localized_name": "FLOAT",
-     "name": "FLOAT",
-     "type": "FLOAT",
-     "links": []
-    },
-    {
-     "localized_name": "INT",
-     "name": "INT",
-     "type": "INT",
-     "links": []
-    },
-    {
-     "localized_name": "BOOL",
-     "name": "BOOL",
-     "type": "BOOLEAN",
-     "links": [
-      1353
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "ComfyMathExpression"
-   },
-   "title": "Subject control is Auto?",
-   "widgets_values": [
-    "a == 0"
-   ]
-  },
-  {
-   "id": 358,
-   "type": "ComfyMathExpression",
-   "pos": [
-    -5100,
-    1510
-   ],
-   "size": [
-    360,
-    120
-   ],
-   "flags": {},
-   "order": 358,
-   "mode": 0,
-   "inputs": [
-    {
-     "label": "a",
-     "localized_name": "values.a",
-     "name": "values.a",
-     "type": "FLOAT,INT,BOOLEAN",
-     "link": 1336
-    },
-    {
-     "label": "b",
-     "localized_name": "values.b",
-     "name": "values.b",
-     "type": "FLOAT,INT,BOOLEAN",
-     "shape": 7,
-     "link": 1337
+     "link": 1347
     }
    ],
    "outputs": [
@@ -5183,24 +5433,24 @@
     "ver": "0.38.0",
     "Node name for S&R": "ComfyMathExpression"
    },
-   "title": "Bust cut applied?",
+   "title": "Subject is Complex?",
    "widgets_values": [
-    "a < b"
+    "a == 2"
    ]
   },
   {
-   "id": 359,
+   "id": 364,
    "type": "ComfyMathExpression",
    "pos": [
     -5100,
-    1660
+    1360
    ],
    "size": [
     360,
     120
    ],
    "flags": {},
-   "order": 359,
+   "order": 364,
    "mode": 0,
    "inputs": [
     {
@@ -5208,150 +5458,7 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1338
-    },
-    {
-     "label": "b",
-     "localized_name": "values.b",
-     "name": "values.b",
-     "type": "FLOAT,INT,BOOLEAN",
-     "shape": 7,
-     "link": 1339
-    },
-    {
-     "label": "c",
-     "localized_name": "values.c",
-     "name": "values.c",
-     "type": "FLOAT,INT,BOOLEAN",
-     "shape": 7,
-     "link": 1340
-    },
-    {
-     "label": "d",
-     "localized_name": "values.d",
-     "name": "values.d",
-     "type": "FLOAT,INT,BOOLEAN",
-     "shape": 7,
-     "link": 1341
-    },
-    {
-     "label": "e",
-     "localized_name": "values.e",
-     "name": "values.e",
-     "type": "FLOAT,INT,BOOLEAN",
-     "shape": 7,
-     "link": 1342
-    }
-   ],
-   "outputs": [
-    {
-     "localized_name": "FLOAT",
-     "name": "FLOAT",
-     "type": "FLOAT",
-     "links": []
-    },
-    {
-     "localized_name": "INT",
-     "name": "INT",
-     "type": "INT",
-     "links": [
-      1343,
-      1344
-     ]
-    },
-    {
-     "localized_name": "BOOL",
-     "name": "BOOL",
-     "type": "BOOLEAN",
-     "links": []
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "ComfyMathExpression"
-   },
-   "title": "Unsure about the subject? (Auto only)",
-   "widgets_values": [
-    "0 if c != 0 else (1 if (a >= 0.6 and (b < 0.5 or d < 0.09 * e)) else (2 if (b >= 0.5 and a < 0.6 and d < 0.35 * e) else 0))"
-   ]
-  },
-  {
-   "id": 360,
-   "type": "ComfyMathExpression",
-   "pos": [
-    -5100,
-    1810
-   ],
-   "size": [
-    360,
-    120
-   ],
-   "flags": {},
-   "order": 360,
-   "mode": 0,
-   "inputs": [
-    {
-     "label": "a",
-     "localized_name": "values.a",
-     "name": "values.a",
-     "type": "FLOAT,INT,BOOLEAN",
-     "link": 1343
-    }
-   ],
-   "outputs": [
-    {
-     "localized_name": "FLOAT",
-     "name": "FLOAT",
-     "type": "FLOAT",
-     "links": []
-    },
-    {
-     "localized_name": "INT",
-     "name": "INT",
-     "type": "INT",
-     "links": []
-    },
-    {
-     "localized_name": "BOOL",
-     "name": "BOOL",
-     "type": "BOOLEAN",
-     "links": [
-      1363
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "ComfyMathExpression"
-   },
-   "title": "Unsure: person without a clear face?",
-   "widgets_values": [
-    "a == 1"
-   ]
-  },
-  {
-   "id": 361,
-   "type": "ComfyMathExpression",
-   "pos": [
-    -5100,
-    1960
-   ],
-   "size": [
-    360,
-    120
-   ],
-   "flags": {},
-   "order": 361,
-   "mode": 0,
-   "inputs": [
-    {
-     "label": "a",
-     "localized_name": "values.a",
-     "name": "values.a",
-     "type": "FLOAT,INT,BOOLEAN",
-     "link": 1344
+     "link": 1348
     }
    ],
    "outputs": [
@@ -5381,449 +5488,285 @@
     "ver": "0.38.0",
     "Node name for S&R": "ComfyMathExpression"
    },
-   "title": "Unsure: face without a person?",
+   "title": "Subject control is Auto?",
    "widgets_values": [
-    "a == 2"
-   ]
-  },
-  {
-   "id": 362,
-   "type": "PrimitiveString",
-   "pos": [
-    -4700,
-    1060
-   ],
-   "size": [
-    300,
-    60
-   ],
-   "flags": {},
-   "order": 362,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "value",
-     "type": "STRING",
-     "widget": {
-      "name": "value"
-     },
-     "link": null
-    }
-   ],
-   "outputs": [
-    {
-     "name": "STRING",
-     "type": "STRING",
-     "links": [
-      1345
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "PrimitiveString"
-   },
-   "title": "Object",
-   "widgets_values": [
-    "Object"
-   ]
-  },
-  {
-   "id": 363,
-   "type": "PrimitiveString",
-   "pos": [
-    -4700,
-    1140
-   ],
-   "size": [
-    300,
-    60
-   ],
-   "flags": {},
-   "order": 363,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "value",
-     "type": "STRING",
-     "widget": {
-      "name": "value"
-     },
-     "link": null
-    }
-   ],
-   "outputs": [
-    {
-     "name": "STRING",
-     "type": "STRING",
-     "links": [
-      1346
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "PrimitiveString"
-   },
-   "title": "Complex",
-   "widgets_values": [
-    "Complex shapes (TRELLIS.2)"
-   ]
-  },
-  {
-   "id": 364,
-   "type": "PrimitiveString",
-   "pos": [
-    -4700,
-    1220
-   ],
-   "size": [
-    300,
-    60
-   ],
-   "flags": {},
-   "order": 364,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "value",
-     "type": "STRING",
-     "widget": {
-      "name": "value"
-     },
-     "link": null
-    }
-   ],
-   "outputs": [
-    {
-     "name": "STRING",
-     "type": "STRING",
-     "links": [
-      1349
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "PrimitiveString"
-   },
-   "title": "Character bust",
-   "widgets_values": [
-    "Character bust"
+    "a == 0"
    ]
   },
   {
    "id": 365,
-   "type": "ComfySwitchNode",
+   "type": "ComfyMathExpression",
    "pos": [
-    -4340,
-    1060
+    -5100,
+    1510
    ],
    "size": [
-    280,
-    100
+    360,
+    120
    ],
    "flags": {},
    "order": 365,
    "mode": 0,
    "inputs": [
     {
-     "name": "on_false",
-     "type": "STRING",
-     "shape": 7,
-     "link": 1345
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1349
     },
     {
-     "name": "on_true",
-     "type": "STRING",
+     "label": "b",
+     "localized_name": "values.b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
      "shape": 7,
-     "link": 1346
-    },
-    {
-     "name": "switch",
-     "type": "BOOLEAN",
-     "link": 1347,
-     "widget": {
-      "name": "switch"
-     }
+     "link": 1350
     }
    ],
    "outputs": [
     {
-     "name": "output",
-     "type": "STRING",
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": []
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
      "links": [
-      1348
+      1376
      ]
     }
    ],
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.38.0",
-    "Node name for S&R": "ComfySwitchNode"
+    "Node name for S&R": "ComfyMathExpression"
    },
-   "title": "Name (complex?)",
+   "title": "Bust cut applied?",
    "widgets_values": [
-    false
+    "a < b"
    ]
   },
   {
    "id": 366,
-   "type": "ComfySwitchNode",
+   "type": "ComfyMathExpression",
    "pos": [
-    -4020,
-    1060
+    -5100,
+    1660
    ],
    "size": [
-    280,
-    100
+    360,
+    120
    ],
    "flags": {},
    "order": 366,
    "mode": 0,
    "inputs": [
     {
-     "name": "on_false",
-     "type": "STRING",
-     "shape": 7,
-     "link": 1348
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1351
     },
     {
-     "name": "on_true",
-     "type": "STRING",
+     "label": "b",
+     "localized_name": "values.b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
      "shape": 7,
-     "link": 1349
+     "link": 1352
     },
     {
-     "name": "switch",
-     "type": "BOOLEAN",
-     "link": 1350,
-     "widget": {
-      "name": "switch"
-     }
+     "label": "c",
+     "localized_name": "values.c",
+     "name": "values.c",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1353
+    },
+    {
+     "label": "d",
+     "localized_name": "values.d",
+     "name": "values.d",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1354
+    },
+    {
+     "label": "e",
+     "localized_name": "values.e",
+     "name": "values.e",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1355
     }
    ],
    "outputs": [
     {
-     "name": "output",
-     "type": "STRING",
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
      "links": [
-      1370
+      1356,
+      1357
      ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
     }
    ],
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.38.0",
-    "Node name for S&R": "ComfySwitchNode"
+    "Node name for S&R": "ComfyMathExpression"
    },
-   "title": "Name",
+   "title": "Unsure about the subject? (Auto only)",
    "widgets_values": [
-    false
+    "0 if c != 0 else (1 if (a >= 0.6 and (b < 0.5 or d < 0.09 * e)) else (2 if (b >= 0.5 and a < 0.6 and d < 0.35 * e) else 0))"
    ]
   },
   {
    "id": 367,
-   "type": "PrimitiveString",
+   "type": "ComfyMathExpression",
    "pos": [
-    -4700,
-    1320
+    -5100,
+    1810
    ],
    "size": [
-    300,
-    60
+    360,
+    120
    ],
    "flags": {},
    "order": 367,
    "mode": 0,
    "inputs": [
     {
-     "name": "value",
-     "type": "STRING",
-     "widget": {
-      "name": "value"
-     },
-     "link": null
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1356
     }
    ],
    "outputs": [
     {
-     "name": "STRING",
-     "type": "STRING",
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": []
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
      "links": [
-      1352
+      1379
      ]
     }
    ],
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.38.0",
-    "Node name for S&R": "PrimitiveString"
+    "Node name for S&R": "ComfyMathExpression"
    },
-   "title": "Auto",
+   "title": "Unsure: person without a clear face?",
    "widgets_values": [
-    "Auto picked it"
+    "a == 1"
    ]
   },
   {
    "id": 368,
-   "type": "PrimitiveString",
+   "type": "ComfyMathExpression",
    "pos": [
-    -4700,
-    1400
+    -5100,
+    1960
    ],
    "size": [
-    300,
-    60
+    360,
+    120
    ],
    "flags": {},
    "order": 368,
    "mode": 0,
    "inputs": [
     {
-     "name": "value",
-     "type": "STRING",
-     "widget": {
-      "name": "value"
-     },
-     "link": null
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1357
     }
    ],
    "outputs": [
     {
-     "name": "STRING",
-     "type": "STRING",
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": []
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
      "links": [
-      1351
+      1382
      ]
     }
    ],
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.38.0",
-    "Node name for S&R": "PrimitiveString"
+    "Node name for S&R": "ComfyMathExpression"
    },
-   "title": "Chosen",
+   "title": "Unsure: face without a person?",
    "widgets_values": [
-    "your choice"
+    "a == 2"
    ]
   },
   {
    "id": 369,
-   "type": "ComfySwitchNode",
-   "pos": [
-    -4340,
-    1320
-   ],
-   "size": [
-    280,
-    100
-   ],
-   "flags": {},
-   "order": 369,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "on_false",
-     "type": "STRING",
-     "shape": 7,
-     "link": 1351
-    },
-    {
-     "name": "on_true",
-     "type": "STRING",
-     "shape": 7,
-     "link": 1352
-    },
-    {
-     "name": "switch",
-     "type": "BOOLEAN",
-     "link": 1353,
-     "widget": {
-      "name": "switch"
-     }
-    }
-   ],
-   "outputs": [
-    {
-     "name": "output",
-     "type": "STRING",
-     "links": [
-      1371
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "ComfySwitchNode"
-   },
-   "title": "How",
-   "widgets_values": [
-    false
-   ]
-  },
-  {
-   "id": 370,
-   "type": "StringFormat",
-   "pos": [
-    -4700,
-    1500
-   ],
-   "size": [
-    420,
-    140
-   ],
-   "flags": {},
-   "order": 370,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "values.a",
-     "type": "FLOAT",
-     "link": 1354
-    },
-    {
-     "name": "values.b",
-     "type": "FLOAT",
-     "link": 1355
-    }
-   ],
-   "outputs": [
-    {
-     "name": "STRING",
-     "type": "STRING",
-     "links": [
-      1372
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "StringFormat"
-   },
-   "title": "What it looked for",
-   "widgets_values": [
-    "Looked for: a face (score {a:.2f}) and a person (score {b:.2f}); scores run from 0 to 1."
-   ]
-  },
-  {
-   "id": 371,
    "type": "PrimitiveString",
    "pos": [
-    -4240,
-    1500
+    -4700,
+    1060
    ],
    "size": [
     300,
     60
    ],
    "flags": {},
-   "order": 371,
+   "order": 369,
    "mode": 0,
    "inputs": [
     {
@@ -5849,35 +5792,33 @@
     "ver": "0.38.0",
     "Node name for S&R": "PrimitiveString"
    },
-   "title": "Whole picture",
+   "title": "Object",
    "widgets_values": [
-    "Framing: the whole picture"
+    "Object"
    ]
   },
   {
-   "id": 372,
-   "type": "StringFormat",
+   "id": 370,
+   "type": "PrimitiveString",
    "pos": [
-    -4240,
-    1580
+    -4700,
+    1140
    ],
    "size": [
-    420,
-    130
+    300,
+    60
    ],
    "flags": {},
-   "order": 372,
+   "order": 370,
    "mode": 0,
    "inputs": [
     {
-     "name": "values.a",
-     "type": "INT",
-     "link": 1356
-    },
-    {
-     "name": "values.b",
-     "type": "INT",
-     "link": 1357
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
     }
    ],
    "outputs": [
@@ -5892,26 +5833,69 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.38.0",
-    "Node name for S&R": "StringFormat"
+    "Node name for S&R": "PrimitiveString"
    },
-   "title": "Framing text",
+   "title": "Complex",
    "widgets_values": [
-    "Framing: cut below the chest, rows 0 to {a} of {b} kept, so the face and hands get more detail."
+    "Complex shapes (TRELLIS.2)"
    ]
   },
   {
-   "id": 373,
+   "id": 371,
+   "type": "PrimitiveString",
+   "pos": [
+    -4700,
+    1220
+   ],
+   "size": [
+    300,
+    60
+   ],
+   "flags": {},
+   "order": 371,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1362
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveString"
+   },
+   "title": "Character bust",
+   "widgets_values": [
+    "Character bust"
+   ]
+  },
+  {
+   "id": 372,
    "type": "ComfySwitchNode",
    "pos": [
-    -3780,
-    1500
+    -4340,
+    1060
    ],
    "size": [
     280,
     100
    ],
    "flags": {},
-   "order": 373,
+   "order": 372,
    "mode": 0,
    "inputs": [
     {
@@ -5940,7 +5924,7 @@
      "name": "output",
      "type": "STRING",
      "links": [
-      1373
+      1361
      ]
     }
    ],
@@ -5949,196 +5933,24 @@
     "ver": "0.38.0",
     "Node name for S&R": "ComfySwitchNode"
    },
-   "title": "Framing",
+   "title": "Name (complex?)",
    "widgets_values": [
     false
    ]
   },
   {
-   "id": 374,
-   "type": "PrimitiveString",
-   "pos": [
-    -4240,
-    1760
-   ],
-   "size": [
-    300,
-    60
-   ],
-   "flags": {},
-   "order": 374,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "value",
-     "type": "STRING",
-     "widget": {
-      "name": "value"
-     },
-     "link": null
-    }
-   ],
-   "outputs": [
-    {
-     "name": "STRING",
-     "type": "STRING",
-     "links": [
-      1361
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "PrimitiveString"
-   },
-   "title": "(nothing)",
-   "widgets_values": [
-    ""
-   ]
-  },
-  {
-   "id": 375,
-   "type": "PrimitiveString",
-   "pos": [
-    -4240,
-    1840
-   ],
-   "size": [
-    300,
-    60
-   ],
-   "flags": {},
-   "order": 375,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "value",
-     "type": "STRING",
-     "widget": {
-      "name": "value"
-     },
-     "link": null
-    }
-   ],
-   "outputs": [
-    {
-     "name": "STRING",
-     "type": "STRING",
-     "links": [
-      1368
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "PrimitiveString"
-   },
-   "title": "Hidden surfaces",
-   "widgets_values": [
-    "Hidden surfaces (the back and the far side) are inferred, not measured."
-   ]
-  },
-  {
-   "id": 376,
-   "type": "PrimitiveString",
-   "pos": [
-    -4240,
-    1920
-   ],
-   "size": [
-    300,
-    60
-   ],
-   "flags": {},
-   "order": 376,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "value",
-     "type": "STRING",
-     "widget": {
-      "name": "value"
-     },
-     "link": null
-    }
-   ],
-   "outputs": [
-    {
-     "name": "STRING",
-     "type": "STRING",
-     "links": [
-      1362
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "PrimitiveString"
-   },
-   "title": "Unsure: person",
-   "widgets_values": [
-    "Not sure: a person, but no large clear face (it may be hidden, small or stylised). Auto used the Object workflow; choose Character bust to crop to the upper body."
-   ]
-  },
-  {
-   "id": 377,
-   "type": "PrimitiveString",
-   "pos": [
-    -4240,
-    2000
-   ],
-   "size": [
-    300,
-    60
-   ],
-   "flags": {},
-   "order": 377,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "value",
-     "type": "STRING",
-     "widget": {
-      "name": "value"
-     },
-     "link": null
-    }
-   ],
-   "outputs": [
-    {
-     "name": "STRING",
-     "type": "STRING",
-     "links": [
-      1365
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "PrimitiveString"
-   },
-   "title": "Unsure: toy",
-   "widgets_values": [
-    "Note: a face but no person, so this may be a toy, doll or statue. Auto kept the whole figure (Object workflow); choose Character bust to crop to the upper body."
-   ]
-  },
-  {
-   "id": 378,
+   "id": 373,
    "type": "ComfySwitchNode",
    "pos": [
-    -3780,
-    1840
+    -4020,
+    1060
    ],
    "size": [
     280,
     100
    ],
    "flags": {},
-   "order": 378,
+   "order": 373,
    "mode": 0,
    "inputs": [
     {
@@ -6167,7 +5979,7 @@
      "name": "output",
      "type": "STRING",
      "links": [
-      1364
+      1386
      ]
     }
    ],
@@ -6176,24 +5988,110 @@
     "ver": "0.38.0",
     "Node name for S&R": "ComfySwitchNode"
    },
-   "title": "Note (person without a face?)",
+   "title": "Name",
    "widgets_values": [
     false
    ]
   },
   {
-   "id": 379,
+   "id": 374,
+   "type": "PrimitiveString",
+   "pos": [
+    -4700,
+    1320
+   ],
+   "size": [
+    300,
+    60
+   ],
+   "flags": {},
+   "order": 374,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1365
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveString"
+   },
+   "title": "Auto",
+   "widgets_values": [
+    "Auto picked it"
+   ]
+  },
+  {
+   "id": 375,
+   "type": "PrimitiveString",
+   "pos": [
+    -4700,
+    1400
+   ],
+   "size": [
+    300,
+    60
+   ],
+   "flags": {},
+   "order": 375,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1364
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveString"
+   },
+   "title": "Chosen",
+   "widgets_values": [
+    "your choice"
+   ]
+  },
+  {
+   "id": 376,
    "type": "ComfySwitchNode",
    "pos": [
-    -3780,
-    1960
+    -4340,
+    1320
    ],
    "size": [
     280,
     100
    ],
    "flags": {},
-   "order": 379,
+   "order": 376,
    "mode": 0,
    "inputs": [
     {
@@ -6222,7 +6120,7 @@
      "name": "output",
      "type": "STRING",
      "links": [
-      1367
+      1387
      ]
     }
    ],
@@ -6231,42 +6129,218 @@
     "ver": "0.38.0",
     "Node name for S&R": "ComfySwitchNode"
    },
-   "title": "Note (face without a person?)",
+   "title": "How",
    "widgets_values": [
     false
    ]
   },
   {
-   "id": 380,
-   "type": "ComfySwitchNode",
+   "id": 377,
+   "type": "StringFormat",
    "pos": [
-    -3480,
-    1840
+    -4700,
+    1500
    ],
    "size": [
-    280,
-    100
+    420,
+    140
+   ],
+   "flags": {},
+   "order": 377,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "values.a",
+     "type": "FLOAT",
+     "link": 1367
+    },
+    {
+     "name": "values.b",
+     "type": "FLOAT",
+     "link": 1368
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1388
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "StringFormat"
+   },
+   "title": "What it looked for",
+   "widgets_values": [
+    "Looked for: a face (score {a:.2f}) and a person (score {b:.2f}); scores run from 0 to 1."
+   ]
+  },
+  {
+   "id": 378,
+   "type": "PrimitiveString",
+   "pos": [
+    -4240,
+    1500
+   ],
+   "size": [
+    300,
+    60
+   ],
+   "flags": {},
+   "order": 378,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1371
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveString"
+   },
+   "title": "Whole picture",
+   "widgets_values": [
+    "Framing: the whole picture"
+   ]
+  },
+  {
+   "id": 379,
+   "type": "StringFormat",
+   "pos": [
+    -4240,
+    1580
+   ],
+   "size": [
+    420,
+    130
+   ],
+   "flags": {},
+   "order": 379,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "values.a",
+     "type": "INT",
+     "link": 1369
+    },
+    {
+     "name": "values.b",
+     "type": "INT",
+     "link": 1370
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1375
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "StringFormat"
+   },
+   "title": "Framing text",
+   "widgets_values": [
+    "Framing: cut below the chest, rows 0 to {a} of {b} kept, so the face and hands get more detail."
+   ]
+  },
+  {
+   "id": 380,
+   "type": "PrimitiveString",
+   "pos": [
+    -4700,
+    1660
+   ],
+   "size": [
+    300,
+    60
    ],
    "flags": {},
    "order": 380,
    "mode": 0,
    "inputs": [
     {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1372
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveString"
+   },
+   "title": "Whole picture (character)",
+   "widgets_values": [
+    "Framing: the whole picture (cutting below the chest would not make the subject larger for the model, so it is used as it is)"
+   ]
+  },
+  {
+   "id": 381,
+   "type": "ComfySwitchNode",
+   "pos": [
+    -4020,
+    1660
+   ],
+   "size": [
+    280,
+    100
+   ],
+   "flags": {},
+   "order": 381,
+   "mode": 0,
+   "inputs": [
+    {
      "name": "on_false",
      "type": "STRING",
      "shape": 7,
-     "link": 1367
+     "link": 1371
     },
     {
      "name": "on_true",
      "type": "STRING",
      "shape": 7,
-     "link": 1368
+     "link": 1372
     },
     {
      "name": "switch",
      "type": "BOOLEAN",
-     "link": 1369,
+     "link": 1373,
      "widget": {
       "name": "switch"
      }
@@ -6286,13 +6360,405 @@
     "ver": "0.38.0",
     "Node name for S&R": "ComfySwitchNode"
    },
+   "title": "Whole picture text",
+   "widgets_values": [
+    false
+   ]
+  },
+  {
+   "id": 382,
+   "type": "ComfySwitchNode",
+   "pos": [
+    -3780,
+    1500
+   ],
+   "size": [
+    280,
+    100
+   ],
+   "flags": {},
+   "order": 382,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1374
+    },
+    {
+     "name": "on_true",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1375
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 1376,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "STRING",
+     "links": [
+      1389
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfySwitchNode"
+   },
+   "title": "Framing",
+   "widgets_values": [
+    false
+   ]
+  },
+  {
+   "id": 383,
+   "type": "PrimitiveString",
+   "pos": [
+    -4240,
+    1760
+   ],
+   "size": [
+    300,
+    60
+   ],
+   "flags": {},
+   "order": 383,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1377
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveString"
+   },
+   "title": "(nothing)",
+   "widgets_values": [
+    ""
+   ]
+  },
+  {
+   "id": 384,
+   "type": "PrimitiveString",
+   "pos": [
+    -4240,
+    1840
+   ],
+   "size": [
+    300,
+    60
+   ],
+   "flags": {},
+   "order": 384,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1384
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveString"
+   },
+   "title": "Hidden surfaces",
+   "widgets_values": [
+    "Hidden surfaces (the back and the far side) are inferred, not measured."
+   ]
+  },
+  {
+   "id": 385,
+   "type": "PrimitiveString",
+   "pos": [
+    -4240,
+    1920
+   ],
+   "size": [
+    300,
+    60
+   ],
+   "flags": {},
+   "order": 385,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1378
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveString"
+   },
+   "title": "Unsure: person",
+   "widgets_values": [
+    "Not sure: a person, but no large clear face (it may be hidden, small or stylised). Auto used the Object workflow; choose Character bust to crop to the upper body."
+   ]
+  },
+  {
+   "id": 386,
+   "type": "PrimitiveString",
+   "pos": [
+    -4240,
+    2000
+   ],
+   "size": [
+    300,
+    60
+   ],
+   "flags": {},
+   "order": 386,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1381
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveString"
+   },
+   "title": "Unsure: toy",
+   "widgets_values": [
+    "Note: a face but no person, so this may be a toy, doll or statue. Auto kept the whole figure (Object workflow); choose Character bust to crop to the upper body."
+   ]
+  },
+  {
+   "id": 387,
+   "type": "ComfySwitchNode",
+   "pos": [
+    -3780,
+    1840
+   ],
+   "size": [
+    280,
+    100
+   ],
+   "flags": {},
+   "order": 387,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1377
+    },
+    {
+     "name": "on_true",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1378
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 1379,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "STRING",
+     "links": [
+      1380
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfySwitchNode"
+   },
+   "title": "Note (person without a face?)",
+   "widgets_values": [
+    false
+   ]
+  },
+  {
+   "id": 388,
+   "type": "ComfySwitchNode",
+   "pos": [
+    -3780,
+    1960
+   ],
+   "size": [
+    280,
+    100
+   ],
+   "flags": {},
+   "order": 388,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1380
+    },
+    {
+     "name": "on_true",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1381
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 1382,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "STRING",
+     "links": [
+      1383
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfySwitchNode"
+   },
+   "title": "Note (face without a person?)",
+   "widgets_values": [
+    false
+   ]
+  },
+  {
+   "id": 389,
+   "type": "ComfySwitchNode",
+   "pos": [
+    -3480,
+    1840
+   ],
+   "size": [
+    280,
+    100
+   ],
+   "flags": {},
+   "order": 389,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1383
+    },
+    {
+     "name": "on_true",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1384
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 1385,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "STRING",
+     "links": [
+      1390
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfySwitchNode"
+   },
    "title": "Note",
    "widgets_values": [
     false
    ]
   },
   {
-   "id": 381,
+   "id": 390,
    "type": "StringFormat",
    "pos": [
     -3480,
@@ -6303,33 +6769,33 @@
     300
    ],
    "flags": {},
-   "order": 381,
+   "order": 390,
    "mode": 0,
    "inputs": [
     {
      "name": "values.a",
      "type": "STRING",
-     "link": 1370
+     "link": 1386
     },
     {
      "name": "values.b",
      "type": "STRING",
-     "link": 1371
+     "link": 1387
     },
     {
      "name": "values.c",
      "type": "STRING",
-     "link": 1372
+     "link": 1388
     },
     {
      "name": "values.d",
      "type": "STRING",
-     "link": 1373
+     "link": 1389
     },
     {
      "name": "values.e",
      "type": "STRING",
-     "link": 1374
+     "link": 1390
     }
    ],
    "outputs": [
@@ -6337,7 +6803,7 @@
      "name": "STRING",
      "type": "STRING",
      "links": [
-      1375
+      1391
      ]
     }
    ],
@@ -6352,7 +6818,7 @@
    ]
   },
   {
-   "id": 382,
+   "id": 391,
    "type": "PreviewAny",
    "pos": [
     -2920,
@@ -6363,13 +6829,13 @@
     200
    ],
    "flags": {},
-   "order": 382,
+   "order": 391,
    "mode": 0,
    "inputs": [
     {
      "name": "source",
      "type": "*",
-     "link": 1375
+     "link": 1391
     }
    ],
    "outputs": [
@@ -6388,7 +6854,7 @@
    "title": "Subject report (what Local3D decided and why)"
   },
   {
-   "id": 383,
+   "id": 392,
    "type": "ComfyMathExpression",
    "pos": [
     -5100,
@@ -6399,7 +6865,7 @@
     120
    ],
    "flags": {},
-   "order": 383,
+   "order": 392,
    "mode": 0,
    "inputs": [
     {
@@ -6407,7 +6873,7 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1376
+     "link": 1392
     },
     {
      "label": "b",
@@ -6415,7 +6881,7 @@
      "name": "values.b",
      "type": "FLOAT,INT,BOOLEAN",
      "shape": 7,
-     "link": 1377
+     "link": 1393
     }
    ],
    "outputs": [
@@ -6436,9 +6902,9 @@
      "name": "BOOL",
      "type": "BOOLEAN",
      "links": [
-      1378,
-      1379,
-      1380
+      1394,
+      1395,
+      1396
      ]
     }
    ],
@@ -6453,7 +6919,7 @@
    ]
   },
   {
-   "id": 384,
+   "id": 393,
    "type": "ComfyMathExpression",
    "pos": [
     -4700,
@@ -6464,7 +6930,7 @@
     120
    ],
    "flags": {},
-   "order": 384,
+   "order": 393,
    "mode": 0,
    "inputs": [
     {
@@ -6472,7 +6938,7 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1381
+     "link": 1397
     }
    ],
    "outputs": [
@@ -6487,7 +6953,7 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      1382
+      1398
      ]
     },
     {
@@ -6508,7 +6974,7 @@
    ]
   },
   {
-   "id": 385,
+   "id": 394,
    "type": "ComfyMathExpression",
    "pos": [
     -4700,
@@ -6519,7 +6985,7 @@
     120
    ],
    "flags": {},
-   "order": 385,
+   "order": 394,
    "mode": 0,
    "inputs": [
     {
@@ -6527,7 +6993,7 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1383
+     "link": 1399
     }
    ],
    "outputs": [
@@ -6542,7 +7008,7 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      1384
+      1400
      ]
     },
     {
@@ -6563,7 +7029,7 @@
    ]
   },
   {
-   "id": 386,
+   "id": 395,
    "type": "ComfyMathExpression",
    "pos": [
     -4700,
@@ -6574,7 +7040,7 @@
     120
    ],
    "flags": {},
-   "order": 386,
+   "order": 395,
    "mode": 0,
    "inputs": [
     {
@@ -6582,7 +7048,7 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1385
+     "link": 1401
     },
     {
      "label": "b",
@@ -6590,7 +7056,7 @@
      "name": "values.b",
      "type": "FLOAT,INT,BOOLEAN",
      "shape": 7,
-     "link": 1386
+     "link": 1402
     }
    ],
    "outputs": [
@@ -6605,7 +7071,7 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      1387
+      1403
      ]
     },
     {
@@ -6626,7 +7092,7 @@
    ]
   },
   {
-   "id": 387,
+   "id": 396,
    "type": "ComfyMathExpression",
    "pos": [
     -4700,
@@ -6637,7 +7103,7 @@
     120
    ],
    "flags": {},
-   "order": 387,
+   "order": 396,
    "mode": 0,
    "inputs": [
     {
@@ -6645,7 +7111,7 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1388
+     "link": 1404
     },
     {
      "label": "b",
@@ -6653,7 +7119,7 @@
      "name": "values.b",
      "type": "FLOAT,INT,BOOLEAN",
      "shape": 7,
-     "link": 1389
+     "link": 1405
     }
    ],
    "outputs": [
@@ -6668,8 +7134,8 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      1394,
-      1395
+      1410,
+      1411
      ]
     },
     {
@@ -6690,7 +7156,7 @@
    ]
   },
   {
-   "id": 388,
+   "id": 397,
    "type": "ComfyMathExpression",
    "pos": [
     -4700,
@@ -6701,257 +7167,7 @@
     120
    ],
    "flags": {},
-   "order": 388,
-   "mode": 0,
-   "inputs": [
-    {
-     "label": "a",
-     "localized_name": "values.a",
-     "name": "values.a",
-     "type": "FLOAT,INT,BOOLEAN",
-     "link": 1390
-    }
-   ],
-   "outputs": [
-    {
-     "localized_name": "FLOAT",
-     "name": "FLOAT",
-     "type": "FLOAT",
-     "links": []
-    },
-    {
-     "localized_name": "INT",
-     "name": "INT",
-     "type": "INT",
-     "links": [
-      1391
-     ]
-    },
-    {
-     "localized_name": "BOOL",
-     "name": "BOOL",
-     "type": "BOOLEAN",
-     "links": []
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "ComfyMathExpression"
-   },
-   "title": "Preset: normal map size",
-   "widgets_values": [
-    "1024 if a == 0 else (2048 if a == 1 else (2048))"
-   ]
-  },
-  {
-   "id": 389,
-   "type": "ComfyMathExpression",
-   "pos": [
-    -4700,
-    -570
-   ],
-   "size": [
-    360,
-    120
-   ],
-   "flags": {},
-   "order": 389,
-   "mode": 0,
-   "inputs": [
-    {
-     "label": "a",
-     "localized_name": "values.a",
-     "name": "values.a",
-     "type": "FLOAT,INT,BOOLEAN",
-     "link": 1392
-    }
-   ],
-   "outputs": [
-    {
-     "localized_name": "FLOAT",
-     "name": "FLOAT",
-     "type": "FLOAT",
-     "links": []
-    },
-    {
-     "localized_name": "INT",
-     "name": "INT",
-     "type": "INT",
-     "links": [
-      1393
-     ]
-    },
-    {
-     "localized_name": "BOOL",
-     "name": "BOOL",
-     "type": "BOOLEAN",
-     "links": []
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "ComfyMathExpression"
-   },
-   "title": "Preset: AO map size",
-   "widgets_values": [
-    "512 if a == 0 else (1024 if a == 1 else (1024))"
-   ]
-  },
-  {
-   "id": 390,
-   "type": "InvertMask",
-   "pos": [
-    -4300,
-    -1320
-   ],
-   "size": [
-    260,
-    60
-   ],
-   "flags": {},
-   "order": 390,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "mask",
-     "type": "MASK",
-     "link": 1400
-    }
-   ],
-   "outputs": [
-    {
-     "name": "MASK",
-     "type": "MASK",
-     "links": [
-      1404,
-      1411
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "InvertMask"
-   },
-   "title": "Your cutout (alpha)"
-  },
-  {
-   "id": 391,
-   "type": "MaskComposite",
-   "pos": [
-    -4300,
-    -1200
-   ],
-   "size": [
-    300,
-    160
-   ],
-   "flags": {},
-   "order": 391,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "destination",
-     "type": "MASK",
-     "link": 1403
-    },
-    {
-     "name": "source",
-     "type": "MASK",
-     "link": 1404
-    }
-   ],
-   "outputs": [
-    {
-     "name": "MASK",
-     "type": "MASK",
-     "links": [
-      1407
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "MaskComposite"
-   },
-   "title": "Auto: AI matte × your cutout",
-   "widgets_values": [
-    0,
-    0,
-    "multiply"
-   ]
-  },
-  {
-   "id": 392,
-   "type": "ComfyMathExpression",
-   "pos": [
-    -4300,
-    -960
-   ],
-   "size": [
-    360,
-    120
-   ],
-   "flags": {},
-   "order": 392,
-   "mode": 0,
-   "inputs": [
-    {
-     "label": "a",
-     "localized_name": "values.a",
-     "name": "values.a",
-     "type": "FLOAT,INT,BOOLEAN",
-     "link": 1405
-    }
-   ],
-   "outputs": [
-    {
-     "localized_name": "FLOAT",
-     "name": "FLOAT",
-     "type": "FLOAT",
-     "links": []
-    },
-    {
-     "localized_name": "INT",
-     "name": "INT",
-     "type": "INT",
-     "links": []
-    },
-    {
-     "localized_name": "BOOL",
-     "name": "BOOL",
-     "type": "BOOLEAN",
-     "links": [
-      1409
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "ComfyMathExpression"
-   },
-   "title": "Background is Remove?",
-   "widgets_values": [
-    "a == 1"
-   ]
-  },
-  {
-   "id": 393,
-   "type": "ComfyMathExpression",
-   "pos": [
-    -4300,
-    -810
-   ],
-   "size": [
-    360,
-    120
-   ],
-   "flags": {},
-   "order": 393,
+   "order": 397,
    "mode": 0,
    "inputs": [
     {
@@ -6973,6 +7189,201 @@
      "localized_name": "INT",
      "name": "INT",
      "type": "INT",
+     "links": [
+      1407
+     ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "title": "Preset: normal map size",
+   "widgets_values": [
+    "1024 if a == 0 else (2048 if a == 1 else (2048))"
+   ]
+  },
+  {
+   "id": 398,
+   "type": "ComfyMathExpression",
+   "pos": [
+    -4700,
+    -570
+   ],
+   "size": [
+    360,
+    120
+   ],
+   "flags": {},
+   "order": 398,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1408
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      1409
+     ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "title": "Preset: AO map size",
+   "widgets_values": [
+    "512 if a == 0 else (1024 if a == 1 else (1024))"
+   ]
+  },
+  {
+   "id": 399,
+   "type": "InvertMask",
+   "pos": [
+    -4300,
+    -1320
+   ],
+   "size": [
+    260,
+    60
+   ],
+   "flags": {},
+   "order": 399,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "mask",
+     "type": "MASK",
+     "link": 1416
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": [
+      1420,
+      1427
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "InvertMask"
+   },
+   "title": "Your cutout (alpha)"
+  },
+  {
+   "id": 400,
+   "type": "MaskComposite",
+   "pos": [
+    -4300,
+    -1200
+   ],
+   "size": [
+    300,
+    160
+   ],
+   "flags": {},
+   "order": 400,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "destination",
+     "type": "MASK",
+     "link": 1419
+    },
+    {
+     "name": "source",
+     "type": "MASK",
+     "link": 1420
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": [
+      1423
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "MaskComposite"
+   },
+   "title": "Auto: AI matte × your cutout",
+   "widgets_values": [
+    0,
+    0,
+    "multiply"
+   ]
+  },
+  {
+   "id": 401,
+   "type": "ComfyMathExpression",
+   "pos": [
+    -4300,
+    -960
+   ],
+   "size": [
+    360,
+    120
+   ],
+   "flags": {},
+   "order": 401,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1421
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
      "links": []
     },
     {
@@ -6980,7 +7391,62 @@
      "name": "BOOL",
      "type": "BOOLEAN",
      "links": [
-      1412
+      1425
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "title": "Background is Remove?",
+   "widgets_values": [
+    "a == 1"
+   ]
+  },
+  {
+   "id": 402,
+   "type": "ComfyMathExpression",
+   "pos": [
+    -4300,
+    -810
+   ],
+   "size": [
+    360,
+    120
+   ],
+   "flags": {},
+   "order": 402,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1422
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": []
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": [
+      1428
      ]
     }
    ],
@@ -6995,7 +7461,7 @@
    ]
   },
   {
-   "id": 394,
+   "id": 403,
    "type": "ComfySwitchNode",
    "pos": [
     -3900,
@@ -7006,23 +7472,23 @@
     110
    ],
    "flags": {},
-   "order": 394,
+   "order": 403,
    "mode": 0,
    "inputs": [
     {
      "name": "on_false",
      "type": "MASK",
-     "link": 1407
+     "link": 1423
     },
     {
      "name": "on_true",
      "type": "MASK",
-     "link": 1408
+     "link": 1424
     },
     {
      "name": "switch",
      "type": "BOOLEAN",
-     "link": 1409,
+     "link": 1425,
      "widget": {
       "name": "switch"
      }
@@ -7033,7 +7499,7 @@
      "name": "output",
      "type": "MASK",
      "links": [
-      1410
+      1426
      ]
     }
    ],
@@ -7048,7 +7514,7 @@
    ]
   },
   {
-   "id": 395,
+   "id": 404,
    "type": "MarkdownNote",
    "pos": [
     -5100,
@@ -7059,7 +7525,7 @@
     260
    ],
    "flags": {},
-   "order": 395,
+   "order": 404,
    "mode": 0,
    "inputs": [],
    "outputs": [],
@@ -7951,486 +8417,478 @@
   ],
   [
    1315,
-   122,
+   336,
    0,
    348,
+   0,
+   "STRING"
+  ],
+  [
+   1316,
+   348,
+   0,
+   349,
+   0,
+   "STRING"
+  ],
+  [
+   1317,
+   336,
+   0,
+   350,
+   0,
+   "STRING"
+  ],
+  [
+   1318,
+   350,
+   0,
+   351,
+   0,
+   "STRING"
+  ],
+  [
+   1319,
+   336,
+   0,
+   352,
+   0,
+   "STRING"
+  ],
+  [
+   1320,
+   352,
+   0,
+   353,
+   0,
+   "STRING"
+  ],
+  [
+   1321,
+   122,
+   0,
+   354,
    0,
    "IMAGE"
   ],
   [
-   1316,
+   1322,
    343,
    0,
-   349,
-   0,
-   "FLOAT"
-  ],
-  [
-   1317,
-   341,
-   0,
-   349,
-   1,
-   "FLOAT"
-  ],
-  [
-   1318,
-   347,
-   0,
-   349,
-   2,
-   "FLOAT"
-  ],
-  [
-   1319,
-   348,
-   1,
-   349,
-   3,
-   "INT"
-  ],
-  [
-   1320,
-   329,
-   1,
-   350,
-   0,
-   "INT"
-  ],
-  [
-   1321,
-   349,
-   1,
-   350,
-   1,
-   "INT"
-  ],
-  [
-   1322,
-   345,
-   0,
-   351,
+   355,
    0,
    "FLOAT"
   ],
   [
    1323,
-   347,
+   341,
    0,
-   351,
+   355,
    1,
    "FLOAT"
   ],
   [
    1324,
-   348,
-   1,
-   351,
+   347,
+   0,
+   355,
    2,
-   "INT"
+   "FLOAT"
   ],
   [
    1325,
-   350,
+   354,
    1,
-   351,
+   355,
    3,
    "INT"
   ],
   [
    1326,
-   348,
-   0,
-   352,
+   329,
+   1,
+   356,
    0,
    "INT"
   ],
   [
    1327,
-   351,
+   355,
    1,
-   352,
+   356,
    1,
    "INT"
   ],
   [
    1328,
-   122,
+   345,
    0,
-   353,
+   357,
    0,
-   "IMAGE"
+   "FLOAT"
   ],
   [
    1329,
-   352,
+   347,
    0,
-   353,
+   357,
    1,
-   "BOUNDING_BOX"
+   "FLOAT"
   ],
   [
    1330,
-   122,
-   1,
-   354,
+   349,
    0,
-   "MASK"
+   357,
+   2,
+   "FLOAT"
   ],
   [
    1331,
-   348,
-   0,
-   354,
-   1,
-   "INT"
-  ],
-  [
-   1332,
    351,
-   1,
-   354,
-   2,
-   "INT"
-  ],
-  [
-   1333,
-   350,
-   1,
-   355,
    0,
-   "INT"
-  ],
-  [
-   1334,
-   350,
-   1,
-   356,
-   0,
-   "INT"
-  ],
-  [
-   1335,
-   329,
-   1,
    357,
-   0,
-   "INT"
-  ],
-  [
-   1336,
-   351,
-   1,
-   358,
-   0,
-   "INT"
-  ],
-  [
-   1337,
-   348,
-   1,
-   358,
-   1,
-   "INT"
-  ],
-  [
-   1338,
-   341,
-   0,
-   359,
-   0,
-   "FLOAT"
-  ],
-  [
-   1339,
-   343,
-   0,
-   359,
-   1,
-   "FLOAT"
-  ],
-  [
-   1340,
-   329,
-   1,
-   359,
-   2,
-   "INT"
-  ],
-  [
-   1341,
-   347,
-   0,
-   359,
    3,
    "FLOAT"
   ],
   [
-   1342,
-   348,
+   1332,
+   353,
+   0,
+   357,
+   4,
+   "FLOAT"
+  ],
+  [
+   1333,
+   345,
+   0,
+   358,
+   0,
+   "FLOAT"
+  ],
+  [
+   1334,
+   347,
+   0,
+   358,
    1,
-   359,
+   "FLOAT"
+  ],
+  [
+   1335,
+   354,
+   1,
+   358,
+   2,
+   "INT"
+  ],
+  [
+   1336,
+   356,
+   1,
+   358,
+   3,
+   "INT"
+  ],
+  [
+   1337,
+   329,
+   1,
+   358,
    4,
    "INT"
   ],
   [
-   1343,
-   359,
+   1338,
+   357,
    1,
-   360,
+   358,
+   5,
+   "INT"
+  ],
+  [
+   1339,
+   354,
+   0,
+   359,
    0,
    "INT"
   ],
   [
-   1344,
+   1340,
+   358,
+   1,
    359,
+   1,
+   "INT"
+  ],
+  [
+   1341,
+   122,
+   0,
+   360,
+   0,
+   "IMAGE"
+  ],
+  [
+   1342,
+   359,
+   0,
+   360,
+   1,
+   "BOUNDING_BOX"
+  ],
+  [
+   1343,
+   122,
    1,
    361,
    0,
+   "MASK"
+  ],
+  [
+   1344,
+   354,
+   0,
+   361,
+   1,
    "INT"
   ],
   [
    1345,
-   362,
-   0,
-   365,
-   0,
-   "STRING"
+   358,
+   1,
+   361,
+   2,
+   "INT"
   ],
   [
    1346,
-   363,
-   0,
-   365,
+   356,
    1,
-   "STRING"
+   362,
+   0,
+   "INT"
   ],
   [
    1347,
    356,
-   2,
-   365,
-   2,
-   "BOOLEAN"
+   1,
+   363,
+   0,
+   "INT"
   ],
   [
    1348,
-   365,
+   329,
+   1,
+   364,
    0,
-   366,
-   0,
-   "STRING"
+   "INT"
   ],
   [
    1349,
-   364,
-   0,
-   366,
+   358,
    1,
-   "STRING"
+   365,
+   0,
+   "INT"
   ],
   [
    1350,
-   355,
-   2,
-   366,
-   2,
-   "BOOLEAN"
+   354,
+   1,
+   365,
+   1,
+   "INT"
   ],
   [
    1351,
-   368,
+   341,
    0,
-   369,
+   366,
    0,
-   "STRING"
+   "FLOAT"
   ],
   [
    1352,
-   367,
+   343,
    0,
-   369,
+   366,
    1,
-   "STRING"
+   "FLOAT"
   ],
   [
    1353,
-   357,
+   329,
+   1,
+   366,
    2,
-   369,
-   2,
-   "BOOLEAN"
+   "INT"
   ],
   [
    1354,
-   343,
+   347,
    0,
-   370,
-   0,
+   366,
+   3,
    "FLOAT"
   ],
   [
    1355,
-   341,
-   0,
-   370,
+   354,
    1,
-   "FLOAT"
+   366,
+   4,
+   "INT"
   ],
   [
    1356,
-   351,
+   366,
    1,
-   372,
+   367,
    0,
    "INT"
   ],
   [
    1357,
-   348,
+   366,
    1,
-   372,
-   1,
+   368,
+   0,
    "INT"
   ],
   [
    1358,
-   371,
+   369,
    0,
-   373,
+   372,
    0,
    "STRING"
   ],
   [
    1359,
-   372,
+   370,
    0,
-   373,
+   372,
    1,
    "STRING"
   ],
   [
    1360,
-   358,
+   363,
    2,
-   373,
+   372,
    2,
    "BOOLEAN"
   ],
   [
    1361,
-   374,
+   372,
    0,
-   378,
+   373,
    0,
    "STRING"
   ],
   [
    1362,
-   376,
+   371,
    0,
-   378,
+   373,
    1,
    "STRING"
   ],
   [
    1363,
-   360,
+   362,
    2,
-   378,
+   373,
    2,
    "BOOLEAN"
   ],
   [
    1364,
-   378,
+   375,
    0,
-   379,
+   376,
    0,
    "STRING"
   ],
   [
    1365,
-   377,
+   374,
    0,
-   379,
+   376,
    1,
    "STRING"
   ],
   [
    1366,
-   361,
+   364,
    2,
-   379,
+   376,
    2,
    "BOOLEAN"
   ],
   [
    1367,
-   379,
+   343,
    0,
-   380,
+   377,
    0,
-   "STRING"
+   "FLOAT"
   ],
   [
    1368,
-   375,
+   341,
    0,
-   380,
+   377,
    1,
-   "STRING"
+   "FLOAT"
   ],
   [
    1369,
-   355,
-   2,
-   380,
-   2,
-   "BOOLEAN"
+   358,
+   1,
+   379,
+   0,
+   "INT"
   ],
   [
    1370,
-   366,
-   0,
-   381,
-   0,
-   "STRING"
+   354,
+   1,
+   379,
+   1,
+   "INT"
   ],
   [
    1371,
-   369,
+   378,
    0,
    381,
-   1,
+   0,
    "STRING"
   ],
   [
    1372,
-   370,
+   380,
    0,
    381,
-   2,
+   1,
    "STRING"
   ],
   [
    1373,
-   373,
-   0,
+   362,
+   2,
    381,
-   3,
-   "STRING"
+   2,
+   "BOOLEAN"
   ],
   [
    1374,
-   380,
-   0,
-   381,
-   4,
-   "STRING"
-  ],
-  [
-   1375,
    381,
    0,
    382,
@@ -8438,167 +8896,303 @@
    "STRING"
   ],
   [
+   1375,
+   379,
+   0,
+   382,
+   1,
+   "STRING"
+  ],
+  [
    1376,
+   365,
+   2,
+   382,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   1377,
+   383,
+   0,
+   387,
+   0,
+   "STRING"
+  ],
+  [
+   1378,
+   385,
+   0,
+   387,
+   1,
+   "STRING"
+  ],
+  [
+   1379,
+   367,
+   2,
+   387,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   1380,
+   387,
+   0,
+   388,
+   0,
+   "STRING"
+  ],
+  [
+   1381,
+   386,
+   0,
+   388,
+   1,
+   "STRING"
+  ],
+  [
+   1382,
+   368,
+   2,
+   388,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   1383,
+   388,
+   0,
+   389,
+   0,
+   "STRING"
+  ],
+  [
+   1384,
+   384,
+   0,
+   389,
+   1,
+   "STRING"
+  ],
+  [
+   1385,
+   362,
+   2,
+   389,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   1386,
+   373,
+   0,
+   390,
+   0,
+   "STRING"
+  ],
+  [
+   1387,
+   376,
+   0,
+   390,
+   1,
+   "STRING"
+  ],
+  [
+   1388,
+   377,
+   0,
+   390,
+   2,
+   "STRING"
+  ],
+  [
+   1389,
+   382,
+   0,
+   390,
+   3,
+   "STRING"
+  ],
+  [
+   1390,
+   389,
+   0,
+   390,
+   4,
+   "STRING"
+  ],
+  [
+   1391,
+   390,
+   0,
+   391,
+   0,
+   "STRING"
+  ],
+  [
+   1392,
    324,
    1,
-   383,
+   392,
    0,
    "INT"
   ],
   [
-   1377,
-   350,
+   1393,
+   356,
    1,
-   383,
+   392,
    1,
    "INT"
   ],
   [
-   1378,
-   383,
+   1394,
+   392,
    2,
    314,
    2,
    "BOOLEAN"
   ],
   [
-   1379,
-   383,
+   1395,
+   392,
    2,
    315,
    2,
    "BOOLEAN"
   ],
   [
-   1380,
-   383,
+   1396,
+   392,
    2,
    318,
    2,
    "BOOLEAN"
   ],
   [
-   1381,
+   1397,
    325,
    1,
-   384,
+   393,
    0,
    "INT"
   ],
   [
-   1382,
-   384,
+   1398,
+   393,
    1,
    94,
    4,
    "INT"
   ],
   [
-   1383,
+   1399,
    325,
    1,
-   385,
+   394,
    0,
    "INT"
   ],
   [
-   1384,
-   385,
+   1400,
+   394,
    1,
    241,
    1,
    "INT"
   ],
   [
-   1385,
+   1401,
    325,
    1,
-   386,
+   395,
    0,
    "INT"
   ],
   [
-   1386,
+   1402,
    327,
    1,
-   386,
+   395,
    1,
    "INT"
   ],
   [
-   1387,
-   386,
+   1403,
+   395,
    1,
    186,
    1,
    "INT"
   ],
   [
-   1388,
+   1404,
    325,
    1,
-   387,
+   396,
    0,
    "INT"
   ],
   [
-   1389,
+   1405,
    327,
    1,
-   387,
+   396,
    1,
    "INT"
   ],
   [
-   1390,
+   1406,
    325,
    1,
-   388,
+   397,
    0,
    "INT"
   ],
   [
-   1391,
-   388,
+   1407,
+   397,
    1,
    224,
    2,
    "INT"
   ],
   [
-   1392,
+   1408,
    325,
    1,
-   389,
+   398,
    0,
    "INT"
   ],
   [
-   1393,
-   389,
+   1409,
+   398,
    1,
    233,
    2,
    "INT"
   ],
   [
-   1394,
-   387,
+   1410,
+   396,
    1,
    196,
    1,
    "INT"
   ],
   [
-   1395,
-   387,
+   1411,
+   396,
    1,
    147,
    3,
    "INT"
   ],
   [
-   1396,
+   1412,
    328,
    0,
    3,
@@ -8606,7 +9200,7 @@
    "INT"
   ],
   [
-   1397,
+   1413,
    328,
    0,
    18,
@@ -8614,7 +9208,7 @@
    "INT"
   ],
   [
-   1398,
+   1414,
    328,
    0,
    23,
@@ -8622,7 +9216,7 @@
    "INT"
   ],
   [
-   1399,
+   1415,
    328,
    0,
    12,
@@ -8630,104 +9224,104 @@
    "INT"
   ],
   [
-   1400,
-   354,
+   1416,
+   361,
    0,
-   390,
+   399,
    0,
    "MASK"
   ],
   [
-   1401,
-   353,
+   1417,
+   360,
    0,
    192,
    1,
    "IMAGE"
   ],
   [
-   1402,
-   353,
+   1418,
+   360,
    0,
    312,
    0,
    "IMAGE"
   ],
   [
-   1403,
+   1419,
    192,
    0,
-   391,
+   400,
    0,
    "MASK"
   ],
   [
-   1404,
-   390,
+   1420,
+   399,
    0,
-   391,
+   400,
    1,
    "MASK"
   ],
   [
-   1405,
+   1421,
    326,
    1,
-   392,
+   401,
    0,
    "INT"
   ],
   [
-   1406,
+   1422,
    326,
    1,
-   393,
+   402,
    0,
    "INT"
   ],
   [
-   1407,
-   391,
+   1423,
+   400,
    0,
-   394,
+   403,
    0,
    "MASK"
   ],
   [
-   1408,
+   1424,
    192,
    0,
-   394,
+   403,
    1,
    "MASK"
   ],
   [
-   1409,
-   392,
+   1425,
+   401,
    2,
-   394,
+   403,
    2,
    "BOOLEAN"
   ],
   [
-   1410,
-   394,
+   1426,
+   403,
    0,
    248,
    0,
    "MASK"
   ],
   [
-   1411,
-   390,
+   1427,
+   399,
    0,
    248,
    1,
    "MASK"
   ],
   [
-   1412,
-   393,
+   1428,
+   402,
    2,
    248,
    2,
@@ -8995,7 +9589,7 @@
    "outputs": [
     322,
     302,
-    382
+    391
    ]
   },
   "local3d": {

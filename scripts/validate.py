@@ -83,7 +83,7 @@ def check_data():
             if v != sorted(v):
                 err(f"presets.json[{k}]: values must not decrease from Fast to Maximum ({v})")
         routing = presets.get("routing", {})
-        for k in ("face_score_min", "person_score_min", "portrait_face_fraction", "bust_min_face_fraction", "bust_cut_face_heights", "bust_cut_max_fraction"):
+        for k in ("face_score_min", "person_score_min", "portrait_face_fraction", "bust_min_face_fraction", "bust_cut_face_heights", "bust_cut_max_fraction", "bust_min_gain"):
             if not isinstance(routing.get(k), (int, float)) or routing[k] <= 0:
                 err(f"presets.json routing.{k}: must be a positive number")
         if routing and not 0 < routing.get("bust_min_face_fraction", 0) < routing.get("portrait_face_fraction", 0) <= 1:

@@ -103,36 +103,69 @@ class SubjectDecision(unittest.TestCase):
 
 
 class BustCut(unittest.TestCase):
+    GAIN = expression(IMAGE_APP, "Bust cut makes the subject larger for the model?")
     CUT = expression(IMAGE_APP, "Bust cut: last picture row kept")
+    # the pictures the rule was measured on: face box (top, height), person box (top, height, width), picture height
+    OFFICER = dict(face_y=399, face_h=245, person=(157, 1506, 932), height=1679)   # 937 x 1679 comic, tall
+    TALL = dict(face_y=190, face_h=110, person=(60, 1280, 620), height=1344)       # 768 x 1344 three-quarter-length figure
+    SQUARE = dict(face_y=170, face_h=170, person=(40, 960, 1000), height=1024)     # 1024 x 1024 half-length figure that fills the frame
 
-    def cut(self, face_y, face_h, height, subject):
-        return evaluate(self.CUT, a=face_y, b=face_h, c=height, d=subject)
+    def gain(self, face_y, face_h, person, height):
+        py, ph, pw = person
+        return evaluate(self.GAIN, a=face_y, b=face_h, c=py, d=ph, e=pw)
+
+    def cut(self, face_y, face_h, height, subject, control=0, person=(0, 1000, 500)):
+        py, ph, pw = person
+        pays = evaluate(self.GAIN, a=face_y, b=face_h, c=py, d=ph, e=pw)
+        return evaluate(self.CUT, a=face_y, b=face_h, c=height, d=subject, e=control, f=pays)
+
+    def test_cutting_pays_for_tall_pictures_and_not_for_square_ones(self):
+        self.assertEqual(self.gain(**self.OFFICER), 1)     # 1.6 times larger for the model
+        self.assertEqual(self.gain(**self.TALL), 1)        # about 2 times
+        self.assertEqual(self.gain(**self.SQUARE), 0)      # the longer side stays the width: no gain
+        self.assertEqual(self.gain(0, 100, (0, 500, 800), 600), 0)   # a wide picture: cutting never makes it larger
+
+    def test_the_gain_threshold_is_the_one_in_the_data(self):
+        w = 1000
+        just_below = int(ROUTING["bust_min_gain"] * w) - 10
+        just_above = int(ROUTING["bust_min_gain"] * w) + 10
+        # person box top 0, width w; a cut line well inside it: the whole-picture side is max(w, h)
+        self.assertEqual(self.gain(100, 100, (0, just_below, w), 5000), 0)
+        self.assertEqual(self.gain(100, 100, (0, just_above, w), 5000), 1)
 
     def test_the_officer_regression_picture(self):
-        # 937 x 1679 comic illustration; MediaPipe face box y=399, height=245  ->  cut just below the chest
-        self.assertEqual(self.cut(399, 245, 1679, 1), 1060)
+        o = self.OFFICER
+        self.assertEqual(self.cut(o["face_y"], o["face_h"], o["height"], 1, person=o["person"]), 1060)   # cut just below the chest
+
+    def test_auto_leaves_a_square_picture_whole_but_an_explicit_choice_cuts_it(self):
+        s = self.SQUARE
+        self.assertEqual(self.cut(s["face_y"], s["face_h"], s["height"], 1, control=0, person=s["person"]), s["height"])
+        cut = self.cut(s["face_y"], s["face_h"], s["height"], 1, control=2, person=s["person"])
+        self.assertLess(cut, s["height"])
 
     def test_only_a_character_is_cut(self):
-        self.assertEqual(self.cut(399, 245, 1679, 0), 1679)
-        self.assertEqual(self.cut(399, 245, 1679, 2), 1679)
+        o = self.OFFICER
+        self.assertEqual(self.cut(o["face_y"], o["face_h"], o["height"], 0, person=o["person"]), o["height"])
+        self.assertEqual(self.cut(o["face_y"], o["face_h"], o["height"], 2, person=o["person"]), o["height"])
 
     def test_no_face_means_no_cut(self):
-        self.assertEqual(self.cut(-1, -1, 1679, 1), 1679)
+        self.assertEqual(self.cut(-1, -1, 1679, 1, control=2), 1679)
+        self.assertEqual(self.cut(-1, -1, 1679, 1, control=0, person=self.OFFICER["person"]), 1679)
 
     def test_a_close_portrait_is_never_cut(self):
-        self.assertEqual(self.cut(120, 700, 1600, 1), 1600)    # the cut would fall below the picture
+        self.assertEqual(self.cut(120, 700, 1600, 1, control=2), 1600)    # the cut would fall below the picture
 
     def test_a_cut_that_only_trims_the_bottom_edge_is_skipped(self):
-        self.assertEqual(self.cut(300, 260, 1024, 1), 1024)    # cut line at row 1002 of 1024: not worth a "bust" crop
-        self.assertLess(self.cut(300, 200, 1024, 1), 1024)
+        self.assertEqual(self.cut(300, 260, 1024, 1, control=2), 1024)    # cut line at row 1002 of 1024: not worth a "bust" crop
+        self.assertLess(self.cut(300, 200, 1024, 1, control=2), 1024)
 
     def test_an_explicit_character_choice_cuts_even_a_small_face(self):
         # Auto leaves full-length figures alone (see SubjectDecision); a user who picks Character bust asked for the bust
-        self.assertEqual(self.cut(200, 120, 1600, 1), 524)
+        self.assertEqual(self.cut(200, 120, 1600, 1, control=2), 524)
 
     def test_the_cut_never_goes_above_the_chin(self):
         for face_h in range(150, 400, 25):
-            self.assertGreater(self.cut(300, face_h, 3000, 1), 300 + face_h)
+            self.assertGreater(self.cut(300, face_h, 3000, 1, control=2), 300 + face_h)
 
 
 class GraphWiring(unittest.TestCase):
@@ -180,6 +213,7 @@ class GraphWiring(unittest.TestCase):
 
     def test_routing_constants_match_the_generated_expressions(self):
         self.assertIn(str(ROUTING["bust_cut_face_heights"]), expression(IMAGE_APP, "Bust cut: last picture row kept"))
+        self.assertIn(str(ROUTING["bust_min_gain"]), expression(IMAGE_APP, "Bust cut makes the subject larger for the model?"))
         self.assertIn(str(ROUTING["face_score_min"]), expression(IMAGE_APP, "Auto: is it a person?"))
 
 

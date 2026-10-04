@@ -260,7 +260,7 @@ def add_subject_routing(g: Graph, subject_combo: int, origin) -> dict:
     object makes the numbers fall back to -1 / 0, which the Math tables read as "nothing found"."""
     R = load_presets()["routing"]
     x, y = origin
-    SENTINEL = '{"y": -1, "height": -1, "score": 0}'
+    SENTINEL = '{"y": -1, "width": -1, "height": -1, "score": 0}'
 
     # ---- detectors -----------------------------------------------------------------------------------------------
     rt_model = g.add("UNETLoader", title="Person detector (RT-DETR)", pos=(x, y), size=(340, 100),
@@ -296,6 +296,9 @@ def add_subject_routing(g: Graph, subject_combo: int, origin) -> dict:
     face_score = _first_number(g, face_json, "score", (x + 1580, y + 140))
     face_y = _first_number(g, face_json, "y", (x + 1580, y + 280))
     face_h = _first_number(g, face_json, "height", (x + 1580, y + 420))
+    person_y = _first_number(g, person_json, "y", (x + 1580, y + 560))
+    person_h = _first_number(g, person_json, "height", (x + 1580, y + 700))
+    person_w = _first_number(g, person_json, "width", (x + 1580, y + 840))
 
     # ---- decision -------------------------------------------------------------------------------------------------
     # subject codes: 0 Object, 1 Character bust, 2 Complex shapes.  Control index: 0 Auto, 1 Object, 2 Character, 3 Complex.
@@ -311,11 +314,21 @@ def add_subject_routing(g: Graph, subject_combo: int, origin) -> dict:
                   source_dtype="FLOAT")
     m_subject = math(g, "Subject (resolved)", "1 if a == 2 else (0 if a == 1 else (2 if a == 3 else b))", subject_combo, "INDEX",
                      (x + 400, y + 520), extra_in=[(m_auto, "INT", "b")])
-    # the cut only needs a face box: Auto already required a big enough face, and an explicit "Character bust" is the user's call
-    cut_expr = (f"c if (d != 1 or b <= 0 or a + {R['bust_cut_face_heights']} * b >= {R['bust_cut_max_fraction']} * c) "
-                f"else int(a + {R['bust_cut_face_heights']} * b)")
+    # Does cutting make the subject bigger for the model? The 3D model sees a SQUARE crop of the subject's box, so only the longer side
+    # counts: cutting a tall picture shrinks it (the officer: 1.6 times), cutting a square one changes nothing (1.0) and only costs
+    # time, memory and context. a = face top, b = face height, c = person top, d = person height, e = person width.
+    cut_line = f"a + {R['bust_cut_face_heights']} * b"
+    m_gain = math(g, "Bust cut makes the subject larger for the model?",
+                  f"1 if max(e, d) >= {R['bust_min_gain']} * max(e, {cut_line} - c) else 0", face_y, 0, (x + 800, y + 520),
+                  extra_in=[(face_h, 0, "b", "FLOAT"), (person_y, 0, "c", "FLOAT"), (person_h, 0, "d", "FLOAT"), (person_w, 0, "e", "FLOAT")],
+                  source_dtype="FLOAT")
+    # The cut needs a face box and a cut line above the bottom edge. Under Auto it also has to pay; an explicit "Character bust" is the
+    # user's call. a = face top, b = face height, c = picture height, d = subject, e = Subject control (0 = Auto), f = does cutting pay?
+    cut_expr = (f"c if (d != 1 or b <= 0 or {cut_line} >= {R['bust_cut_max_fraction']} * c or (e == 0 and f == 0)) "
+                f"else int({cut_line})")
     m_cut = math(g, "Bust cut: last picture row kept", cut_expr, face_y, 0, (x + 400, y + 700),
-                 extra_in=[(face_h, 0, "b", "FLOAT"), (img_size, "height", "c"), (m_subject, "INT", "d")], source_dtype="FLOAT")
+                 extra_in=[(face_h, 0, "b", "FLOAT"), (img_size, "height", "c"), (m_subject, "INT", "d"), (subject_combo, "INDEX", "e"), (m_gain, "INT", "f")],
+                 source_dtype="FLOAT")
 
     # ---- crop the picture and the cutout to the bust ----------------------------------------------------------------
     box = g.add("PrimitiveBoundingBox", title="Bust box", pos=(x + 800, y + 700), size=(270, 130), widgets=[0, 0, 512, 512],
@@ -366,7 +379,10 @@ def add_subject_routing(g: Graph, subject_combo: int, origin) -> dict:
                         outputs=[{"name": "STRING", "type": "STRING"}])
     g.connect(m_cut, "INT", framing_cut, "values.a", dtype="INT")
     g.connect(img_size, "height", framing_cut, "values.b", dtype="INT")
-    framing = _switch(g, "Framing", is_cropped, "BOOL", t_whole, framing_cut, (x + 1320, ry + 440))
+    t_whole_char = _lit(g, "Framing: the whole picture (cutting below the chest would not make the subject larger for the model, so it is used as it is)",
+                        (x + 400, ry + 600), "Whole picture (character)")
+    whole = _switch(g, "Whole picture text", is_char, "BOOL", t_whole, t_whole_char, (x + 1080, ry + 600))
+    framing = _switch(g, "Framing", is_cropped, "BOOL", whole, framing_cut, (x + 1320, ry + 440))
     t_none = _lit(g, "", (x + 860, ry + 700), "(nothing)")
     t_hidden = _lit(g, "Hidden surfaces (the back and the far side) are inferred, not measured.", (x + 860, ry + 780), "Hidden surfaces")
     t_unsure = _lit(g, "Not sure: a person, but no large clear face (it may be hidden, small or stylised). Auto used the Object workflow; choose Character bust to crop to the upper body.",
