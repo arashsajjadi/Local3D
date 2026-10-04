@@ -47,11 +47,25 @@ jobs:
           $setup = Get-ChildItem dist\Local3D-Setup-*.exe | Select-Object -First 1
           $dir = Join-Path $env:RUNNER_TEMP "Local3D-installed"
           Start-Process $setup.FullName -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART","/DIR=$dir" -Wait
-          foreach ($f in "Local3D.exe","data\models.json","data\runtime.json","scripts\provision_models.py","local3d_pack\__init__.py") {
+          foreach ($f in "Local3D.exe","data\models.json","data\runtime.json","scripts\provision_models.py","local3d_pack\__init__.py",
+                         "local3d_pack\example_workflows\Local3D_Image_to_3D.app.json","local3d_pack\example_workflows\Local3D_Character_from_Views.app.json",
+                         "assets\examples\Local3D_example_views_front.jpg") {
             if (-not (Test-Path (Join-Path $dir $f))) { throw "missing after install: $f" }
           }
           $lnk = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\Local3D.lnk"
           if (-not (Test-Path $lnk)) { throw "Start Menu shortcut was not created" }
+          # every shortcut in "Local3D tools" exists, starts the installed program and points at an icon that exists
+          $tools = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\Local3D tools"
+          $shell = New-Object -ComObject WScript.Shell
+          foreach ($n in "Prompt to 3D","Character from views","Reference pictures","Download more models","Diagnostics") {
+            $path = Join-Path $tools "$n.lnk"
+            if (-not (Test-Path $path)) { throw "shortcut missing: $n" }
+            $sc = $shell.CreateShortcut($path)
+            if ($sc.TargetPath -ne (Join-Path $dir "Local3D.exe")) { throw "shortcut '$n' starts $($sc.TargetPath)" }
+            $icon = $sc.IconLocation.Split(",")[0]
+            if (-not (Test-Path $icon)) { throw "shortcut '$n' points at a missing icon: $icon" }
+          }
+          if ($shell.CreateShortcut((Join-Path $tools "Character from views.lnk")).Arguments -ne "--app views") { throw "Character from views does not start --app views" }
           Start-Process (Join-Path $dir "Local3D.exe") -ArgumentList "--version" -Wait -RedirectStandardOutput version.txt
           $v = (Get-Content version.txt -Raw).Trim()
           if ($v -notmatch '^Local3D \d+\.\d+\.\d+$') { throw "unexpected version output: '$v'" }
