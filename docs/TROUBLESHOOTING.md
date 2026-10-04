@@ -73,8 +73,15 @@ picture; the Run button warns until a picture is selected.
 ### Prompt to 3D: the reference picture is poor
 
 Use **Reference Pictures** first: it makes up to four candidates in seconds. Pick the best one in `Documents\Local3D`, then
-open *Image to 3D* and choose it. Keep the prompt about **one object**; leave *3D-friendly reference* on unless you want
+open *Image to 3D* and choose it (the new pictures are named `Local3D_reference_*`; if you cannot see them in the picture list,
+click on the app window and press **R** to refresh the list, or close and reopen the app). Keep the prompt about **one object**; leave *3D-friendly reference* on unless you want
 your wording used exactly.
+
+### The model looks faceted or darker than the picture in the viewer
+
+ComfyUI's built-in viewer (*Original* mode) shades the baked normal map more harshly than most programs, so a smooth surface can
+look slightly faceted, and shiny metals can look darker. The file itself is fine: its stored normals are smooth. Switch the
+viewer's mode to **Clay** or **Normal** to check the shape, or open the `.glb` in Blender or any glTF viewer for a second look.
 
 ## Opening and using the result
 

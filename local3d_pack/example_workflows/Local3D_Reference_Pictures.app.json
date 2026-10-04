@@ -940,7 +940,7 @@
    },
    "title": "Local3D",
    "widgets_values": [
-    "## Local3D — Reference pictures\n\nMake a few reference pictures from a prompt, pick the best one, then open **Image to 3D** and choose it there. Pictures are saved as `Local3D_reference_*.png`."
+    "## Local3D — Reference pictures\n\nMake a few reference pictures from a prompt, pick the best one, then open **Image to 3D** and choose it there (press **R** to refresh its picture list). Pictures are saved as `Local3D_reference_*.png`."
    ],
    "color": "#233",
    "bgcolor": "#355"

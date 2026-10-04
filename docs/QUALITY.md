@@ -42,9 +42,45 @@ reports from other users of the same pipeline show 12 GB cards running out of me
 (a fix landed upstream in ComfyUI 0.35, which Local3D includes), and a 16 GB card finishing at the defaults.
 **On 12 GB or less start with *Fast* or *Balanced*.**
 
-Look at what you get: *Fast* is a real preview, not a degraded one. In the independent viewer the 100 k-triangle axe keeps the wolf
-head, legible runes and the wrapped handle; *Balanced* adds finer surface and 2048-px normal detail; *Maximum* mostly adds
-polygon count and a 4096-px colour map.
+**What the presets actually change.** With the *same picture, model and seed* (an axe, run at all three presets):
+
+* *Balanced* and *Maximum* come out almost identical: the same shape and materials, with *Maximum* slightly crisper in the fine
+  surface detail. For about 20 % less time (68 s against 84 s on this run), a 30 MB file instead of 67 MB, and less GPU memory,
+  *Balanced* is the right default.
+* *Fast* (39 s) is a **rougher preview**: the lower shape resolution softens fine detail and can even change how
+  colours and materials are read, so do not treat it as a small version of the Balanced result.
+
+![Same seed at three presets: Fast, Balanced, Maximum (wolf-head detail)](images/axe-presets.jpg)
+
+## Output: High fidelity or Game asset
+
+*Output* changes only the post-processing, so ComfyUI can **re-use the generated shape**:
+
+| Output | Triangles | Textures | File (owl) |
+| --- | --- | --- | --- |
+| **High fidelity** (default) | the Quality preset's budget (100 k / 300 k / 700 k) | the preset's size | 23 MB |
+| **Game asset** | at most 30 000 | at most 2048 px | 12 MB |
+
+Normal and ambient-occlusion maps are baked from the full-detail mesh *before* it is decimated, which is why a 30 k-triangle
+asset looks nearly identical to the 300 k one:
+
+![Owl at 300 k triangles (left) and as a 30 k-triangle game asset (right)](images/owl-intent.jpg)
+
+**3D-print optimization is not offered.** ComfyUI Core cannot guarantee a watertight, printable mesh (meshes can contain an
+inner shell, upstream issue #16147), and promising "printable" would be dishonest. Use the viewer's STL export and your slicer's
+repair tools.
+
+## Re-running and caching
+
+ComfyUI caches every stage whose inputs did not change. Measured on the same machine, Balanced, same picture and seed:
+
+| What you did | Time |
+| --- | --- |
+| first run | 95 s |
+| press Run again with nothing changed | **0 s** (the finished result is reused) |
+| change **Output** to Game asset | **36 s** (the generated shape is reused) |
+| change **Quality** | the generation stages run again (ComfyUI's cache key includes upstream inputs, so Balanced to Maximum saved nothing: 119 s against 120 s with a new seed) |
+| change the **picture**, **Model** or **Seed** | everything downstream of the change runs again |
 
 ## Mesh and file checks
 
@@ -66,7 +102,55 @@ noise. It does not judge the artwork.
 
 ## Evaluation set
 
-EVALUATION_PLACEHOLDER
+Eight objects chosen to stress different things, each made from a generated reference picture and run through both
+models at **Balanced** (one seed each; `scripts/evaluate_samples.py`). Nothing was cherry-picked: this is every run,
+including the one that failed.
+
+| Object | What it tests | Pixal3D | TRELLIS.2 | What we saw |
+| --- | --- | --- | --- | --- |
+| Red metal toolbox | simple hard-surface | 255 s\* | 562 s\* | clean; latches and handle readable on both |
+| Steampunk pocket watch | detailed hard-surface | 115 s | 160 s | gears and crown kept; TRELLIS.2 shifted the brass toward brighter gold |
+| Ceramic fox | organic | 158 s | 358 s\* | smooth and plausible on both |
+| Spindle-back chair | thin structures | 88 s | 99 s | every spindle and leg kept by both |
+| Wicker basket | holes / open topology | 162 s | 239 s | open top and loop handle kept by both; TRELLIS.2 drifted from straw to terracotta |
+| Chrome teapot | reflective / metallic | 109 s | 189 s | **weak on both:** blotchy, faceted reflections |
+| Knitted wool hat | fabric-like | 137 s | **ran out of GPU memory** | Pixal3D kept the knit pattern |
+| Cartoon robot | stylized character | 103 s | 153 s | both fine; Pixal3D kept the blue visor, TRELLIS.2 made it black |
+
+\* Slower than the benchmark because these were the first runs after models loaded and the machine was also running other
+tests; use the benchmark table above for timing. Mesh size was 295 to 300 k triangles everywhere (the Balanced budget).
+
+![Evaluation set, part 1: toolbox, pocket watch, fox, chair](images/examples-1.jpg)
+![Evaluation set, part 2: basket, teapot, hat, robot](images/examples-2.jpg)
+
+What this tells us (one picture per object and one seed, so read it as a pattern, not a verdict):
+
+* **15 of 16 runs finished.** The failure was TRELLIS.2 at *Balanced* on the hat, out of GPU memory in the shape-decode
+  stage while other programs held about 5 GB of the 16 GB card. *Fast*, or Pixal3D, finished the same picture. Local3D now
+  explains this in plain words if it happens, and the Quality labels say which setting needs the most memory.
+* **Pixal3D stayed closer to the picture's colours** (basket, robot, watch); TRELLIS.2 sometimes drifted in colour.
+  Both kept thin spindles, open tops and small handles.
+* **Shiny metal is the weak spot.** Reflections in the picture become baked blotches in the texture. Prefer matte or
+  satin objects, or expect to repaint reflective ones.
+* The hidden back sides are *estimates*: we have no ground truth to measure them against, so no accuracy figure is claimed.
+
+### Reference-picture template
+
+The *3D-friendly* wording was chosen by experiment (`scripts/evaluate_prompts.py`: 8 prompts, 3 batches of 4 pictures each,
+96 pictures per wording), counting pictures that are complete, clear of the borders, a sensible size in frame and on a
+plain background:
+
+| Wording | Pictures that pass |
+| --- | --- |
+| your prompt, unchanged (*3D-friendly* off) | 46 of 96 (**48 %**) |
+| first wording we tried ("centred, fully visible, nothing cropped") | 67 of 96 (70 %) |
+| "about 60 % of the frame height" | 84 of 96 (88 %) |
+| **"small in the frame with a wide empty margin" (shipped)** | **92 of 96 (96 %)** |
+
+The first version of the check was wrong in an instructive way: it treated the soft shading of the grey backdrop as part of the
+object and rejected perfectly good pictures. It now fits a smooth background surface through the picture's edge first, and
+every picture it rejects is genuinely cropped or badly framed. It is still a heuristic about *framing*, not a judgement of the artwork.
+
 
 ## Repeat it
 

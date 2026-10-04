@@ -39,7 +39,8 @@ You never see a console window, a Python install, a model folder or a node graph
   the most GPU memory.
 * **Prompt to 3D**: *Start > Local3D tools > Prompt to 3D*, or use the *Apps* button in the left bar of the window.
   Type what you want and press **Run**.
-* **Reference pictures** makes up to four candidates in seconds. Pick the best, then choose it in *Image to 3D*.
+* **Reference pictures** makes up to four candidates in seconds. Pick the best, then choose it in *Image to 3D*. If the new
+  pictures are not in that app's picture list yet, press **R** (refresh) or reopen the app.
 
 Results are in **`Documents\Local3D\models\`** as `.glb` files. The 3D viewer shows the model; drag to rotate, scroll to
 zoom, right-drag to pan. Each run also appears in the app's history.

@@ -530,7 +530,7 @@ def build_reference_app(variant: str = "blackwell") -> dict:
     g.connect(decode, 0, out, "images")
     describe_stages(g, {out: "Saving the pictures"})
     note(g, "## Local3D — Reference pictures\n\nMake a few reference pictures from a prompt, pick the best one, then open "
-            "**Image to 3D** and choose it there. Pictures are saved as `Local3D_reference_*.png`.", (X, Y - 330), (700, 200))
+            "**Image to 3D** and choose it there (press **R** to refresh its picture list). Pictures are saved as `Local3D_reference_*.png`.", (X, Y - 330), (700, 200))
     inputs = [
         [prompt, "value", {"description": "Describe ONE object"}],
         [friendly, "value", {"description": "Adds framing that helps 3D"}],

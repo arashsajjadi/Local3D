@@ -71,11 +71,16 @@ packages, even when the folder defines no nodes. The launcher starts ComfyUI wit
 | `--listen 127.0.0.1 --port <free port>` | private to this PC; no fixed port to remember or conflict with Comfy Desktop (8000) |
 | `--disable-auto-launch` | the launcher opens the window itself |
 | `--disable-all-custom-nodes --whitelist-custom-nodes local3d_pack` | deterministic: only our data pack |
-| `--disable-api-nodes` | no paid cloud nodes; also stops the frontend reaching out |
 | `--base-directory`, `--models-directory`, `--input-directory`, `--output-directory` | keep the runtime pristine and replaceable; models where the user chose |
 | env `HF_HUB_OFFLINE=1`, `DO_NOT_TRACK=1` | generation never needs the network |
 
-Not used on purpose: `--use-ck-attention` (silently corrupts TRELLIS.2 output, upstream issue #16027), `--use-sage-attention`,
+Not used on purpose: **`--disable-api-nodes`**. It looks like a privacy switch, but it makes ComfyUI send a
+Content-Security-Policy whose `connect-src` lacks `blob:`, so its own 3D viewer cannot load the textures embedded in a GLB and every
+model shows grey (found by running the app; the console shows the blocked `blob:` fetches). Instead the privacy claim is *measured*:
+with that flag off, the engine opens no outbound connections and the page's requests all go to `127.0.0.1`. Defense in depth: the
+app window's DNS rules block `api.comfy.org` and well-known telemetry hosts, and the apps use no cloud nodes.
+
+Also not used: `--use-ck-attention` (silently corrupts TRELLIS.2 output, upstream issue #16027), `--use-sage-attention`,
 bare `--fast`, `--fp16-vae`/`--bf16-vae`, `--highvram`/`--gpu-only`/`--disable-dynamic-vram`
 (a last-resort diagnostic only). See [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
 
