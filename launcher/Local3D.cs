@@ -25,8 +25,8 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 
 [assembly: AssemblyTitle("Local3D")]
-[assembly: AssemblyVersion("0.1.1.0")]
-[assembly: AssemblyInformationalVersion("0.1.1")]
+[assembly: AssemblyVersion("0.1.2.0")]
+[assembly: AssemblyInformationalVersion("0.1.2")]
 [assembly: AssemblyProduct("Local3D")]
 [assembly: AssemblyCopyright("Copyright (c) 2026 Arash Sajjadi. MIT License.")]
 
@@ -34,7 +34,7 @@ namespace Local3D
 {
     internal static class Program
     {
-        public const string Version = "0.1.1";
+        public const string Version = "0.1.2";
 
         [STAThread]
         private static int Main(string[] args)
@@ -58,7 +58,9 @@ namespace Local3D
                         if (!Ui.AutoYes) Ui.Info("Local3D", "Local3D is already starting. Look for the Local3D window in the taskbar; the app opens there when it is ready.");
                         return 0;
                     }
-                    return new Session(env, cli).Run();
+                    int rc = new Session(env, cli).Run();
+                    Log.Write("Main returning " + rc);
+                    return rc;
                 }
             }
             catch (Exception ex)
@@ -438,6 +440,7 @@ namespace Local3D
             form.Cancelled += delegate { Shutdown(); };
             form.Shown += delegate { Thread t = new Thread(Work); t.IsBackground = true; t.SetApartmentState(ApartmentState.STA); t.Start(); };
             Application.Run(form);
+            Log.Write("UI loop ended");
             Shutdown();
             return exitCode;
         }
@@ -966,9 +969,12 @@ namespace Local3D
             return r;
         }
 
+        // "Alive" means a visible app window, not merely a process: Edge may keep a background process (or its crash handler)
+        // of the profile around for a while after the last window is closed.
         private bool WindowAlive()
         {
-            foreach (Process p in ProfileBrowsers()) { try { if (!p.HasExited) return true; } catch { } }
+            foreach (Process p in ProfileBrowsers())
+                try { p.Refresh(); if (!p.HasExited && p.MainWindowHandle != IntPtr.Zero) return true; } catch { }
             return false;
         }
 
@@ -1017,6 +1023,7 @@ namespace Local3D
             if (shuttingDown) return;
             shuttingDown = true;
             try { if (server != null && !server.HasExited) Proc.KillTree(server); } catch { }
+            if (browser != null) { try { KillProfileBrowsers(); } catch { } }   // no background Edge of Local3D's own profile is left behind
             lock (children) foreach (Process p in children) { try { if (!p.HasExited) Proc.KillTree(p); } catch { } }
             try { File.Delete(Path.Combine(env.DataDir, "session.json")); } catch { }
             if (job != IntPtr.Zero) { Native.CloseHandle(job); job = IntPtr.Zero; }
