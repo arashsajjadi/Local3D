@@ -39,7 +39,7 @@ def check_data():
     presets = load(ROOT / "data" / "presets.json")
     core = load(ROOT / "data" / "core_node_types.json")
     load(ROOT / "data" / "frontend-settings.json")
-    known_dirs = {"diffusion_models", "vae", "clip_vision", "text_encoders", "geometry_estimation", "background_removal", "checkpoints"}
+    known_dirs = {"diffusion_models", "vae", "clip_vision", "text_encoders", "geometry_estimation", "background_removal", "checkpoints", "detection", "loras"}
     if manifest:
         packs = set(manifest.get("packs", {}))
         seen = set()
@@ -82,6 +82,14 @@ def check_data():
                 err(f"presets.json[{k}]: need {n} positive integers")
             if v != sorted(v):
                 err(f"presets.json[{k}]: values must not decrease from Fast to Maximum ({v})")
+        routing = presets.get("routing", {})
+        for k in ("face_score_min", "person_score_min", "portrait_face_fraction", "bust_min_face_fraction", "bust_cut_face_heights", "bust_cut_max_fraction"):
+            if not isinstance(routing.get(k), (int, float)) or routing[k] <= 0:
+                err(f"presets.json routing.{k}: must be a positive number")
+        if routing and not 0 < routing.get("bust_min_face_fraction", 0) < routing.get("portrait_face_fraction", 0) <= 1:
+            err("presets.json routing: bust_min_face_fraction must be positive and smaller than portrait_face_fraction, which must not exceed 1")
+        if routing and not 0 < routing.get("bust_cut_max_fraction", 0) <= 1:
+            err("presets.json routing.bust_cut_max_fraction: must be between 0 and 1")
         intents = presets.get("intents", {})
         for k, cap in intents.get("caps", {}).items():
             if k not in presets["parameters"] or not isinstance(cap, int) or cap <= 0:
@@ -92,7 +100,7 @@ def check_data():
 
 
 # ---------------------------------------------------------------------------------------------- workflows
-OUTPUT_TYPES = {"SaveImage", "Save3DAdvanced", "SaveGLB"}
+OUTPUT_TYPES = {"SaveImage", "Save3DAdvanced", "SaveGLB", "PreviewAny"}   # PreviewAny: the text report of Subject routing
 WIDGET_FOR_TYPE = {"CustomCombo": "choice", "PrimitiveInt": "value", "PrimitiveStringMultiline": "value",
                    "PrimitiveBoolean": "value", "LoadImage": "image"}
 

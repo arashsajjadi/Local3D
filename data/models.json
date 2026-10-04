@@ -185,6 +185,32 @@
         "ada",
         "legacy"
       ]
+    },
+    {
+      "id": "rtdetr",
+      "pack": "core",
+      "label": "RT-DETRv4 person detector (fp16)",
+      "license": "Apache-2.0",
+      "repo": "Comfy-Org/SDPose",
+      "revision": "acb43fbe8142b54d9ebd52b720b81dd4e14c8d81",
+      "path": "diffusion_models/rt_detr_v4-x-hgnet_fp16.safetensors",
+      "dest": "diffusion_models/rt_detr_v4-x-hgnet_fp16.safetensors",
+      "size": 123968978,
+      "sha256": "581f9af9bbabb664d1891cbccd823308b176ecd409146f954dfa39af3bec2476",
+      "note": "Used by Subject: Auto to tell people from objects"
+    },
+    {
+      "id": "mediapipe-face",
+      "pack": "core",
+      "label": "MediaPipe face detector",
+      "license": "Apache-2.0",
+      "repo": "Comfy-Org/mediapipe",
+      "revision": "f787efc1ad99492ec7d5b6564c0dd6c48d84ee49",
+      "path": "detection/mediapipe_face_fp32.safetensors",
+      "dest": "detection/mediapipe_face_fp32.safetensors",
+      "size": 5423900,
+      "sha256": "a98c4806081d40eba35102a0f6dc0000c2e1388b72cf24e691703d0605bd888a",
+      "note": "Used by Subject: Auto and the Character bust framing"
     }
   ],
   "gpu_classes": {

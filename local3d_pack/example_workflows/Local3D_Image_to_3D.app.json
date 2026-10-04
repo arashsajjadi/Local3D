@@ -1,8 +1,8 @@
 {
  "id": "39f5fdc0-0b0f-5871-a2e5-263a05bafa71",
  "revision": 0,
- "last_node_id": 341,
- "last_link_id": 1330,
+ "last_node_id": 395,
+ "last_link_id": 1412,
  "nodes": [
   {
    "id": 3,
@@ -42,7 +42,7 @@
     {
      "name": "seed",
      "type": "INT",
-     "link": 1316,
+     "link": 1396,
      "widget": {
       "name": "seed"
      }
@@ -166,7 +166,7 @@
     {
      "name": "seed",
      "type": "INT",
-     "link": 1319,
+     "link": 1399,
      "widget": {
       "name": "seed"
      }
@@ -293,7 +293,7 @@
     {
      "name": "seed",
      "type": "INT",
-     "link": 1317,
+     "link": 1397,
      "widget": {
       "name": "seed"
      }
@@ -371,7 +371,7 @@
     {
      "name": "seed",
      "type": "INT",
-     "link": 1318,
+     "link": 1398,
      "widget": {
       "name": "seed"
      }
@@ -802,7 +802,7 @@
     {
      "name": "target_resolution",
      "type": "INT",
-     "link": 1302,
+     "link": 1382,
      "widget": {
       "name": "target_resolution"
      }
@@ -1126,15 +1126,17 @@
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
-      888,
-      1260
+      1298,
+      1300,
+      1315,
+      1328
      ]
     },
     {
      "name": "MASK",
      "type": "MASK",
      "links": [
-      1320
+      1330
      ]
     }
    ],
@@ -1275,7 +1277,7 @@
      "widget": {
       "name": "texture_size"
      },
-     "link": 1315
+     "link": 1395
     }
    ],
    "outputs": [
@@ -1374,7 +1376,7 @@
     {
      "name": "target_face_count",
      "type": "INT",
-     "link": 1307,
+     "link": 1387,
      "widget": {
       "name": "target_face_count"
      }
@@ -1429,7 +1431,7 @@
     {
      "name": "image",
      "type": "IMAGE",
-     "link": 888
+     "link": 1401
     }
    ],
    "outputs": [
@@ -1437,8 +1439,8 @@
      "name": "mask",
      "type": "MASK",
      "links": [
-      1321,
-      1326
+      1403,
+      1408
      ]
     }
    ],
@@ -1523,7 +1525,7 @@
      "widget": {
       "name": "resolution"
      },
-     "link": 1314
+     "link": 1394
     }
    ],
    "outputs": [
@@ -1814,7 +1816,7 @@
     {
      "name": "resolution",
      "type": "INT",
-     "link": 1311,
+     "link": 1391,
      "widget": {
       "name": "resolution"
      }
@@ -1911,7 +1913,7 @@
     {
      "name": "resolution",
      "type": "INT",
-     "link": 1313,
+     "link": 1393,
      "widget": {
       "name": "resolution"
      }
@@ -2051,7 +2053,7 @@
     {
      "name": "resolution",
      "type": "INT",
-     "link": 1304,
+     "link": 1384,
      "widget": {
       "name": "resolution"
      }
@@ -2376,17 +2378,17 @@
     {
      "name": "on_false",
      "type": "MASK",
-     "link": 1328
+     "link": 1410
     },
     {
      "name": "on_true",
      "type": "MASK",
-     "link": 1329
+     "link": 1411
     },
     {
      "name": "switch",
      "type": "BOOLEAN",
-     "link": 1330,
+     "link": 1412,
      "widget": {
       "name": "switch"
      }
@@ -2924,7 +2926,7 @@
     {
      "name": "images",
      "type": "IMAGE",
-     "link": 1260
+     "link": 1402
     },
     {
      "name": "masks",
@@ -3020,7 +3022,7 @@
      "widget": {
       "name": "switch"
      },
-     "link": 1298
+     "link": 1378
     }
    ],
    "outputs": [
@@ -3076,7 +3078,7 @@
      "widget": {
       "name": "switch"
      },
-     "link": 1299
+     "link": 1379
     }
    ],
    "outputs": [
@@ -3132,7 +3134,7 @@
      "widget": {
       "name": "switch"
      },
-     "link": 1300
+     "link": 1380
     }
    ],
    "outputs": [
@@ -3400,7 +3402,7 @@
      "type": "INT",
      "localized_name": "INDEX",
      "links": [
-      1297
+      1376
      ]
     }
    ],
@@ -3458,12 +3460,12 @@
      "type": "INT",
      "localized_name": "INDEX",
      "links": [
-      1301,
-      1303,
-      1305,
-      1308,
-      1310,
-      1312
+      1381,
+      1383,
+      1385,
+      1388,
+      1390,
+      1392
      ]
     }
    ],
@@ -3521,8 +3523,8 @@
      "type": "INT",
      "localized_name": "INDEX",
      "links": [
-      1323,
-      1324
+      1405,
+      1406
      ]
     }
    ],
@@ -3580,8 +3582,8 @@
      "type": "INT",
      "localized_name": "INDEX",
      "links": [
-      1306,
-      1309
+      1386,
+      1389
      ]
     }
    ],
@@ -3632,10 +3634,10 @@
      "type": "INT",
      "localized_name": "INT",
      "links": [
-      1316,
-      1317,
-      1318,
-      1319
+      1396,
+      1397,
+      1398,
+      1399
      ]
     }
    ],
@@ -3652,17 +3654,925 @@
   },
   {
    "id": 329,
+   "type": "CustomCombo",
+   "pos": [
+    -3300,
+    -1560
+   ],
+   "size": [
+    330,
+    190
+   ],
+   "flags": {},
+   "order": 329,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "choice",
+     "type": "COMBO",
+     "widget": {
+      "name": "choice"
+     },
+     "label": "Subject",
+     "localized_name": "choice",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "localized_name": "STRING",
+     "links": []
+    },
+    {
+     "name": "INDEX",
+     "type": "INT",
+     "localized_name": "INDEX",
+     "links": [
+      1320,
+      1335,
+      1340
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "CustomCombo",
+    "local3d_tip": "Auto looks for a face and picks Character bust for people; Object for everything else. Complex uses TRELLIS.2."
+   },
+   "title": "Subject",
+   "widgets_values": [
+    "Auto — recommended",
+    0,
+    "Auto — recommended",
+    "Object — products, toys, figurines",
+    "Character bust — people",
+    "Complex — thin or open shapes",
+    ""
+   ]
+  },
+  {
+   "id": 330,
+   "type": "UNETLoader",
+   "pos": [
+    -5100,
+    -60
+   ],
+   "size": [
+    340,
+    100
+   ],
+   "flags": {},
+   "order": 330,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      1297
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "UNETLoader",
+    "models": [
+     {
+      "name": "rt_detr_v4-x-hgnet_fp16.safetensors",
+      "directory": "diffusion_models",
+      "url": "https://huggingface.co/Comfy-Org/SDPose/resolve/acb43fbe8142b54d9ebd52b720b81dd4e14c8d81/diffusion_models/rt_detr_v4-x-hgnet_fp16.safetensors",
+      "hash": "581f9af9bbabb664d1891cbccd823308b176ecd409146f954dfa39af3bec2476",
+      "hash_type": "SHA256"
+     }
+    ],
+    "Execution Message": "Looking at your picture"
+   },
+   "title": "Person detector (RT-DETR)",
+   "widgets_values": [
+    "rt_detr_v4-x-hgnet_fp16.safetensors",
+    "default"
+   ]
+  },
+  {
+   "id": 331,
+   "type": "RTDETR_detect",
+   "pos": [
+    -4720,
+    -60
+   ],
+   "size": [
+    340,
+    130
+   ],
+   "flags": {},
+   "order": 331,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 1297
+    },
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 1298
+    }
+   ],
+   "outputs": [
+    {
+     "name": "bboxes",
+     "type": "BOUNDING_BOX",
+     "links": [
+      1301
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "RTDETR_detect",
+    "Execution Message": "Looking at your picture"
+   },
+   "title": "Find the person",
+   "widgets_values": [
+    0.3,
+    "person",
+    1
+   ]
+  },
+  {
+   "id": 332,
+   "type": "LoadMediaPipeFaceLandmarker",
+   "pos": [
+    -5100,
+    100
+   ],
+   "size": [
+    340,
+    70
+   ],
+   "flags": {},
+   "order": 332,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "FACE_DETECTION_MODEL",
+     "type": "FACE_DETECTION_MODEL",
+     "links": [
+      1299
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "LoadMediaPipeFaceLandmarker",
+    "models": [
+     {
+      "name": "mediapipe_face_fp32.safetensors",
+      "directory": "detection",
+      "url": "https://huggingface.co/Comfy-Org/mediapipe/resolve/f787efc1ad99492ec7d5b6564c0dd6c48d84ee49/detection/mediapipe_face_fp32.safetensors",
+      "hash": "a98c4806081d40eba35102a0f6dc0000c2e1388b72cf24e691703d0605bd888a",
+      "hash_type": "SHA256"
+     }
+    ],
+    "Execution Message": "Looking at your picture"
+   },
+   "title": "Face detector (MediaPipe)",
+   "widgets_values": [
+    "mediapipe_face_fp32.safetensors"
+   ]
+  },
+  {
+   "id": 333,
+   "type": "MediaPipeFaceLandmarker",
+   "pos": [
+    -4720,
+    100
+   ],
+   "size": [
+    340,
+    160
+   ],
+   "flags": {},
+   "order": 333,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "face_detection_model",
+     "type": "FACE_DETECTION_MODEL",
+     "link": 1299
+    },
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 1300
+    }
+   ],
+   "outputs": [
+    {
+     "name": "face_landmarks",
+     "type": "FACE_LANDMARKS",
+     "links": []
+    },
+    {
+     "name": "bboxes",
+     "type": "BOUNDING_BOX",
+     "links": [
+      1304
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "MediaPipeFaceLandmarker",
+    "Execution Message": "Looking at your picture"
+   },
+   "title": "Find the face",
+   "widgets_values": [
+    "both",
+    1,
+    0.3,
+    "empty"
+   ]
+  },
+  {
+   "id": 334,
+   "type": "GetItemFromList",
+   "pos": [
+    -4340,
+    -60
+   ],
+   "size": [
+    200,
+    60
+   ],
+   "flags": {},
+   "order": 334,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "list",
+     "type": "BOUNDING_BOX",
+     "link": 1301
+    }
+   ],
+   "outputs": [
+    {
+     "name": "*",
+     "type": "*",
+     "links": [
+      1302
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "GetItemFromList"
+   },
+   "title": "(any type)",
+   "widgets_values": [
+    0
+   ]
+  },
+  {
+   "id": 335,
+   "type": "ConvertArrayToString",
+   "pos": [
+    -4120,
+    -60
+   ],
+   "size": [
+    240,
+    60
+   ],
+   "flags": {},
+   "order": 335,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "array",
+     "type": "ARRAY",
+     "link": 1302
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1303
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ConvertArrayToString"
+   },
+   "title": "Detections as text",
+   "widgets_values": [
+    0
+   ]
+  },
+  {
+   "id": 336,
+   "type": "StringConcatenate",
+   "pos": [
+    -3860,
+    -60
+   ],
+   "size": [
+    300,
+    160
+   ],
+   "flags": {},
+   "order": 336,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "string_a",
+     "type": "STRING",
+     "link": 1303,
+     "widget": {
+      "name": "string_a"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1307
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "StringConcatenate"
+   },
+   "title": "+ 'nothing found' fallback",
+   "widgets_values": [
+    "",
+    "{\"y\": -1, \"height\": -1, \"score\": 0}",
+    " "
+   ]
+  },
+  {
+   "id": 337,
+   "type": "GetItemFromList",
+   "pos": [
+    -4340,
+    160
+   ],
+   "size": [
+    200,
+    60
+   ],
+   "flags": {},
+   "order": 337,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "list",
+     "type": "BOUNDING_BOX",
+     "link": 1304
+    }
+   ],
+   "outputs": [
+    {
+     "name": "*",
+     "type": "*",
+     "links": [
+      1305
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "GetItemFromList"
+   },
+   "title": "(any type)",
+   "widgets_values": [
+    0
+   ]
+  },
+  {
+   "id": 338,
+   "type": "ConvertArrayToString",
+   "pos": [
+    -4120,
+    160
+   ],
+   "size": [
+    240,
+    60
+   ],
+   "flags": {},
+   "order": 338,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "array",
+     "type": "ARRAY",
+     "link": 1305
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1306
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ConvertArrayToString"
+   },
+   "title": "Detections as text",
+   "widgets_values": [
+    0
+   ]
+  },
+  {
+   "id": 339,
+   "type": "StringConcatenate",
+   "pos": [
+    -3860,
+    160
+   ],
+   "size": [
+    300,
+    160
+   ],
+   "flags": {},
+   "order": 339,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "string_a",
+     "type": "STRING",
+     "link": 1306,
+     "widget": {
+      "name": "string_a"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1309,
+      1311,
+      1313
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "StringConcatenate"
+   },
+   "title": "+ 'nothing found' fallback",
+   "widgets_values": [
+    "",
+    "{\"y\": -1, \"height\": -1, \"score\": 0}",
+    " "
+   ]
+  },
+  {
+   "id": 340,
+   "type": "JsonExtractString",
+   "pos": [
+    -3520,
+    -60
+   ],
+   "size": [
+    300,
+    100
+   ],
+   "flags": {},
+   "order": 340,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "json_string",
+     "type": "STRING",
+     "link": 1307,
+     "widget": {
+      "name": "json_string"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1308
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "JsonExtractString"
+   },
+   "title": "Read 'score'",
+   "widgets_values": [
+    "",
+    "score"
+   ]
+  },
+  {
+   "id": 341,
+   "type": "ComfyNumberConvert",
+   "pos": [
+    -3200,
+    -60
+   ],
+   "size": [
+    220,
+    60
+   ],
+   "flags": {},
+   "order": 341,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "INT,FLOAT,STRING,BOOLEAN",
+     "link": 1308
+    }
+   ],
+   "outputs": [
+    {
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": [
+      1317,
+      1338,
+      1355
+     ]
+    },
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyNumberConvert"
+   },
+   "title": "'score' as a number"
+  },
+  {
+   "id": 342,
+   "type": "JsonExtractString",
+   "pos": [
+    -3520,
+    80
+   ],
+   "size": [
+    300,
+    100
+   ],
+   "flags": {},
+   "order": 342,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "json_string",
+     "type": "STRING",
+     "link": 1309,
+     "widget": {
+      "name": "json_string"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1310
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "JsonExtractString"
+   },
+   "title": "Read 'score'",
+   "widgets_values": [
+    "",
+    "score"
+   ]
+  },
+  {
+   "id": 343,
+   "type": "ComfyNumberConvert",
+   "pos": [
+    -3200,
+    80
+   ],
+   "size": [
+    220,
+    60
+   ],
+   "flags": {},
+   "order": 343,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "INT,FLOAT,STRING,BOOLEAN",
+     "link": 1310
+    }
+   ],
+   "outputs": [
+    {
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": [
+      1316,
+      1339,
+      1354
+     ]
+    },
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyNumberConvert"
+   },
+   "title": "'score' as a number"
+  },
+  {
+   "id": 344,
+   "type": "JsonExtractString",
+   "pos": [
+    -3520,
+    220
+   ],
+   "size": [
+    300,
+    100
+   ],
+   "flags": {},
+   "order": 344,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "json_string",
+     "type": "STRING",
+     "link": 1311,
+     "widget": {
+      "name": "json_string"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1312
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "JsonExtractString"
+   },
+   "title": "Read 'y'",
+   "widgets_values": [
+    "",
+    "y"
+   ]
+  },
+  {
+   "id": 345,
+   "type": "ComfyNumberConvert",
+   "pos": [
+    -3200,
+    220
+   ],
+   "size": [
+    220,
+    60
+   ],
+   "flags": {},
+   "order": 345,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "INT,FLOAT,STRING,BOOLEAN",
+     "link": 1312
+    }
+   ],
+   "outputs": [
+    {
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": [
+      1322
+     ]
+    },
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyNumberConvert"
+   },
+   "title": "'y' as a number"
+  },
+  {
+   "id": 346,
+   "type": "JsonExtractString",
+   "pos": [
+    -3520,
+    360
+   ],
+   "size": [
+    300,
+    100
+   ],
+   "flags": {},
+   "order": 346,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "json_string",
+     "type": "STRING",
+     "link": 1313,
+     "widget": {
+      "name": "json_string"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1314
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "JsonExtractString"
+   },
+   "title": "Read 'height'",
+   "widgets_values": [
+    "",
+    "height"
+   ]
+  },
+  {
+   "id": 347,
+   "type": "ComfyNumberConvert",
+   "pos": [
+    -3200,
+    360
+   ],
+   "size": [
+    220,
+    60
+   ],
+   "flags": {},
+   "order": 347,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "INT,FLOAT,STRING,BOOLEAN",
+     "link": 1314
+    }
+   ],
+   "outputs": [
+    {
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": [
+      1318,
+      1323,
+      1341
+     ]
+    },
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyNumberConvert"
+   },
+   "title": "'height' as a number"
+  },
+  {
+   "id": 348,
+   "type": "GetImageSize",
+   "pos": [
+    -5100,
+    640
+   ],
+   "size": [
+    200,
+    80
+   ],
+   "flags": {},
+   "order": 348,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 1315
+    }
+   ],
+   "outputs": [
+    {
+     "name": "width",
+     "type": "INT",
+     "links": [
+      1326,
+      1331
+     ]
+    },
+    {
+     "name": "height",
+     "type": "INT",
+     "links": [
+      1319,
+      1324,
+      1337,
+      1342,
+      1357
+     ]
+    },
+    {
+     "name": "batch_size",
+     "type": "INT",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "GetImageSize"
+   },
+   "title": "Picture size"
+  },
+  {
+   "id": 349,
    "type": "ComfyMathExpression",
    "pos": [
     -5100,
-    -1320
+    460
    ],
    "size": [
     360,
     120
    ],
    "flags": {},
-   "order": 329,
+   "order": 349,
    "mode": 0,
    "inputs": [
     {
@@ -3670,7 +4580,406 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1297
+     "link": 1316
+    },
+    {
+     "label": "b",
+     "localized_name": "values.b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1317
+    },
+    {
+     "label": "c",
+     "localized_name": "values.c",
+     "name": "values.c",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1318
+    },
+    {
+     "label": "d",
+     "localized_name": "values.d",
+     "name": "values.d",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1319
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      1321
+     ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "title": "Auto: is it a person?",
+   "widgets_values": [
+    "1 if (a >= 0.5 and c >= 0.09 * d and (b >= 0.6 or c >= 0.35 * d)) else 0"
+   ]
+  },
+  {
+   "id": 350,
+   "type": "ComfyMathExpression",
+   "pos": [
+    -4700,
+    460
+   ],
+   "size": [
+    360,
+    120
+   ],
+   "flags": {},
+   "order": 350,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1320
+    },
+    {
+     "label": "b",
+     "localized_name": "values.b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1321
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      1325,
+      1333,
+      1334,
+      1377
+     ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "title": "Subject (resolved)",
+   "widgets_values": [
+    "1 if a == 2 else (0 if a == 1 else (2 if a == 3 else b))"
+   ]
+  },
+  {
+   "id": 351,
+   "type": "ComfyMathExpression",
+   "pos": [
+    -4700,
+    640
+   ],
+   "size": [
+    360,
+    120
+   ],
+   "flags": {},
+   "order": 351,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1322
+    },
+    {
+     "label": "b",
+     "localized_name": "values.b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1323
+    },
+    {
+     "label": "c",
+     "localized_name": "values.c",
+     "name": "values.c",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1324
+    },
+    {
+     "label": "d",
+     "localized_name": "values.d",
+     "name": "values.d",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1325
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      1327,
+      1332,
+      1336,
+      1356
+     ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "title": "Bust cut: last picture row kept",
+   "widgets_values": [
+    "c if (d != 1 or b <= 0 or a + 2.7 * b >= 0.95 * c) else int(a + 2.7 * b)"
+   ]
+  },
+  {
+   "id": 352,
+   "type": "PrimitiveBoundingBox",
+   "pos": [
+    -4300,
+    640
+   ],
+   "size": [
+    270,
+    130
+   ],
+   "flags": {},
+   "order": 352,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "width",
+     "type": "INT",
+     "link": 1326,
+     "widget": {
+      "name": "width"
+     }
+    },
+    {
+     "name": "height",
+     "type": "INT",
+     "link": 1327,
+     "widget": {
+      "name": "height"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "BOUNDING_BOX",
+     "type": "BOUNDING_BOX",
+     "links": [
+      1329
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveBoundingBox"
+   },
+   "title": "Bust box",
+   "widgets_values": [
+    0,
+    0,
+    512,
+    512
+   ]
+  },
+  {
+   "id": 353,
+   "type": "ImageCropV2",
+   "pos": [
+    -3980,
+    640
+   ],
+   "size": [
+    300,
+    120
+   ],
+   "flags": {},
+   "order": 353,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 1328
+    },
+    {
+     "name": "crop_region",
+     "type": "BOUNDING_BOX",
+     "link": 1329,
+     "widget": {
+      "name": "crop_region"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      1401,
+      1402
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ImageCropV2",
+    "Execution Message": "Framing the subject"
+   },
+   "title": "Crop picture to the bust",
+   "widgets_values": [
+    {
+     "x": 0,
+     "y": 0,
+     "width": 512,
+     "height": 512
+    },
+    0,
+    0,
+    512,
+    512
+   ]
+  },
+  {
+   "id": 354,
+   "type": "CropMask",
+   "pos": [
+    -3980,
+    800
+   ],
+   "size": [
+    270,
+    130
+   ],
+   "flags": {},
+   "order": 354,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "mask",
+     "type": "MASK",
+     "link": 1330
+    },
+    {
+     "name": "width",
+     "type": "INT",
+     "link": 1331,
+     "widget": {
+      "name": "width"
+     }
+    },
+    {
+     "name": "height",
+     "type": "INT",
+     "link": 1332,
+     "widget": {
+      "name": "height"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": [
+      1400
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "CropMask"
+   },
+   "title": "Crop your cutout to the bust",
+   "widgets_values": [
+    0,
+    0,
+    512,
+    512
+   ]
+  },
+  {
+   "id": 355,
+   "type": "ComfyMathExpression",
+   "pos": [
+    -5100,
+    1060
+   ],
+   "size": [
+    360,
+    120
+   ],
+   "flags": {},
+   "order": 355,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1333
     }
    ],
    "outputs": [
@@ -3691,9 +5000,8 @@
      "name": "BOOL",
      "type": "BOOLEAN",
      "links": [
-      1298,
-      1299,
-      1300
+      1350,
+      1369
      ]
     }
    ],
@@ -3702,24 +5010,24 @@
     "ver": "0.38.0",
     "Node name for S&R": "ComfyMathExpression"
    },
-   "title": "Model is TRELLIS.2?",
+   "title": "Subject is Character bust?",
    "widgets_values": [
-    "a == 2"
+    "a == 1"
    ]
   },
   {
-   "id": 330,
+   "id": 356,
    "type": "ComfyMathExpression",
    "pos": [
-    -4700,
-    -1320
+    -5100,
+    1210
    ],
    "size": [
     360,
     120
    ],
    "flags": {},
-   "order": 330,
+   "order": 356,
    "mode": 0,
    "inputs": [
     {
@@ -3727,7 +5035,212 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1301
+     "link": 1334
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": []
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": [
+      1347
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "title": "Subject is Complex?",
+   "widgets_values": [
+    "a == 2"
+   ]
+  },
+  {
+   "id": 357,
+   "type": "ComfyMathExpression",
+   "pos": [
+    -5100,
+    1360
+   ],
+   "size": [
+    360,
+    120
+   ],
+   "flags": {},
+   "order": 357,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1335
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": []
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": [
+      1353
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "title": "Subject control is Auto?",
+   "widgets_values": [
+    "a == 0"
+   ]
+  },
+  {
+   "id": 358,
+   "type": "ComfyMathExpression",
+   "pos": [
+    -5100,
+    1510
+   ],
+   "size": [
+    360,
+    120
+   ],
+   "flags": {},
+   "order": 358,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1336
+    },
+    {
+     "label": "b",
+     "localized_name": "values.b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1337
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": []
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": [
+      1360
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "title": "Bust cut applied?",
+   "widgets_values": [
+    "a < b"
+   ]
+  },
+  {
+   "id": 359,
+   "type": "ComfyMathExpression",
+   "pos": [
+    -5100,
+    1660
+   ],
+   "size": [
+    360,
+    120
+   ],
+   "flags": {},
+   "order": 359,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1338
+    },
+    {
+     "label": "b",
+     "localized_name": "values.b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1339
+    },
+    {
+     "label": "c",
+     "localized_name": "values.c",
+     "name": "values.c",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1340
+    },
+    {
+     "label": "d",
+     "localized_name": "values.d",
+     "name": "values.d",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1341
+    },
+    {
+     "label": "e",
+     "localized_name": "values.e",
+     "name": "values.e",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1342
     }
    ],
    "outputs": [
@@ -3742,7 +5255,1239 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      1302
+      1343,
+      1344
+     ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "title": "Unsure about the subject? (Auto only)",
+   "widgets_values": [
+    "0 if c != 0 else (1 if (a >= 0.6 and (b < 0.5 or d < 0.09 * e)) else (2 if (b >= 0.5 and a < 0.6 and d < 0.35 * e) else 0))"
+   ]
+  },
+  {
+   "id": 360,
+   "type": "ComfyMathExpression",
+   "pos": [
+    -5100,
+    1810
+   ],
+   "size": [
+    360,
+    120
+   ],
+   "flags": {},
+   "order": 360,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1343
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": []
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": [
+      1363
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "title": "Unsure: person without a clear face?",
+   "widgets_values": [
+    "a == 1"
+   ]
+  },
+  {
+   "id": 361,
+   "type": "ComfyMathExpression",
+   "pos": [
+    -5100,
+    1960
+   ],
+   "size": [
+    360,
+    120
+   ],
+   "flags": {},
+   "order": 361,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1344
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": []
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": [
+      1366
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "title": "Unsure: face without a person?",
+   "widgets_values": [
+    "a == 2"
+   ]
+  },
+  {
+   "id": 362,
+   "type": "PrimitiveString",
+   "pos": [
+    -4700,
+    1060
+   ],
+   "size": [
+    300,
+    60
+   ],
+   "flags": {},
+   "order": 362,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1345
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveString"
+   },
+   "title": "Object",
+   "widgets_values": [
+    "Object"
+   ]
+  },
+  {
+   "id": 363,
+   "type": "PrimitiveString",
+   "pos": [
+    -4700,
+    1140
+   ],
+   "size": [
+    300,
+    60
+   ],
+   "flags": {},
+   "order": 363,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1346
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveString"
+   },
+   "title": "Complex",
+   "widgets_values": [
+    "Complex shapes (TRELLIS.2)"
+   ]
+  },
+  {
+   "id": 364,
+   "type": "PrimitiveString",
+   "pos": [
+    -4700,
+    1220
+   ],
+   "size": [
+    300,
+    60
+   ],
+   "flags": {},
+   "order": 364,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1349
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveString"
+   },
+   "title": "Character bust",
+   "widgets_values": [
+    "Character bust"
+   ]
+  },
+  {
+   "id": 365,
+   "type": "ComfySwitchNode",
+   "pos": [
+    -4340,
+    1060
+   ],
+   "size": [
+    280,
+    100
+   ],
+   "flags": {},
+   "order": 365,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1345
+    },
+    {
+     "name": "on_true",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1346
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 1347,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "STRING",
+     "links": [
+      1348
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfySwitchNode"
+   },
+   "title": "Name (complex?)",
+   "widgets_values": [
+    false
+   ]
+  },
+  {
+   "id": 366,
+   "type": "ComfySwitchNode",
+   "pos": [
+    -4020,
+    1060
+   ],
+   "size": [
+    280,
+    100
+   ],
+   "flags": {},
+   "order": 366,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1348
+    },
+    {
+     "name": "on_true",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1349
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 1350,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "STRING",
+     "links": [
+      1370
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfySwitchNode"
+   },
+   "title": "Name",
+   "widgets_values": [
+    false
+   ]
+  },
+  {
+   "id": 367,
+   "type": "PrimitiveString",
+   "pos": [
+    -4700,
+    1320
+   ],
+   "size": [
+    300,
+    60
+   ],
+   "flags": {},
+   "order": 367,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1352
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveString"
+   },
+   "title": "Auto",
+   "widgets_values": [
+    "Auto picked it"
+   ]
+  },
+  {
+   "id": 368,
+   "type": "PrimitiveString",
+   "pos": [
+    -4700,
+    1400
+   ],
+   "size": [
+    300,
+    60
+   ],
+   "flags": {},
+   "order": 368,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1351
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveString"
+   },
+   "title": "Chosen",
+   "widgets_values": [
+    "your choice"
+   ]
+  },
+  {
+   "id": 369,
+   "type": "ComfySwitchNode",
+   "pos": [
+    -4340,
+    1320
+   ],
+   "size": [
+    280,
+    100
+   ],
+   "flags": {},
+   "order": 369,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1351
+    },
+    {
+     "name": "on_true",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1352
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 1353,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "STRING",
+     "links": [
+      1371
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfySwitchNode"
+   },
+   "title": "How",
+   "widgets_values": [
+    false
+   ]
+  },
+  {
+   "id": 370,
+   "type": "StringFormat",
+   "pos": [
+    -4700,
+    1500
+   ],
+   "size": [
+    420,
+    140
+   ],
+   "flags": {},
+   "order": 370,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "values.a",
+     "type": "FLOAT",
+     "link": 1354
+    },
+    {
+     "name": "values.b",
+     "type": "FLOAT",
+     "link": 1355
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1372
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "StringFormat"
+   },
+   "title": "What it looked for",
+   "widgets_values": [
+    "Looked for: a face (score {a:.2f}) and a person (score {b:.2f}); scores run from 0 to 1."
+   ]
+  },
+  {
+   "id": 371,
+   "type": "PrimitiveString",
+   "pos": [
+    -4240,
+    1500
+   ],
+   "size": [
+    300,
+    60
+   ],
+   "flags": {},
+   "order": 371,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1358
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveString"
+   },
+   "title": "Whole picture",
+   "widgets_values": [
+    "Framing: the whole picture"
+   ]
+  },
+  {
+   "id": 372,
+   "type": "StringFormat",
+   "pos": [
+    -4240,
+    1580
+   ],
+   "size": [
+    420,
+    130
+   ],
+   "flags": {},
+   "order": 372,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "values.a",
+     "type": "INT",
+     "link": 1356
+    },
+    {
+     "name": "values.b",
+     "type": "INT",
+     "link": 1357
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1359
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "StringFormat"
+   },
+   "title": "Framing text",
+   "widgets_values": [
+    "Framing: cut below the chest, rows 0 to {a} of {b} kept, so the face and hands get more detail."
+   ]
+  },
+  {
+   "id": 373,
+   "type": "ComfySwitchNode",
+   "pos": [
+    -3780,
+    1500
+   ],
+   "size": [
+    280,
+    100
+   ],
+   "flags": {},
+   "order": 373,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1358
+    },
+    {
+     "name": "on_true",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1359
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 1360,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "STRING",
+     "links": [
+      1373
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfySwitchNode"
+   },
+   "title": "Framing",
+   "widgets_values": [
+    false
+   ]
+  },
+  {
+   "id": 374,
+   "type": "PrimitiveString",
+   "pos": [
+    -4240,
+    1760
+   ],
+   "size": [
+    300,
+    60
+   ],
+   "flags": {},
+   "order": 374,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1361
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveString"
+   },
+   "title": "(nothing)",
+   "widgets_values": [
+    ""
+   ]
+  },
+  {
+   "id": 375,
+   "type": "PrimitiveString",
+   "pos": [
+    -4240,
+    1840
+   ],
+   "size": [
+    300,
+    60
+   ],
+   "flags": {},
+   "order": 375,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1368
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveString"
+   },
+   "title": "Hidden surfaces",
+   "widgets_values": [
+    "Hidden surfaces (the back and the far side) are inferred, not measured."
+   ]
+  },
+  {
+   "id": 376,
+   "type": "PrimitiveString",
+   "pos": [
+    -4240,
+    1920
+   ],
+   "size": [
+    300,
+    60
+   ],
+   "flags": {},
+   "order": 376,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1362
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveString"
+   },
+   "title": "Unsure: person",
+   "widgets_values": [
+    "Not sure: a person, but no large clear face (it may be hidden, small or stylised). Auto used the Object workflow; choose Character bust to crop to the upper body."
+   ]
+  },
+  {
+   "id": 377,
+   "type": "PrimitiveString",
+   "pos": [
+    -4240,
+    2000
+   ],
+   "size": [
+    300,
+    60
+   ],
+   "flags": {},
+   "order": 377,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1365
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveString"
+   },
+   "title": "Unsure: toy",
+   "widgets_values": [
+    "Note: a face but no person, so this may be a toy, doll or statue. Auto kept the whole figure (Object workflow); choose Character bust to crop to the upper body."
+   ]
+  },
+  {
+   "id": 378,
+   "type": "ComfySwitchNode",
+   "pos": [
+    -3780,
+    1840
+   ],
+   "size": [
+    280,
+    100
+   ],
+   "flags": {},
+   "order": 378,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1361
+    },
+    {
+     "name": "on_true",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1362
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 1363,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "STRING",
+     "links": [
+      1364
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfySwitchNode"
+   },
+   "title": "Note (person without a face?)",
+   "widgets_values": [
+    false
+   ]
+  },
+  {
+   "id": 379,
+   "type": "ComfySwitchNode",
+   "pos": [
+    -3780,
+    1960
+   ],
+   "size": [
+    280,
+    100
+   ],
+   "flags": {},
+   "order": 379,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1364
+    },
+    {
+     "name": "on_true",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1365
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 1366,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "STRING",
+     "links": [
+      1367
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfySwitchNode"
+   },
+   "title": "Note (face without a person?)",
+   "widgets_values": [
+    false
+   ]
+  },
+  {
+   "id": 380,
+   "type": "ComfySwitchNode",
+   "pos": [
+    -3480,
+    1840
+   ],
+   "size": [
+    280,
+    100
+   ],
+   "flags": {},
+   "order": 380,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1367
+    },
+    {
+     "name": "on_true",
+     "type": "STRING",
+     "shape": 7,
+     "link": 1368
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 1369,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "STRING",
+     "links": [
+      1374
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfySwitchNode"
+   },
+   "title": "Note",
+   "widgets_values": [
+    false
+   ]
+  },
+  {
+   "id": 381,
+   "type": "StringFormat",
+   "pos": [
+    -3480,
+    1060
+   ],
+   "size": [
+    520,
+    300
+   ],
+   "flags": {},
+   "order": 381,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "values.a",
+     "type": "STRING",
+     "link": 1370
+    },
+    {
+     "name": "values.b",
+     "type": "STRING",
+     "link": 1371
+    },
+    {
+     "name": "values.c",
+     "type": "STRING",
+     "link": 1372
+    },
+    {
+     "name": "values.d",
+     "type": "STRING",
+     "link": 1373
+    },
+    {
+     "name": "values.e",
+     "type": "STRING",
+     "link": 1374
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1375
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "StringFormat"
+   },
+   "title": "Subject report",
+   "widgets_values": [
+    "Subject: {a} ({b})\n{c}\n{d}\n{e}"
+   ]
+  },
+  {
+   "id": 382,
+   "type": "PreviewAny",
+   "pos": [
+    -2920,
+    1060
+   ],
+   "size": [
+    420,
+    200
+   ],
+   "flags": {},
+   "order": 382,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "source",
+     "type": "*",
+     "link": 1375
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PreviewAny",
+    "Execution Message": "Writing the report"
+   },
+   "title": "Subject report (what Local3D decided and why)"
+  },
+  {
+   "id": 383,
+   "type": "ComfyMathExpression",
+   "pos": [
+    -5100,
+    -1320
+   ],
+   "size": [
+    360,
+    120
+   ],
+   "flags": {},
+   "order": 383,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1376
+    },
+    {
+     "label": "b",
+     "localized_name": "values.b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1377
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": []
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": [
+      1378,
+      1379,
+      1380
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "title": "Model is TRELLIS.2?",
+   "widgets_values": [
+    "a == 2 or (a == 0 and b == 2)"
+   ]
+  },
+  {
+   "id": 384,
+   "type": "ComfyMathExpression",
+   "pos": [
+    -4700,
+    -1320
+   ],
+   "size": [
+    360,
+    120
+   ],
+   "flags": {},
+   "order": 384,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1381
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      1382
      ]
     },
     {
@@ -3763,7 +6508,7 @@
    ]
   },
   {
-   "id": 331,
+   "id": 385,
    "type": "ComfyMathExpression",
    "pos": [
     -4700,
@@ -3774,7 +6519,7 @@
     120
    ],
    "flags": {},
-   "order": 331,
+   "order": 385,
    "mode": 0,
    "inputs": [
     {
@@ -3782,7 +6527,7 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1303
+     "link": 1383
     }
    ],
    "outputs": [
@@ -3797,7 +6542,7 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      1304
+      1384
      ]
     },
     {
@@ -3818,7 +6563,7 @@
    ]
   },
   {
-   "id": 332,
+   "id": 386,
    "type": "ComfyMathExpression",
    "pos": [
     -4700,
@@ -3829,7 +6574,7 @@
     120
    ],
    "flags": {},
-   "order": 332,
+   "order": 386,
    "mode": 0,
    "inputs": [
     {
@@ -3837,7 +6582,7 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1305
+     "link": 1385
     },
     {
      "label": "b",
@@ -3845,7 +6590,7 @@
      "name": "values.b",
      "type": "FLOAT,INT,BOOLEAN",
      "shape": 7,
-     "link": 1306
+     "link": 1386
     }
    ],
    "outputs": [
@@ -3860,7 +6605,7 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      1307
+      1387
      ]
     },
     {
@@ -3881,7 +6626,7 @@
    ]
   },
   {
-   "id": 333,
+   "id": 387,
    "type": "ComfyMathExpression",
    "pos": [
     -4700,
@@ -3892,7 +6637,7 @@
     120
    ],
    "flags": {},
-   "order": 333,
+   "order": 387,
    "mode": 0,
    "inputs": [
     {
@@ -3900,7 +6645,7 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1308
+     "link": 1388
     },
     {
      "label": "b",
@@ -3908,7 +6653,7 @@
      "name": "values.b",
      "type": "FLOAT,INT,BOOLEAN",
      "shape": 7,
-     "link": 1309
+     "link": 1389
     }
    ],
    "outputs": [
@@ -3923,8 +6668,8 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      1314,
-      1315
+      1394,
+      1395
      ]
     },
     {
@@ -3945,7 +6690,7 @@
    ]
   },
   {
-   "id": 334,
+   "id": 388,
    "type": "ComfyMathExpression",
    "pos": [
     -4700,
@@ -3956,7 +6701,7 @@
     120
    ],
    "flags": {},
-   "order": 334,
+   "order": 388,
    "mode": 0,
    "inputs": [
     {
@@ -3964,7 +6709,7 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1310
+     "link": 1390
     }
    ],
    "outputs": [
@@ -3979,7 +6724,7 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      1311
+      1391
      ]
     },
     {
@@ -4000,7 +6745,7 @@
    ]
   },
   {
-   "id": 335,
+   "id": 389,
    "type": "ComfyMathExpression",
    "pos": [
     -4700,
@@ -4011,7 +6756,7 @@
     120
    ],
    "flags": {},
-   "order": 335,
+   "order": 389,
    "mode": 0,
    "inputs": [
     {
@@ -4019,7 +6764,7 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1312
+     "link": 1392
     }
    ],
    "outputs": [
@@ -4034,7 +6779,7 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      1313
+      1393
      ]
     },
     {
@@ -4055,7 +6800,7 @@
    ]
   },
   {
-   "id": 336,
+   "id": 390,
    "type": "InvertMask",
    "pos": [
     -4300,
@@ -4066,13 +6811,13 @@
     60
    ],
    "flags": {},
-   "order": 336,
+   "order": 390,
    "mode": 0,
    "inputs": [
     {
      "name": "mask",
      "type": "MASK",
-     "link": 1320
+     "link": 1400
     }
    ],
    "outputs": [
@@ -4080,8 +6825,8 @@
      "name": "MASK",
      "type": "MASK",
      "links": [
-      1322,
-      1329
+      1404,
+      1411
      ]
     }
    ],
@@ -4093,7 +6838,7 @@
    "title": "Your cutout (alpha)"
   },
   {
-   "id": 337,
+   "id": 391,
    "type": "MaskComposite",
    "pos": [
     -4300,
@@ -4104,18 +6849,18 @@
     160
    ],
    "flags": {},
-   "order": 337,
+   "order": 391,
    "mode": 0,
    "inputs": [
     {
      "name": "destination",
      "type": "MASK",
-     "link": 1321
+     "link": 1403
     },
     {
      "name": "source",
      "type": "MASK",
-     "link": 1322
+     "link": 1404
     }
    ],
    "outputs": [
@@ -4123,7 +6868,7 @@
      "name": "MASK",
      "type": "MASK",
      "links": [
-      1325
+      1407
      ]
     }
    ],
@@ -4140,7 +6885,7 @@
    ]
   },
   {
-   "id": 338,
+   "id": 392,
    "type": "ComfyMathExpression",
    "pos": [
     -4300,
@@ -4151,7 +6896,7 @@
     120
    ],
    "flags": {},
-   "order": 338,
+   "order": 392,
    "mode": 0,
    "inputs": [
     {
@@ -4159,7 +6904,7 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1323
+     "link": 1405
     }
    ],
    "outputs": [
@@ -4180,7 +6925,7 @@
      "name": "BOOL",
      "type": "BOOLEAN",
      "links": [
-      1327
+      1409
      ]
     }
    ],
@@ -4195,7 +6940,7 @@
    ]
   },
   {
-   "id": 339,
+   "id": 393,
    "type": "ComfyMathExpression",
    "pos": [
     -4300,
@@ -4206,7 +6951,7 @@
     120
    ],
    "flags": {},
-   "order": 339,
+   "order": 393,
    "mode": 0,
    "inputs": [
     {
@@ -4214,7 +6959,7 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1324
+     "link": 1406
     }
    ],
    "outputs": [
@@ -4235,7 +6980,7 @@
      "name": "BOOL",
      "type": "BOOLEAN",
      "links": [
-      1330
+      1412
      ]
     }
    ],
@@ -4250,7 +6995,7 @@
    ]
   },
   {
-   "id": 340,
+   "id": 394,
    "type": "ComfySwitchNode",
    "pos": [
     -3900,
@@ -4261,23 +7006,23 @@
     110
    ],
    "flags": {},
-   "order": 340,
+   "order": 394,
    "mode": 0,
    "inputs": [
     {
      "name": "on_false",
      "type": "MASK",
-     "link": 1325
+     "link": 1407
     },
     {
      "name": "on_true",
      "type": "MASK",
-     "link": 1326
+     "link": 1408
     },
     {
      "name": "switch",
      "type": "BOOLEAN",
-     "link": 1327,
+     "link": 1409,
      "widget": {
       "name": "switch"
      }
@@ -4288,7 +7033,7 @@
      "name": "output",
      "type": "MASK",
      "links": [
-      1328
+      1410
      ]
     }
    ],
@@ -4303,7 +7048,7 @@
    ]
   },
   {
-   "id": 341,
+   "id": 395,
    "type": "MarkdownNote",
    "pos": [
     -5100,
@@ -4314,7 +7059,7 @@
     260
    ],
    "flags": {},
-   "order": 341,
+   "order": 395,
    "mode": 0,
    "inputs": [],
    "outputs": [],
@@ -4539,14 +7284,6 @@
    192,
    0,
    "BACKGROUND_REMOVAL"
-  ],
-  [
-   888,
-   122,
-   0,
-   192,
-   1,
-   "IMAGE"
   ],
   [
    900,
@@ -4861,14 +7598,6 @@
    "IMAGE"
   ],
   [
-   1260,
-   122,
-   0,
-   312,
-   0,
-   "IMAGE"
-  ],
-  [
    1265,
    117,
    0,
@@ -5078,158 +7807,798 @@
   ],
   [
    1297,
-   324,
+   330,
+   0,
+   331,
+   0,
+   "MODEL"
+  ],
+  [
+   1298,
+   122,
+   0,
+   331,
    1,
+   "IMAGE"
+  ],
+  [
+   1299,
+   332,
+   0,
+   333,
+   0,
+   "FACE_DETECTION_MODEL"
+  ],
+  [
+   1300,
+   122,
+   0,
+   333,
+   1,
+   "IMAGE"
+  ],
+  [
+   1301,
+   331,
+   0,
+   334,
+   0,
+   "BOUNDING_BOX"
+  ],
+  [
+   1302,
+   334,
+   0,
+   335,
+   0,
+   "ARRAY"
+  ],
+  [
+   1303,
+   335,
+   0,
+   336,
+   0,
+   "STRING"
+  ],
+  [
+   1304,
+   333,
+   1,
+   337,
+   0,
+   "BOUNDING_BOX"
+  ],
+  [
+   1305,
+   337,
+   0,
+   338,
+   0,
+   "ARRAY"
+  ],
+  [
+   1306,
+   338,
+   0,
+   339,
+   0,
+   "STRING"
+  ],
+  [
+   1307,
+   336,
+   0,
+   340,
+   0,
+   "STRING"
+  ],
+  [
+   1308,
+   340,
+   0,
+   341,
+   0,
+   "STRING"
+  ],
+  [
+   1309,
+   339,
+   0,
+   342,
+   0,
+   "STRING"
+  ],
+  [
+   1310,
+   342,
+   0,
+   343,
+   0,
+   "STRING"
+  ],
+  [
+   1311,
+   339,
+   0,
+   344,
+   0,
+   "STRING"
+  ],
+  [
+   1312,
+   344,
+   0,
+   345,
+   0,
+   "STRING"
+  ],
+  [
+   1313,
+   339,
+   0,
+   346,
+   0,
+   "STRING"
+  ],
+  [
+   1314,
+   346,
+   0,
+   347,
+   0,
+   "STRING"
+  ],
+  [
+   1315,
+   122,
+   0,
+   348,
+   0,
+   "IMAGE"
+  ],
+  [
+   1316,
+   343,
+   0,
+   349,
+   0,
+   "FLOAT"
+  ],
+  [
+   1317,
+   341,
+   0,
+   349,
+   1,
+   "FLOAT"
+  ],
+  [
+   1318,
+   347,
+   0,
+   349,
+   2,
+   "FLOAT"
+  ],
+  [
+   1319,
+   348,
+   1,
+   349,
+   3,
+   "INT"
+  ],
+  [
+   1320,
    329,
+   1,
+   350,
    0,
    "INT"
   ],
   [
-   1298,
+   1321,
+   349,
+   1,
+   350,
+   1,
+   "INT"
+  ],
+  [
+   1322,
+   345,
+   0,
+   351,
+   0,
+   "FLOAT"
+  ],
+  [
+   1323,
+   347,
+   0,
+   351,
+   1,
+   "FLOAT"
+  ],
+  [
+   1324,
+   348,
+   1,
+   351,
+   2,
+   "INT"
+  ],
+  [
+   1325,
+   350,
+   1,
+   351,
+   3,
+   "INT"
+  ],
+  [
+   1326,
+   348,
+   0,
+   352,
+   0,
+   "INT"
+  ],
+  [
+   1327,
+   351,
+   1,
+   352,
+   1,
+   "INT"
+  ],
+  [
+   1328,
+   122,
+   0,
+   353,
+   0,
+   "IMAGE"
+  ],
+  [
+   1329,
+   352,
+   0,
+   353,
+   1,
+   "BOUNDING_BOX"
+  ],
+  [
+   1330,
+   122,
+   1,
+   354,
+   0,
+   "MASK"
+  ],
+  [
+   1331,
+   348,
+   0,
+   354,
+   1,
+   "INT"
+  ],
+  [
+   1332,
+   351,
+   1,
+   354,
+   2,
+   "INT"
+  ],
+  [
+   1333,
+   350,
+   1,
+   355,
+   0,
+   "INT"
+  ],
+  [
+   1334,
+   350,
+   1,
+   356,
+   0,
+   "INT"
+  ],
+  [
+   1335,
    329,
+   1,
+   357,
+   0,
+   "INT"
+  ],
+  [
+   1336,
+   351,
+   1,
+   358,
+   0,
+   "INT"
+  ],
+  [
+   1337,
+   348,
+   1,
+   358,
+   1,
+   "INT"
+  ],
+  [
+   1338,
+   341,
+   0,
+   359,
+   0,
+   "FLOAT"
+  ],
+  [
+   1339,
+   343,
+   0,
+   359,
+   1,
+   "FLOAT"
+  ],
+  [
+   1340,
+   329,
+   1,
+   359,
+   2,
+   "INT"
+  ],
+  [
+   1341,
+   347,
+   0,
+   359,
+   3,
+   "FLOAT"
+  ],
+  [
+   1342,
+   348,
+   1,
+   359,
+   4,
+   "INT"
+  ],
+  [
+   1343,
+   359,
+   1,
+   360,
+   0,
+   "INT"
+  ],
+  [
+   1344,
+   359,
+   1,
+   361,
+   0,
+   "INT"
+  ],
+  [
+   1345,
+   362,
+   0,
+   365,
+   0,
+   "STRING"
+  ],
+  [
+   1346,
+   363,
+   0,
+   365,
+   1,
+   "STRING"
+  ],
+  [
+   1347,
+   356,
+   2,
+   365,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   1348,
+   365,
+   0,
+   366,
+   0,
+   "STRING"
+  ],
+  [
+   1349,
+   364,
+   0,
+   366,
+   1,
+   "STRING"
+  ],
+  [
+   1350,
+   355,
+   2,
+   366,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   1351,
+   368,
+   0,
+   369,
+   0,
+   "STRING"
+  ],
+  [
+   1352,
+   367,
+   0,
+   369,
+   1,
+   "STRING"
+  ],
+  [
+   1353,
+   357,
+   2,
+   369,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   1354,
+   343,
+   0,
+   370,
+   0,
+   "FLOAT"
+  ],
+  [
+   1355,
+   341,
+   0,
+   370,
+   1,
+   "FLOAT"
+  ],
+  [
+   1356,
+   351,
+   1,
+   372,
+   0,
+   "INT"
+  ],
+  [
+   1357,
+   348,
+   1,
+   372,
+   1,
+   "INT"
+  ],
+  [
+   1358,
+   371,
+   0,
+   373,
+   0,
+   "STRING"
+  ],
+  [
+   1359,
+   372,
+   0,
+   373,
+   1,
+   "STRING"
+  ],
+  [
+   1360,
+   358,
+   2,
+   373,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   1361,
+   374,
+   0,
+   378,
+   0,
+   "STRING"
+  ],
+  [
+   1362,
+   376,
+   0,
+   378,
+   1,
+   "STRING"
+  ],
+  [
+   1363,
+   360,
+   2,
+   378,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   1364,
+   378,
+   0,
+   379,
+   0,
+   "STRING"
+  ],
+  [
+   1365,
+   377,
+   0,
+   379,
+   1,
+   "STRING"
+  ],
+  [
+   1366,
+   361,
+   2,
+   379,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   1367,
+   379,
+   0,
+   380,
+   0,
+   "STRING"
+  ],
+  [
+   1368,
+   375,
+   0,
+   380,
+   1,
+   "STRING"
+  ],
+  [
+   1369,
+   355,
+   2,
+   380,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   1370,
+   366,
+   0,
+   381,
+   0,
+   "STRING"
+  ],
+  [
+   1371,
+   369,
+   0,
+   381,
+   1,
+   "STRING"
+  ],
+  [
+   1372,
+   370,
+   0,
+   381,
+   2,
+   "STRING"
+  ],
+  [
+   1373,
+   373,
+   0,
+   381,
+   3,
+   "STRING"
+  ],
+  [
+   1374,
+   380,
+   0,
+   381,
+   4,
+   "STRING"
+  ],
+  [
+   1375,
+   381,
+   0,
+   382,
+   0,
+   "STRING"
+  ],
+  [
+   1376,
+   324,
+   1,
+   383,
+   0,
+   "INT"
+  ],
+  [
+   1377,
+   350,
+   1,
+   383,
+   1,
+   "INT"
+  ],
+  [
+   1378,
+   383,
    2,
    314,
    2,
    "BOOLEAN"
   ],
   [
-   1299,
-   329,
+   1379,
+   383,
    2,
    315,
    2,
    "BOOLEAN"
   ],
   [
-   1300,
-   329,
+   1380,
+   383,
    2,
    318,
    2,
    "BOOLEAN"
   ],
   [
-   1301,
+   1381,
    325,
    1,
-   330,
+   384,
    0,
    "INT"
   ],
   [
-   1302,
-   330,
+   1382,
+   384,
    1,
    94,
    4,
    "INT"
   ],
   [
-   1303,
+   1383,
    325,
    1,
-   331,
+   385,
    0,
    "INT"
   ],
   [
-   1304,
-   331,
+   1384,
+   385,
    1,
    241,
    1,
    "INT"
   ],
   [
-   1305,
+   1385,
    325,
    1,
-   332,
+   386,
    0,
    "INT"
   ],
   [
-   1306,
+   1386,
    327,
    1,
-   332,
+   386,
    1,
    "INT"
   ],
   [
-   1307,
-   332,
+   1387,
+   386,
    1,
    186,
    1,
    "INT"
   ],
   [
-   1308,
+   1388,
    325,
    1,
-   333,
+   387,
    0,
    "INT"
   ],
   [
-   1309,
+   1389,
    327,
    1,
-   333,
+   387,
    1,
    "INT"
   ],
   [
-   1310,
+   1390,
    325,
    1,
-   334,
+   388,
    0,
    "INT"
   ],
   [
-   1311,
-   334,
+   1391,
+   388,
    1,
    224,
    2,
    "INT"
   ],
   [
-   1312,
+   1392,
    325,
    1,
-   335,
+   389,
    0,
    "INT"
   ],
   [
-   1313,
-   335,
+   1393,
+   389,
    1,
    233,
    2,
    "INT"
   ],
   [
-   1314,
-   333,
+   1394,
+   387,
    1,
    196,
    1,
    "INT"
   ],
   [
-   1315,
-   333,
+   1395,
+   387,
    1,
    147,
    3,
    "INT"
   ],
   [
-   1316,
+   1396,
    328,
    0,
    3,
@@ -5237,7 +8606,7 @@
    "INT"
   ],
   [
-   1317,
+   1397,
    328,
    0,
    18,
@@ -5245,7 +8614,7 @@
    "INT"
   ],
   [
-   1318,
+   1398,
    328,
    0,
    23,
@@ -5253,7 +8622,7 @@
    "INT"
   ],
   [
-   1319,
+   1399,
    328,
    0,
    12,
@@ -5261,88 +8630,104 @@
    "INT"
   ],
   [
-   1320,
-   122,
-   1,
-   336,
+   1400,
+   354,
+   0,
+   390,
    0,
    "MASK"
   ],
   [
-   1321,
+   1401,
+   353,
+   0,
+   192,
+   1,
+   "IMAGE"
+  ],
+  [
+   1402,
+   353,
+   0,
+   312,
+   0,
+   "IMAGE"
+  ],
+  [
+   1403,
    192,
    0,
-   337,
+   391,
    0,
    "MASK"
   ],
   [
-   1322,
-   336,
+   1404,
+   390,
    0,
-   337,
+   391,
    1,
    "MASK"
   ],
   [
-   1323,
+   1405,
    326,
    1,
-   338,
+   392,
    0,
    "INT"
   ],
   [
-   1324,
+   1406,
    326,
    1,
-   339,
+   393,
    0,
    "INT"
   ],
   [
-   1325,
-   337,
+   1407,
+   391,
    0,
-   340,
+   394,
    0,
    "MASK"
   ],
   [
-   1326,
+   1408,
    192,
    0,
-   340,
+   394,
    1,
    "MASK"
   ],
   [
-   1327,
-   338,
+   1409,
+   392,
    2,
-   340,
+   394,
    2,
    "BOOLEAN"
   ],
   [
-   1328,
-   340,
+   1410,
+   394,
    0,
    248,
    0,
    "MASK"
   ],
   [
-   1329,
-   336,
+   1411,
+   390,
    0,
    248,
    1,
    "MASK"
   ],
   [
-   1330,
-   339,
+   1412,
+   393,
    2,
    248,
    2,
@@ -5493,6 +8878,19 @@
   },
   {
    "id": 18,
+   "title": "Subject detection, bust framing and report (Local3D)",
+   "bounding": [
+    -5140,
+    -140,
+    2700,
+    2000
+   ],
+   "color": "#2a7f62",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 19,
    "title": "Local3D controls (public app inputs)",
    "bounding": [
     -5140,
@@ -5505,7 +8903,7 @@
    "flags": {}
   },
   {
-   "id": 19,
+   "id": 20,
    "title": "Quality presets (data/presets.json)",
    "bounding": [
     -4740,
@@ -5518,7 +8916,7 @@
    "flags": {}
   },
   {
-   "id": 20,
+   "id": 21,
    "title": "Background handling",
    "bounding": [
     -4320,
@@ -5548,7 +8946,14 @@
      122,
      "image",
      {
-      "description": "Drop ONE object, fully in frame"
+      "description": "Drop ONE subject in frame"
+     }
+    ],
+    [
+     329,
+     "choice",
+     {
+      "description": "Auto picks for your picture"
      }
     ],
     [
@@ -5589,7 +8994,8 @@
    ],
    "outputs": [
     322,
-    302
+    302,
+    382
    ]
   },
   "local3d": {

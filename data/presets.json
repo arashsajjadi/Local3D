@@ -57,5 +57,14 @@
       "texture_size": 2048
     },
     "comment": "Output intent only changes post-processing (decimation and texture size), so switching it re-uses the generated geometry from ComfyUI's cache. High fidelity applies no cap. A cap lowers a value, it never raises it."
+  },
+  "routing": {
+    "face_score_min": 0.5,
+    "person_score_min": 0.6,
+    "portrait_face_fraction": 0.35,
+    "bust_min_face_fraction": 0.09,
+    "bust_cut_face_heights": 2.7,
+    "bust_cut_max_fraction": 0.95,
+    "comment": "Subject routing (docs/CHARACTER_ROUTING_DECISION.md). Auto picks Character bust when MediaPipe finds a face (score >= face_score_min) that is at least bust_min_face_fraction of the picture height AND either RT-DETR finds a person (score >= person_score_min) or the face fills at least portrait_face_fraction of the height (a close portrait). A face without a person is usually a toy, doll or statue, and a small face means a full-length figure: both stay Object, with a note. The bust cut keeps rows 0 .. face_top + bust_cut_face_heights * face_height of the original picture and is skipped when it would remove less than the bottom (1 - bust_cut_max_fraction) of the picture. Choosing Character bust yourself cuts whenever a face box exists."
   }
 }
