@@ -106,6 +106,21 @@ class Hygiene(unittest.TestCase):
         self.assertTrue(any("GitHub token" in m for m in msgs))
         self.assertTrue(any("personal path" in m for m in msgs))
 
+    def test_control_characters_are_found(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            (tmp / "a.iss").write_text("Icon: {app}" + chr(7) + "ssets" + chr(8) + "randing\nplain tab\tand CRLF line\r\n", encoding="utf-8", newline="")
+            old = validate.ROOT
+            validate.ROOT = tmp
+            try:
+                msgs = problems(validate.check_hygiene, [tmp / "a.iss"])
+            finally:
+                validate.ROOT = old
+        self.assertEqual(len(msgs), 1)
+        self.assertIn("0x7", msgs[0])
+        self.assertIn("0x8", msgs[0])
+
     def test_emails_and_author_machine_paths_are_found(self):
         import tempfile
         with tempfile.TemporaryDirectory() as tmp:

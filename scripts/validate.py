@@ -274,6 +274,9 @@ def check_hygiene(files: list[Path]):
                 text = f.read_text(encoding="utf-8")
             except UnicodeDecodeError:
                 continue
+            stray = sorted({hex(ord(ch)) for ch in text if (ord(ch) < 32 and ch not in "\t\n\r") or ord(ch) == 127})
+            if stray:
+                err(f"{rel}: contains control characters ({', '.join(stray)}): a backslash sequence that was turned into a character while the file was written?")
             for name, pat in SECRET_PATTERNS.items():
                 if re.search(pat, text):
                     err(f"{rel}: looks like it contains a {name}")
