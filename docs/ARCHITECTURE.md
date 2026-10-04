@@ -8,7 +8,7 @@ the pieces fit and exactly which parts are ours.
  Start Menu "Local3D"
         |
         v
- Local3D.exe  (launcher, C#, ~960 lines, built with the compiler that ships with Windows)
+ Local3D.exe  (launcher, C#, ~1,200 lines, built with the compiler that ships with Windows)
    1. first run:  curl.exe + tar.exe  ->  official ComfyUI portable (pinned, SHA-256 verified)
                   provision_models.py ->  model files from Hugging Face (pinned, SHA-256 verified)
    2. start:      python_embeded\python.exe ComfyUI\main.py --port <free> ...    (inside a Job Object)
@@ -31,10 +31,10 @@ the pieces fit and exactly which parts are ours.
 | Piece | Size | Why it exists (verified limitation of upstream) |
 | --- | --- | --- |
 | `local3d_pack/` apps | generated JSON | Upstream has no App for this and no prompt-to-3D template |
-| `scripts/build_workflows.py` | ~500 lines | Keeps the apps reproducible from the official templates, so an upstream bump is a re-run, not a re-do |
-| `scripts/provision_models.py` | ~200 lines | App Mode has no model-download UI (it only points to the graph *Errors* tab) and the frontend downloader has open bugs; this wraps Hugging Face's own client |
-| `launcher/Local3D.cs` | ~960 lines | Comfy Desktop cannot be launched into an app and has no CLI; Windows offers no way to run ComfyUI without a console window and clean up its processes |
-| `installer/Local3D.iss` | ~100 lines | Start Menu entry, icon, AppUserModelID, uninstall |
+| `scripts/build_workflows.py` | ~580 lines | Keeps the apps reproducible from the official templates, so an upstream bump is a re-run, not a re-do |
+| `scripts/provision_models.py` | ~250 lines | App Mode has no model-download UI (it only points to the graph *Errors* tab) and the frontend downloader has open bugs; this wraps Hugging Face's own client |
+| `launcher/Local3D.cs` | ~1,200 lines | Comfy Desktop cannot be launched into an app and has no CLI; Windows offers no way to run ComfyUI without a console window and clean up its processes |
+| `installer/Local3D.iss` | ~170 lines | Start Menu entry with icon, per-user install, careful uninstall |
 
 Everything else is upstream: the server, queue, history, node execution, model memory management (dynamic VRAM),
 3D nodes (TRELLIS.2/Pixal3D, remesh, UV unwrap, PBR baking), the 3D viewer and the App Mode UI.
@@ -48,8 +48,8 @@ All apps use **Comfy Core nodes only** (enforced by `scripts/validate.py` agains
   (one per parameter, values from `data/presets.json`); `Background` selects between the AI matte, your own
   transparency, or both; one `Seed` feeds every sampler.
 * **Prompt to 3D** puts FLUX.2 klein 4B (distilled: 4 steps, CFG 1, parameters copied from the official template) in
-  front of the same 3D graph. A *3D-friendly* switch appends a fixed framing sentence (single object, centred, fully
-  visible, three-quarter view, neutral background) to the prompt: no LLM involved.
+  front of the same 3D graph. A *3D-friendly* switch appends a fixed framing sentence (single object, small in the frame
+  with a wide margin, fully visible, three-quarter view, neutral background) to the prompt: no LLM involved.
 * **Reference Pictures** makes 1, 2 or 4 candidates in a few seconds, so you can pick before spending minutes on 3D.
 
 ### Why "Reference pictures" is a separate app
@@ -91,7 +91,7 @@ bare `--fast`, `--fp16-vae`/`--bf16-vae`, `--highvram`/`--gpu-only`/`--disable-d
 %LOCALAPPDATA%\Local3D\               (or the folder in settings.json)
     runtime\ComfyUI_windows_portable  official runtime, replaceable
     workspace\                        ComfyUI base dir: custom_nodes\local3d_pack, user\ (settings, apps)
-    models\                           (or modelsDir)  ~22 GB
+    models\                           (or modelsDir)  15 to 36 GB
     logs\                             launcher.log, comfyui.log
     browser-profile\                  Edge profile used only for the app window
 Documents\Local3D\                    your results: models\*.glb, Local3D_reference_*.png, images you add
@@ -110,4 +110,5 @@ while one is running just opens another window onto the running engine (`session
 
 `data/runtime.json` pins one ComfyUI release. To bump it: update the file, install it, regenerate
 `data/core_node_types.json`, re-vendor the two templates, run `python scripts/build_workflows.py`, then
-`scripts/bench_presets.py` and the app tests. See [CONTRIBUTING.md](../CONTRIBUTING.md).
+`scripts/bench_presets.py` and the app tests. `data/core_node_types.json` is the list of node type names from the new runtime's `/object_info`
+(same shape as the existing file). See [CONTRIBUTING.md](../CONTRIBUTING.md).

@@ -52,6 +52,20 @@ reports from other users of the same pipeline show 12 GB cards running out of me
 
 ![Same seed at three presets: Fast, Balanced, Maximum (wolf-head detail)](images/axe-presets.jpg)
 
+Input picture: `viking_wolf_rune_axe.png` from Comfy-Org/workflow_templates (MIT); the figure shows Local3D output generated from it.
+
+## Prompt to 3D timings
+
+Prompt to 3D adds the reference picture (FLUX.2 klein: about 6 s for four candidates, a few seconds for one) in front of the same 3D stages, but the
+picture model and the 3D model do not both fit in 16 GB at once, so ComfyUI swaps them in and out. Measured on the same RTX 5080 with a fresh seed each run:
+
+| Quality | Time |
+| --- | --- |
+| Fast | 45 to 53 s |
+| Balanced | 102 to 119 s in the benchmark runs; 182 s for the first run after a clean install (models loading) and 191 s for the next run in that session |
+
+Treat Balanced as "two to three minutes". The numbers include whatever else was using the GPU.
+
 ## Output: High fidelity or Game asset
 
 *Output* changes only the post-processing, so ComfyUI can **re-use the generated shape**:
@@ -79,7 +93,7 @@ ComfyUI caches every stage whose inputs did not change. Measured on the same mac
 | first run | 95 s |
 | press Run again with nothing changed | **0 s** (the finished result is reused) |
 | change **Output** to Game asset | **36 s** (the generated shape is reused) |
-| change **Quality** | the generation stages run again (ComfyUI's cache key includes upstream inputs, so Balanced to Maximum saved nothing: 119 s against 120 s with a new seed) |
+| change **Quality** | the generation stages run again (ComfyUI's cache key includes upstream inputs, so Balanced to Maximum saved nothing: 119 s against 120 s with a new seed). Every run in this table used a new seed; to repeat a result, set the Seed control to *Fixed* |
 | change the **picture**, **Model** or **Seed** | everything downstream of the change runs again |
 
 ## Mesh and file checks

@@ -19,7 +19,7 @@ without ever seeing a node graph, a terminal, a Python environment or a model fo
 | --- | --- |
 | **A. LocalAI** | `mudler/LocalAI` as runtime and UI (its `/3d/generations` API, `trellis2cpp` backend, built-in WebGL viewer). |
 | **B. Comfy Desktop + App Mode** | Official Comfy Desktop app hosting our workflows/apps as templates. |
-| **C. Owned ComfyUI portable + pack + thin launcher** *(chosen)* | Official ComfyUI portable (pinned release, unmodified) started by a ~150-line launcher, showing our App Mode apps in a chromeless Edge window; content shipped as a custom-node-folder pack. |
+| **C. Owned ComfyUI portable + pack + thin launcher** *(chosen)* | Official ComfyUI portable (pinned release, unmodified) started by a small launcher, showing our App Mode apps in a chromeless Edge window; content shipped as a custom-node-folder pack. |
 
 ## 3. Decision table
 
@@ -42,9 +42,9 @@ Legend: ✅ works today · ⚠️ partial / needs work · ❌ not available · �
 | Output history | ⚠️ browser-local, 20 entries | ✅ | ✅ |
 | Consumer GPU / RTX 50 (Blackwell) | ✅ sm_120a in ggml fork, CUDA 12.8/13 images (under WSL2) | ✅ | ✅ (torch cu130, aimdo dynamic VRAM) |
 | Licensing of the host | MIT | **AGPL-3.0-or-later / commercial**, EULA still says MIT (issue #1580) | GPL-3.0, run unmodified as a separate process |
-| Telemetry of the host | none known | **forced EULA; telemetry and beta default ON** | none in the portable build we launch *(to be verified by test, see `TROUBLESHOOTING.md`)* |
+| Telemetry of the host | none known | **forced EULA; telemetry and beta default ON** | none observed in the portable build we launch (measured; see *Launch flags* in `ARCHITECTURE.md`) |
 | Process cleanup | ❌ containers | ⚠️ new Desktop tracks trees; legacy leaves orphans (#1595) | ✅ launcher owns the process tree via a Windows Job Object |
-| Custom code we must write | Windows port of server + trellis2cpp + Pixal3D/Hunyuan backends (Go/C++), or a fork | pack only, but cannot be launched into | pack (data) + ~150 LOC launcher + installer script |
+| Custom code we must write | Windows port of server + trellis2cpp + Pixal3D/Hunyuan backends (Go/C++), or a fork | pack only, but cannot be launched into | pack (data) + a small launcher (about 1,200 lines as built; estimated at ~150 before implementation) + installer script |
 | Maintainability / churn | high churn (minor releases every 10–38 days) | high churn (several releases/week) | ComfyUI ships ~every 6.5 days → we **pin one tested release** and bump deliberately |
 | Ease of contribution | Go/C++/React monorepo | content only | content only (JSON, docs, PowerShell) |
 | Future extensibility | new backends = new gRPC backends | new templates | new template/app JSON files; any new core node is usable |
@@ -82,7 +82,7 @@ Comfy Desktop is the right host for a *ComfyUI user*; it is the wrong host for a
 | Runtime, frontend, 3D nodes, queue, history, viewer, App Mode | Official `ComfyUI_windows_portable_nvidia.7z` (pinned tag, SHA-256 verified) | nothing |
 | Content | `local3d_pack/` (custom-node folder containing only `__init__.py` + JSON) | Image→3D and Prompt→3D apps, quality presets, notes |
 | Start / stop | — | launcher: picks a free port, starts ComfyUI with safe flags, waits for readiness, opens the app in a chromeless Edge window, tears the process tree down when the window closes |
-| Install | — | Inno Setup (per-user) installer; Start Menu shortcut with icon + AppUserModelID |
+| Install | — | Inno Setup (per-user) installer; Start Menu shortcut with icon |
 | Models | Official HF files, same `properties.models` metadata ComfyUI itself uses | first-run provisioning script with resume + SHA-256 (justified in §6) |
 
 The pack also works in **any** ComfyUI ≥ 0.35 (including Comfy Desktop) by copying one folder — the launcher is optional
@@ -92,7 +92,7 @@ for experts, which keeps the "open the real graph" escape hatch.
 
 | Limitation (frontend 1.53.x) | Consequence for Local3D |
 | --- | --- |
-| One **Run** button executes the whole graph; no approval gate, no partial execution in the app UI | Prompt → 3D is one app with a *"Preview reference only"* switch that makes the 3D branch lazy; with a fixed seed the reference stage is served from Comfy's cache on the second run. Fallback: two apps. *(to be proven in testing, see `ARCHITECTURE.md`)* |
+| One **Run** button executes the whole graph; no approval gate, no partial execution in the app UI | Outcome: two apps. *Prompt to 3D* runs everything; *Reference Pictures* makes candidates first and the person picks one in *Image to 3D* (see "Why Reference pictures is a separate app" in `ARCHITECTURE.md`) |
 | App Mode UI has no named Front/Back/Top views | document the axis gizmo + Fit/Center; do not build a custom ViewCube |
 | Missing-model resolution is in the graph *Errors* tab, only for `huggingface.co`/civitai URLs and `.safetensors`-type files | embed `properties.models` metadata (works as fallback) **and** provision all weights ourselves on first run |
 | 3D result renders only from nodes that emit a `3d` result (`SaveGLB`, `Save3DAdvanced`) | the app output is a Save node, never a Preview node |

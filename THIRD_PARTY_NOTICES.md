@@ -11,7 +11,7 @@ Black Forest Labs, Alibaba, NVIDIA or anyone else listed here.
 
 | Component | What we include | License |
 | --- | --- | --- |
-| [Comfy-Org/workflow_templates](https://github.com/Comfy-Org/workflow_templates) | `workflows/upstream/*.json` are unmodified copies of two official templates; `local3d_pack/example_workflows/*.app.json` are generated from them by `scripts/build_workflows.py` | MIT, see below |
+| [Comfy-Org/workflow_templates](https://github.com/Comfy-Org/workflow_templates) | `workflows/upstream/*.json` are unmodified copies of two official templates; `local3d_pack/example_workflows/*.app.json` and `local3d_pack/variants/*/*.app.json` are generated from them by `scripts/build_workflows.py` | MIT, see below |
 
 ```
 MIT License
@@ -38,7 +38,8 @@ SOFTWARE.
 ```
 
 The example pictures in `assets/examples/` were generated with FLUX.2 [klein] 4B (Apache-2.0) from prompts written for
-this project; they contain no third-party artwork. Sample input images used by some upstream templates are not redistributed.
+this project; they contain no third-party artwork. Sample input images used by some upstream templates are not redistributed. The benchmark picture behind `docs/images/axe-presets.jpg` is
+`viking_wolf_rune_axe.png` from Comfy-Org/workflow_templates (MIT); that figure shows Local3D renders of models generated from it, and the PNG itself is not in this repository.
 
 ## 2. Runtime downloaded on first start (not included in this repository or the installer)
 
@@ -46,7 +47,8 @@ this project; they contain no third-party artwork. Sample input images used by s
 | --- | --- | --- |
 | ComfyUI (server and core nodes) | [Comfy-Org/ComfyUI](https://github.com/Comfy-Org/ComfyUI), official Windows portable release, pinned in `data/runtime.json`, checksum-verified | GPL-3.0 |
 | ComfyUI frontend (the App Mode UI, 3D viewer) | bundled in the portable build ([Comfy-Org/ComfyUI_frontend](https://github.com/Comfy-Org/ComfyUI_frontend)) | GPL-3.0 |
-| comfy-aimdo, comfy-kitchen | bundled in the portable build | GPL-3.0 / see package |
+| comfy-aimdo | bundled in the portable build | GPL-3.0 |
+| comfy-kitchen; huggingface_hub (used by `scripts/provision_models.py` to download models) | bundled in the portable build | Apache-2.0 |
 | Python, PyTorch, NVIDIA CUDA runtime libraries and other wheels | bundled in the portable build | PSF, BSD-3-Clause, NVIDIA CUDA EULA, and the respective package licenses |
 
 ComfyUI is started as a **separate, unmodified process**. This repository contains no ComfyUI code: the
@@ -64,16 +66,16 @@ Models are fetched from Hugging Face by Local3D's provisioning step, pinned to e
 | --- | --- | --- |
 | [Pixal3D](https://huggingface.co/TencentARC/Pixal3D) (TencentARC); ComfyUI repack: [Comfy-Org/Pixal3D](https://huggingface.co/Comfy-Org/Pixal3D) | image to 3D (default) | MIT. **Note:** earlier versions of the upstream weights carried an academic-only license; MIT applies since 2026-05-20 |
 | [TRELLIS.2](https://github.com/microsoft/TRELLIS.2) (Microsoft); repack: [Comfy-Org/TRELLIS.2](https://huggingface.co/Comfy-Org/TRELLIS.2) | image to 3D (alternative) | MIT |
-| DINOv3 ViT-L image encoder (Meta), repacked in [Comfy-Org/Pixal3D](https://huggingface.co/Comfy-Org/Pixal3D) | conditioning for both 3D models | **Meta DINOv3 License (custom, not MIT).** Read it at <https://ai.meta.com/resources/models-and-libraries/dinov3-license/>. It includes redistribution, trade-control and military end-use terms. Local3D downloads the file for you directly from Hugging Face and does not redistribute it |
+| DINOv3 ViT-L image encoder (Meta), repacked in [Comfy-Org/Pixal3D](https://huggingface.co/Comfy-Org/Pixal3D) | conditioning for both 3D models | **Meta DINOv3 License (custom, not MIT).** Read it at <https://ai.meta.com/resources/models-and-libraries/dinov3-license/>. It includes redistribution, trade-control and military end-use terms. Local3D downloads the file for you directly from Hugging Face and does not redistribute it. The same file also bundles the NAF feature-upsampler weights ([valeoai/NAF](https://github.com/valeoai/NAF), Apache-2.0) |
 | [BiRefNet](https://huggingface.co/ZhengPeng7/BiRefNet) (Peng Zheng et al.); repack: [Comfy-Org/BiRefNet](https://huggingface.co/Comfy-Org/BiRefNet) | background removal | MIT |
 | [MoGe-2](https://github.com/microsoft/MoGe) (Microsoft); repack: [Comfy-Org/MoGe](https://huggingface.co/Comfy-Org/MoGe) | camera / field-of-view estimation | MIT (code), includes DINOv2 code under Apache-2.0 |
-| [FLUX.2 \[klein\] 4B](https://huggingface.co/black-forest-labs/FLUX.2-klein-4b-nvfp4) (Black Forest Labs), nvfp4 build | reference pictures for Prompt to 3D | Apache-2.0 |
-| Qwen3-4B text encoder (Alibaba), fp4 build in [Comfy-Org](https://huggingface.co/Comfy-Org/vae-text-encorder-for-flux-klein-4b) | prompt encoding | Apache-2.0 |
+| FLUX.2 \[klein\] 4B (Black Forest Labs): [nvfp4 build](https://huggingface.co/black-forest-labs/FLUX.2-klein-4b-nvfp4) on RTX 50-series, [fp8 build](https://huggingface.co/black-forest-labs/FLUX.2-klein-4b-fp8) on RTX 40-series, bf16 build (Comfy-Org repack of `flux-2-klein-4b.safetensors`) on older cards | reference pictures for Prompt to 3D | Apache-2.0 |
+| Qwen3-4B text encoder (Alibaba): fp4 build (RTX 50) or bf16 build (older cards) in [Comfy-Org](https://huggingface.co/Comfy-Org/vae-text-encorder-for-flux-klein-4b) | prompt encoding | Apache-2.0 |
 | FLUX.2 VAE, same repository | image decoding | Apache-2.0 |
 
 Deliberately **not** used: BRIA RMBG-2.0 (CC BY-NC; ComfyUI's template uses MIT BiRefNet instead), FLUX.2 klein 9B and
 other non-commercial FLUX weights, and the Tencent Hunyuan3D models (Tencent Hunyuan Community License, which excludes
-the EU, UK and South Korea and has other restrictions). See [docs/MODELS.md](docs/MODELS.md).
+the EU, UK and South Korea and has other restrictions). See [docs/MODELS.md](https://github.com/arashsajjadi/Local3D/blob/main/docs/MODELS.md).
 
 Outputs: generated meshes and pictures are yours to use, subject to the licenses of the models that produced them
 (all of the models Local3D downloads allow commercial use of outputs at the time of writing; DINOv3's terms apply

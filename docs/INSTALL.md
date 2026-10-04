@@ -4,18 +4,20 @@
 
 | | |
 | --- | --- |
-| **Windows** | 10 (version 2004) or 11, 64-bit. Microsoft Edge (already part of Windows) |
+| **Windows** | 10 (version 2004) or 11, 64-bit. Microsoft Edge (already part of Windows). Tested on Windows 11 only; the runtime is unpacked with Windows' own `tar.exe`, which needs a reasonably current Windows 10 (or a free 7-Zip) to open its `.7z` archive |
 | **Graphics card** | NVIDIA RTX 20-series or newer with an up-to-date driver (580 or newer recommended). 12 GB of video memory or more is recommended; 16 GB is the comfortable target. Local3D is developed and tested on an RTX 5080 (16 GB). AMD, Intel and Apple GPUs are not supported yet |
 | **Memory** | tested with 64 GB of RAM; lower amounts have not been measured |
-| **Disk space** | about **8 GB** for the program and runtime, plus **15 GB** for the 3D models, plus **7 to 16 GB** if you add *Prompt to 3D* (depends on your GPU). Models can go on any drive |
+| **Disk space** | about **26 GB** in total on an RTX 50-series card: 7.4 GB while the runtime unpacks (4.4 GB afterwards), **15 GB** for the 3D models and 6.6 GB for *Prompt to 3D*; the prompt files are 12.5 GB on RTX 40-series and 16.1 GB on older cards (up to about 36 GB in total). Local3D also keeps 3 GB spare. Models can go on any drive |
 | **Internet** | for the first start only (about 2 GB runtime + models). After that, generation works offline |
 
 ## Install
 
 1. Download `Local3D-Setup-0.1.0.exe` from the [latest release](https://github.com/arashsajjadi/Local3D/releases/latest)
-   (and, if you like, check it against `SHA256SUMS.txt` on the same page).
+   (and, if you like, check it: `Get-FileHash .\Local3D-Setup-0.1.0.exe` in PowerShell must print the value in `SHA256SUMS.txt`
+   on the same page; the release also carries a GitHub build-provenance attestation).
 2. Run it. Windows may show **"Windows protected your PC"** because the installer is not code-signed yet:
-   click **More info**, then **Run anyway**. No administrator rights are needed; it installs for your user only.
+   click **More info**, then **Run anyway**. If your antivirus removes `Local3D.exe`, see [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
+   No administrator rights are needed; by default it installs for your user only (Setup also offers an all-users install, which asks for them).
 3. Leave *Start Local3D now* ticked and finish.
 
 The installer is only about 2 MB. It does not download anything.
@@ -45,6 +47,7 @@ You never see a console window, a Python install, a model folder or a node graph
 
   ![Prompt to 3D, ready to run](images/app-prompt-ready.png)
 
+* Closing the app window quits Local3D and cancels a model that is still being made: wait for the viewer to show the result.
 * **Reference pictures** makes up to four candidates in seconds. Pick the best, then choose it in *Image to 3D*. If the new
   pictures are not in that app's picture list yet, press **R** (refresh) or reopen the app.
 
@@ -61,20 +64,22 @@ Extra shortcuts (Prompt to 3D, Reference pictures, Download more models, Diagnos
 
 | | |
 | --- | --- |
-| Program | `%LOCALAPPDATA%\Programs\Local3D` |
+| Program | `%LOCALAPPDATA%\Programs\Local3D` (or `C:\Program Files\Local3D` for an all-users install) |
 | Runtime, logs, settings, workspace | `%LOCALAPPDATA%\Local3D` |
 | Model files | `%LOCALAPPDATA%\Local3D\models` or the folder you chose |
-| Your results | `Documents\Local3D` |
+| Your results | `Documents\Local3D` (your real Documents folder, which OneDrive may sync; set `outputDir` in `settings.json` to put them elsewhere) |
 
-To move the runtime or models, create `%LOCALAPPDATA%\Local3D\settings.json` before first start:
-`{"dataDir": "D:\\Local3DData", "modelsDir": "D:\\Local3DModels"}`.
-A model folder you already have from ComfyUI works too: matching files are verified and reused, never downloaded again.
+To move the runtime or models, create `%LOCALAPPDATA%\Local3D\settings.json` before first start (forward slashes are easiest):
+`{"dataDir": "D:/Local3D/data", "modelsDir": "D:/Local3D/models"}`.
+A model folder you already have from ComfyUI works too: files that match the pinned checksums are verified and reused, never downloaded again.
+A file with the same name but different content in that folder is replaced by the version Local3D was tested with, so give Local3D its own folder if you want to keep other versions.
 
 ## Update and uninstall
 
 * **Update:** run the newer installer over the old one. Your runtime, models and results are kept.
-* **Uninstall:** *Settings > Apps > Local3D*. It asks whether to also remove the runtime and logs. Model files and
-  `Documents\Local3D` are never deleted for you.
+* **Uninstall:** *Settings > Apps > Local3D*. It asks whether to also remove the runtime, logs and settings, and then, separately,
+  whether to delete the downloaded model files (the default answer is No, so a reinstall is quick). A models folder you chose
+  yourself and `Documents\Local3D` are never deleted.
 
 ## Already use ComfyUI?
 
@@ -82,7 +87,9 @@ The apps are a standard ComfyUI custom-node folder. With **ComfyUI 0.35 or newer
 `local3d_pack` into `ComfyUI\custom_nodes`, put the models from `data/models.json` in the usual model folders, restart, and
 find the apps under *Templates > Extensions*. Open the *Apps* sidebar after saving them as workflows, or use the link
 `/?template=Local3D_Image_to_3D.app&source=local3d_pack&mode=linear`. You still get the full graph: switch the app
-to *Graph* with the toggle at the top.
+to *Graph* with the toggle at the top. The *Prompt to 3D* and *Reference Pictures* apps are copied for RTX 50-series cards (nvfp4 weights);
+on an RTX 40-series card copy `local3d_pack\variants\ada\*.app.json` over `example_workflows` (RTX 20/30-series: `variants\legacy`) and download
+only the *Prompt to 3D* files in `data/models.json` whose `gpu` list contains your class or has none.
 
 ## Unattended or scripted install
 
@@ -90,4 +97,6 @@ to *Graph* with the toggle at the top.
 Local3D-Setup-0.1.0.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
 "%LOCALAPPDATA%\Programs\Local3D\Local3D.exe" --yes
 ```
-`--yes` accepts the default of every consent dialog (downloads the runtime and the models for your GPU).
+`--yes` accepts the default of every consent dialog (downloads the runtime and the models for your GPU). It is not headless: afterwards
+Local3D starts and opens the app window, and the command keeps running until that window is closed, so run it detached or from an
+interactive user session. Without Microsoft Edge, Local3D opens your default browser instead (and then stays open until you click *Quit*).

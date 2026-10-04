@@ -8,11 +8,11 @@ All files are pinned to exact Hugging Face revisions and SHA-256 hashes in [`dat
 | Pack | Contents | Download | Needed for |
 | --- | --- | --- | --- |
 | **Image to 3D** (required) | Pixal3D, TRELLIS.2, shared 3D VAEs, DINOv3 encoder, MoGe-2, BiRefNet | **15.2 GB** | *Image to 3D*, *Prompt to 3D* |
-| **Prompt to 3D** (optional) | FLUX.2 klein 4B (nvfp4), Qwen3-4B text encoder (fp4), FLUX.2 VAE | **6.6 GB** | *Prompt to 3D*, *Reference Pictures* |
-| ComfyUI runtime (not a model) | official portable build | 2.0 GB (unpacks to ~4.1 GB) | everything |
+| **Prompt to 3D** (optional) | FLUX.2 klein 4B and Qwen3-4B text encoder (nvfp4 + fp4 on RTX 50-series, fp8 + bf16 encoder on RTX 40-series, bf16 on older cards), FLUX.2 VAE | **6.6 GB** (RTX 50) / **12.5 GB** (RTX 40) / **16.1 GB** (older) | *Prompt to 3D*, *Reference Pictures* |
+| ComfyUI runtime (not a model) | official portable build | 2.0 GB (unpacks to ~4.4 GB) | everything |
 
-Total with everything: about **26 GB** on disk. Both Pixal3D and TRELLIS.2 are in the required pack because they share
-about two thirds of their files: adding TRELLIS.2 to Pixal3D costs only its own 5.3 GB model.
+Total with everything: about **26 GB** on disk on an RTX 50-series card, up to about 36 GB on older cards. Both Pixal3D and TRELLIS.2 are
+in the required pack because they share about 4.4 GB of files (both VAEs, DINOv3, MoGe-2, BiRefNet): adding TRELLIS.2 to Pixal3D costs only its own 5.3 GB model.
 Declined the optional pack? Run *Start > Local3D tools > Download more models* later.
 
 ## The 3D models, honestly
@@ -39,13 +39,15 @@ Both need the whole object visible in the picture. Single-picture 3D invents the
 
 ## The reference-picture model
 
-**FLUX.2 [klein] 4B** (Black Forest Labs, Apache-2.0) in its distilled 4-step form, as the *nvfp4* build for RTX 50-series.
+**FLUX.2 [klein] 4B** (Black Forest Labs, Apache-2.0) in its distilled 4-step form: the *nvfp4* build on RTX 50-series, *fp8* on RTX 40-series,
+*bf16* on older cards.
 Chosen because it is permissively licensed, small enough to share a 16 GB card, fast (four candidates in about 6 s here),
 and part of ComfyUI Core. Z-Image-Turbo (Apache-2.0) was the runner-up; the larger Qwen-Image models are too big for a
 shared 16 GB card, and FLUX.2 klein 9B is non-commercial, so it is not used.
 
-The *3D-friendly* option appends a fixed sentence asking for one complete object, centred, in a three-quarter view on a
-plain grey background. Turn it off to send your prompt exactly as typed.
+The *3D-friendly* option appends a fixed framing clause asking for a single complete object, small in the frame with a wide empty margin of
+plain background, fully visible and not cropped, in a three-quarter view from slightly above on a neutral grey background (wording chosen by
+experiment, see [QUALITY.md](QUALITY.md)). Turn it off to send your prompt exactly as typed.
 
 ## Where the files go
 

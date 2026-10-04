@@ -23,7 +23,6 @@
 *.incomplete
 *.download
 models/
-Local3DModels/
 .cache/
 huggingface/
 hf_cache/

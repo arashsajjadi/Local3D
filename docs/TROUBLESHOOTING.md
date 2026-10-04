@@ -12,9 +12,10 @@ Logs (the details behind any friendly message) are in `%LOCALAPPDATA%\Local3D\lo
 | --- | --- | --- |
 | **Windows protected your PC** (SmartScreen) when running the installer | The installer is not code-signed yet | Click *More info*, then *Run anyway*. You can verify the file against `SHA256SUMS.txt` on the release page |
 | "needs an NVIDIA graphics card" | No NVIDIA GPU or driver was found | Install the current NVIDIA driver (RTX 20-series or newer). AMD, Intel and Apple GPUs are not supported in v0.1 |
-| "Not enough free disk space" | The runtime needs about 8 GB free, the models about 26 GB | Free space, or choose another folder for the models in the download dialog |
+| "Not enough free disk space" | The runtime needs about 7.4 GB free while it unpacks; the models need 15 GB, plus 7 to 16 GB for the optional prompt pack (by GPU), plus 3 GB kept spare | Free space, or choose another folder for the models in the download dialog |
 | "Local3D's engine stopped while starting" | The ComfyUI process exited. The technical details show its last lines | Update your NVIDIA driver and start again; if it repeats, see *Engine problems* below |
-| Nothing happens after clicking the shortcut | Local3D may already be running (its window can be behind others) | Click the shortcut again: it opens another window on the running engine |
+| Nothing happens after clicking the shortcut | Local3D may already be running or still starting (its window can be behind others) | Click the shortcut again: once the engine is up it opens another window on it; while it is still starting, a message says so |
+| `Local3D.exe` is missing, or Windows says it cannot find it, after installing | Antivirus software may have quarantined the unsigned launcher (a common false positive for small unsigned programs) | Windows Security > Virus & threat protection > Protection history > Restore / Allow, or add an exclusion for `%LOCALAPPDATA%\Programs\Local3D`. The source is public and `SHA256SUMS.txt` covers the installer |
 | First start takes a minute before the window appears | The engine initialises GPU kernels the very first time | Normal; later starts take a few seconds |
 
 ## Downloads
@@ -23,9 +24,10 @@ Logs (the details behind any friendly message) are in `%LOCALAPPDATA%\Local3D\lo
   files are never downloaded twice.
 * **"A downloaded file failed its checksum and was discarded":** the file was corrupted in transit or changed upstream.
   Start again to fetch it afresh. If it fails repeatedly, open an issue with the diagnostics.
-* **Behind a proxy or firewall:** the runtime comes from `github.com`, models from `huggingface.co` (and its CDN).
-  Allow both. The downloaders read the standard `HTTPS_PROXY` / `HTTP_PROXY` environment variables; they do not read
-  Windows' system proxy setting.
+* **Behind a proxy or firewall:** the runtime comes from `github.com`, which redirects to `release-assets.githubusercontent.com`
+  (allow `*.githubusercontent.com`); models come from `huggingface.co`, which redirects to Hugging Face's CDN hosts (allow `*.hf.co`).
+  The runtime download (curl.exe) reads only the standard `HTTPS_PROXY` / `HTTP_PROXY` environment variables; the model downloader also
+  follows a manual proxy set in Windows Settings (not PAC scripts). Setting the environment variables covers both.
 * **Offline use:** after the downloads, generation needs no internet (`HF_HUB_OFFLINE` is set for the engine). The one
   thing that needs a connection is the first-run download.
 * **Models on another drive:** choose the folder in the download dialog, or edit `modelsDir` in
@@ -63,7 +65,8 @@ the old *Maximum* settings; if you have 12 GB or less, start with *Fast* or *Bal
 * **Mirrors, glass and very dark objects** reconstruct poorly; photograph or generate them differently.
 * **A second, hidden surface inside the model** (inner shell) can occur; it is invisible when viewing but matters for
   3D printing. It is a known upstream limitation (ComfyUI issue #16147).
-* **Different result each time:** the seed changes on every run. Copy the seed shown before pressing Run to repeat a result.
+* **Different result each time:** the seed is randomized on every Run. After a run, the Seed box shows the seed that produced the model on
+  screen. To repeat it, click the small control button next to Seed, choose *Fixed*, keep that number and press Run again.
 
 ### "Media input missing"
 

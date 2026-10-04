@@ -7,8 +7,8 @@ Evidence date: 2026-10-04.
 
 - Short, obvious, easy to spell and search; says what it is (local 3D generation) before the README is read.
 - Available where it matters:
-  `github.com/arashsajjadi/Local3D` does not exist, and the handles `Local3D`/`local3d` are unclaimed on GitHub, PyPI,
-  npm, crates.io, Docker Hub and Hugging Face.
+  `github.com/arashsajjadi/Local3D` was free (the repository was created for this project afterwards), and the handles `Local3D`/`local3d`
+  were unclaimed on GitHub, PyPI, npm, crates.io, Docker Hub and Hugging Face.
 - No major active software product, company or registered trademark named *Local3D* turned up.
 
 ## Honest caveats

@@ -2,24 +2,24 @@
 
 **Turn a photo or a text prompt into a textured 3D model, on your own NVIDIA GPU, offline.**
 
-- **Local and private.** After a one-time download of the models, nothing leaves your PC. No account, no telemetry.
+- **Local and private.** After a one-time download of the models, your pictures, prompts and 3D models never leave your PC. No account, no Local3D telemetry.
 - **Simple.** Drop a picture (or type a prompt), pick a quality, press **Run**. No node graph, no Python, no model folders.
 - **Open models.** Pixal3D and TRELLIS.2 build the 3D model; FLUX.2 klein draws reference pictures. All run through official ComfyUI.
-- **Real assets.** A UV-unwrapped mesh with PBR textures (base colour, metallic, roughness, normal, occlusion) in one `.glb` file.
+- **Real assets.** A UV-unwrapped mesh with PBR (realistic material) textures (base colour, metallic, roughness, normal, occlusion) in one `.glb` file, a standard 3D format that opens in Blender, game engines and most viewers.
 
 ![Local3D turning a picture of a robot into a 3D model: removing the background, building the shape, baking textures, then the finished model in the viewer](docs/images/demo.gif)
 
 ## Quick start
 
-Windows 10/11 and an NVIDIA RTX 20-series or newer graphics card (12 GB+ recommended; developed on an RTX 5080).
+Windows 10/11 and an NVIDIA RTX 20-series or newer graphics card (12 GB+ recommended). Developed and tested on Windows 11 with an RTX 5080 only; other setups should work but are untested. About 26 GB of disk space on an RTX 50-series card (up to 36 GB on older cards).
 
 1. Download **Local3D-Setup-0.1.0.exe** from the [latest release](https://github.com/arashsajjadi/Local3D/releases/latest).
    Windows SmartScreen will warn because the installer is not code-signed yet: *More info* > *Run anyway*.
 2. Install it, then start **Local3D** from the Start menu.
-3. On first start, click **Download** when asked: the ComfyUI runtime (2 GB) and the models (15 GB, plus an optional 7 to 16 GB for prompts).
+3. On first start Local3D asks before each download: **OK** for the ComfyUI engine (2 GB, the open-source tool that runs the models), then **Download** for the AI models (15 GB, plus an optional 7 to 16 GB for prompts).
    It resumes if interrupted, and everything is checked against checksums.
-4. A sample picture is ready: press **Run**. Or drop your own picture of **one object, fully in frame**. For text prompts, use the *Apps* button in the left bar (or *Start > Local3D tools*).
-5. Turn the finished model around in the viewer. It is saved automatically as a `.glb` in `Documents\Local3D\models`, and the download button above the viewer saves a copy anywhere you like.
+4. A sample picture is ready: press **Run**. Or drop your own picture of **one object, fully in frame**. For text prompts, use the *Apps* icon in the left bar (hover over the icons to see their names) or *Start > Local3D tools*.
+5. Turn the finished model around in the viewer. It is saved automatically as a `.glb` in `Documents\Local3D\models`, and the download button above the viewer saves a copy anywhere you like. Wait for the viewer to show the result before closing the window: closing it quits Local3D and cancels a model that is still being made.
 
 More detail: [docs/INSTALL.md](docs/INSTALL.md). Something wrong? [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md).
 
@@ -27,14 +27,14 @@ More detail: [docs/INSTALL.md](docs/INSTALL.md). Something wrong? [docs/TROUBLES
 
 ## What you get
 
-| App | Use it to | Time (RTX 5080) |
+| App | Use it to | Time (RTX 5080, models already loaded) |
 | --- | --- | --- |
 | **Image to 3D** | turn one picture into a textured 3D model | Fast 38 s, **Balanced 81 s**, Maximum 111 s |
-| **Prompt to 3D** | describe an object; Local3D draws a reference picture, then builds the model | Fast about 50 s, Balanced about 110 s |
+| **Prompt to 3D** | describe an object; Local3D draws a reference picture, then builds the model | Fast about 50 s, Balanced 100 to 190 s |
 | **Reference Pictures** | make 1, 2 or 4 candidate pictures from a prompt, then pick the best for *Image to 3D* | about 6 s for four |
 
 Controls: **Model** (Auto = Pixal3D, or TRELLIS.2), **Quality** (Fast, Balanced, Maximum), **Output** (High fidelity, or Game asset with
-about 30k triangles), **Background** (Auto, Remove, Keep your own transparent PNG) and **Seed**. Times are measured, not promised: see [docs/QUALITY.md](docs/QUALITY.md).
+about 30k triangles, for games and apps), **Background** (Auto, Remove, Keep your own transparent PNG) and **Seed**. Times were measured on one machine, not promised: the first row is Pixal3D with models already loaded; TRELLIS.2 and the first run after starting are slower (see [docs/QUALITY.md](docs/QUALITY.md)).
 
 Single-picture 3D *estimates* the sides it cannot see. Show the whole object on a simple background, and treat the back as a good guess.
 
@@ -70,7 +70,9 @@ Details, timings and how the presets were chosen: [docs/QUALITY.md](docs/QUALITY
 
 Generation runs on your PC. Pictures, prompts and meshes are not uploaded anywhere, there is no telemetry, and no account is needed.
 The internet is used only for the first-run downloads (the ComfyUI runtime from GitHub, models from Hugging Face). After
-that, generation works offline. The diagnostics summary contains versions and hardware only.
+that, generation works offline. The diagnostics summary contains versions and hardware only. The app window is Microsoft Edge,
+a separate program: its own background connections to Microsoft follow your Windows and Edge privacy settings and are not
+controlled by Local3D (Local3D blocks known telemetry hosts inside that window and runs it with its own separate profile).
 
 ## How it works
 
@@ -83,6 +85,7 @@ official 3D nodes do the work. Experts can switch any app to the full graph. See
 
 ```
 git clone https://github.com/arashsajjadi/Local3D
+cd Local3D
 python scripts/validate.py && python -m unittest discover -s tests
 ```
 See [CONTRIBUTING.md](CONTRIBUTING.md). Independent project, not affiliated with Comfy Org, Microsoft, Tencent, Meta or Black Forest Labs.
