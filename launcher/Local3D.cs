@@ -397,7 +397,8 @@ namespace Local3D
                 OpenBrowser(port);
                 form.Set("Local3D is running", "You can close this window; Local3D stops when the app window is closed.");
                 form.Progress(1, 1);
-                try { form.BeginInvoke((MethodInvoker)delegate { form.WindowState = FormWindowState.Minimized; form.ShowInTaskbar = false; form.Hide(); }); } catch { }
+                if (browser != null)   // without a tracked app window the status window stays: it is the only way to quit
+                    try { form.BeginInvoke((MethodInvoker)delegate { form.WindowState = FormWindowState.Minimized; form.ShowInTaskbar = false; form.Hide(); }); } catch { }
                 WaitForExit();
             }
             catch (Exception ex)
@@ -414,6 +415,7 @@ namespace Local3D
             Log.Write("GPU: " + (o ?? "(nvidia-smi unavailable)").Trim());
             if (string.IsNullOrEmpty(o) || o.IndexOf(',') < 0)
             {
+                if (Ui.AutoYes) return true;   // unattended: continue (and let the engine report what it can)
                 DialogResult r = (DialogResult)Invoke(delegate
                 {
                     return MessageBox.Show("Local3D needs an NVIDIA graphics card (RTX 20-series or newer, 12 GB or more recommended) with an up-to-date driver, " +
@@ -493,20 +495,24 @@ namespace Local3D
 
             string archive = Path.Combine(folder, Json.Str(env.Runtime, "asset"));
             form.Set("Downloading the ComfyUI runtime (" + Gb(size) + ")", "From github.com/Comfy-Org/ComfyUI " + env.RuntimeTag);
-            Process curl = Proc.Start("curl.exe", "-L --fail --retry 5 --retry-delay 3 -C - -s -S -o \"" + archive + "\" \"" + Json.Str(env.Runtime, "url") + "\"", folder, null);
-            AddChild(curl);
-            while (!curl.HasExited)
+            bool alreadyComplete = File.Exists(archive) && new FileInfo(archive).Length == size;   // e.g. an earlier run stopped before unpacking
+            if (!alreadyComplete)
             {
-                if (form.CancelRequested) { Proc.KillTree(curl); return false; }
-                long have = File.Exists(archive) ? new FileInfo(archive).Length : 0;
-                form.Progress(have, size);
-                form.Set("Downloading the ComfyUI runtime (" + Gb(size) + ")", Gb(have) + " of " + Gb(size));
-                Thread.Sleep(400);
-            }
-            if (curl.ExitCode != 0)
-            {
-                Fail(3, "The runtime download did not finish.", "Check your internet connection and start Local3D again - the download resumes where it stopped.", "curl exit code " + curl.ExitCode);
-                return false;
+                Process curl = Proc.Start("curl.exe", "-L --fail --retry 5 --retry-delay 3 -C - -s -S -o \"" + archive + "\" \"" + Json.Str(env.Runtime, "url") + "\"", folder, null);
+                AddChild(curl);
+                while (!curl.HasExited)
+                {
+                    if (form.CancelRequested) { Proc.KillTree(curl); return false; }
+                    long have = File.Exists(archive) ? new FileInfo(archive).Length : 0;
+                    form.Progress(have, size);
+                    form.Set("Downloading the ComfyUI runtime (" + Gb(size) + ")", Gb(have) + " of " + Gb(size));
+                    Thread.Sleep(400);
+                }
+                if (curl.ExitCode != 0)
+                {
+                    Fail(3, "The runtime download did not finish.", "Check your internet connection and start Local3D again - the download resumes where it stopped.", "curl exit code " + curl.ExitCode);
+                    return false;
+                }
             }
             form.Set("Verifying the download...", "SHA-256 checksum");
             form.Indeterminate();
@@ -617,8 +623,11 @@ namespace Local3D
             Workspace.Prepare(env, gpuClass);
             port = FreePort();
             string rt = env.RuntimeDir;
+            // NOT --disable-api-nodes: it makes ComfyUI send a Content-Security-Policy without blob: in connect-src, which
+            // stops its own 3D viewer from loading a GLB's embedded textures (the model shows grey). The page and engine
+            // were measured to make no outbound connections without it; cloud/telemetry hosts are blocked in the app window.
             string args = "-s ComfyUI\\main.py --windows-standalone-build --listen 127.0.0.1 --port " + port +
-                " --disable-auto-launch --disable-all-custom-nodes --whitelist-custom-nodes local3d_pack --disable-api-nodes" +
+                " --disable-auto-launch --disable-all-custom-nodes --whitelist-custom-nodes local3d_pack" +
                 " --base-directory \"" + env.Workspace + "\" --models-directory \"" + env.ModelsDir + "\"" +
                 " --input-directory \"" + env.OutputDir + "\" --output-directory \"" + env.OutputDir + "\"";
             string extraEngine = Environment.GetEnvironmentVariable("LOCAL3D_ENGINE_ARGS");   // advanced / support: extra ComfyUI flags
@@ -635,7 +644,13 @@ namespace Local3D
             string logPath = Path.Combine(env.LogDir, "comfyui.log");
             StreamWriter sw = new StreamWriter(new FileStream(logPath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite), new UTF8Encoding(false));
             sw.AutoFlush = true;
-            DataReceivedEventHandler h = delegate(object s, DataReceivedEventArgs e) { if (e.Data != null) lock (sw) sw.WriteLine(e.Data); };
+            DataReceivedEventHandler h = delegate(object s, DataReceivedEventArgs e)
+            {
+                if (e.Data == null) return;
+                lock (sw) sw.WriteLine(e.Data);
+                if (e.Data.IndexOf("out of memory", StringComparison.OrdinalIgnoreCase) >= 0 || e.Data.IndexOf("OutOfMemoryError", StringComparison.OrdinalIgnoreCase) >= 0)
+                    OnOutOfMemory(e.Data, logPath);
+            };
             server.OutputDataReceived += h; server.ErrorDataReceived += h;
             server.Start();
             job = Native.KillOnCloseJob();
@@ -660,6 +675,29 @@ namespace Local3D
             }
             Fail(7, "Local3D's engine did not respond in time.", "Restart Local3D. If it happens again, see the troubleshooting guide.", Tail(logPath, 40));
             return false;
+        }
+
+        // GPU memory ran out: say what to do in plain words (once per minute), with the raw log one click away.
+        private DateTime lastOom = DateTime.MinValue;
+        private void OnOutOfMemory(string line, string logPath)
+        {
+            lock (this)
+            {
+                if ((DateTime.Now - lastOom).TotalSeconds < 60) return;
+                lastOom = DateTime.Now;
+            }
+            Log.Write("ERROR: GPU out of memory | " + line);
+            try
+            {
+                form.BeginInvoke((MethodInvoker)delegate
+                {
+                    Ui.Error("Not enough GPU memory for this setting.",
+                        "Choose a lower Quality (Maximum, then Balanced, then Fast) or switch Model, close other programs that use the graphics card, and press Run again. " +
+                        "Your picture and settings have not been changed.",
+                        Tail(logPath, 40));
+                });
+            }
+            catch { }
         }
 
         private static string Tail(string path, int n)
@@ -697,7 +735,8 @@ namespace Local3D
             }
             string profile = Path.Combine(env.DataDir, "browser-profile");
             string a = "--app=\"" + url + "\" --user-data-dir=\"" + profile + "\" --window-size=1440,920 --no-first-run --no-default-browser-check" +
-                       " --disable-features=msEdgeSidebarV2,msShoppingAssistant --disable-sync";
+                       " --disable-features=msEdgeSidebarV2,msShoppingAssistant --disable-sync" +
+                       " --host-resolver-rules=\"MAP api.comfy.org ~NOTFOUND, MAP *.sentry.io ~NOTFOUND, MAP *.posthog.com ~NOTFOUND, MAP *.mixpanel.com ~NOTFOUND, MAP *.segment.io ~NOTFOUND, MAP *.amplitude.com ~NOTFOUND, MAP *.googletagmanager.com ~NOTFOUND\"";
             string extra = Environment.GetEnvironmentVariable("LOCAL3D_BROWSER_ARGS");   // developer hook, e.g. --remote-debugging-port=9333
             if (!string.IsNullOrEmpty(extra)) a += " " + extra;
             ProcessStartInfo psi = new ProcessStartInfo(edge, a);
