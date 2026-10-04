@@ -25,8 +25,8 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 
 [assembly: AssemblyTitle("Local3D")]
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyInformationalVersion("0.1.0")]
+[assembly: AssemblyVersion("0.1.1.0")]
+[assembly: AssemblyInformationalVersion("0.1.1")]
 [assembly: AssemblyProduct("Local3D")]
 [assembly: AssemblyCopyright("Copyright (c) 2026 Arash Sajjadi. MIT License.")]
 
@@ -34,7 +34,7 @@ namespace Local3D
 {
     internal static class Program
     {
-        public const string Version = "0.1.0";
+        public const string Version = "0.1.1";
 
         [STAThread]
         private static int Main(string[] args)
@@ -256,6 +256,41 @@ namespace Local3D
         }
     }
 
+    // Shown when the app window does not become ready in time: the person is never left watching a progress bar.
+    internal static class StallDialog
+    {
+        // returns "retry", "repair", "diag" or "quit"
+        public static string Ask(string details)
+        {
+            string result = "quit";
+            using (Form f = new Form())
+            {
+                f.Text = "Local3D";
+                f.Icon = Ui.AppIcon();
+                f.StartPosition = FormStartPosition.CenterScreen;
+                f.FormBorderStyle = FormBorderStyle.FixedDialog; f.MaximizeBox = false; f.MinimizeBox = false;
+                f.ClientSize = new Size(600, 350);
+                Label s = new Label { Text = "Local3D could not finish loading the interface.", Left = 16, Top = 14, Width = 568, Height = 26, Font = new Font(SystemFonts.MessageBoxFont.FontFamily, 11f, FontStyle.Bold) };
+                Label g = new Label { Left = 16, Top = 46, Width = 568, Height = 62,
+                    Text = "The engine is running, but the app window did not become ready in time. Retry reopens the window. " +
+                           "Repair interface resets only Local3D's own browser data (your models and results are not touched) and reopens it." };
+                TextBox t = new TextBox { Text = (details ?? "").Replace("\r\n", "\n").Replace("\n", "\r\n"), Left = 16, Top = 112, Width = 568, Height = 180, Multiline = true, ReadOnly = true, ScrollBars = ScrollBars.Both, WordWrap = false, AccessibleName = "Technical details" };
+                Button retry = new Button { Text = "Retry", Left = 16, Top = 304, Width = 100, Height = 30 };
+                Button repair = new Button { Text = "Repair interface", Left = 124, Top = 304, Width = 130, Height = 30 };
+                Button diag = new Button { Text = "Open diagnostics", Left = 262, Top = 304, Width = 130, Height = 30 };
+                Button quit = new Button { Text = "Quit", Left = 484, Top = 304, Width = 100, Height = 30 };
+                retry.Click += delegate { result = "retry"; f.Close(); };
+                repair.Click += delegate { result = "repair"; f.Close(); };
+                diag.Click += delegate { result = "diag"; f.Close(); };
+                quit.Click += delegate { result = "quit"; f.Close(); };
+                f.Controls.AddRange(new Control[] { s, g, t, retry, repair, diag, quit });
+                f.AcceptButton = retry; f.CancelButton = quit;
+                f.ShowDialog();
+            }
+            return result;
+        }
+    }
+
     // Small status window used during first run and startup. Closing it (or "Quit") shuts Local3D down.
     internal sealed class StatusForm : Form
     {
@@ -427,6 +462,7 @@ namespace Local3D
                 if (!StartServer()) return;
                 KillProfileBrowsers();   // a leftover window of ours would swallow the new one
                 OpenBrowser(port);
+                if (browser != null && !AwaitInterface()) return;
                 form.Set("Local3D is running", browser != null ? "You can close this window; Local3D stops when the app window is closed."
                                                                 : "Local3D is open in your web browser. Keep THIS window open and click Quit when you are done.");
                 form.Progress(1, 1);
@@ -768,7 +804,7 @@ namespace Local3D
                     Fail(6, "Local3D's engine stopped while starting.", "Restart Local3D. If it happens again, update your NVIDIA driver and see the troubleshooting guide.", Tail(logPath, 40));
                     return false;
                 }
-                if (Http.Ok("http://127.0.0.1:" + port + "/system_stats"))
+                if (Http.Ok("http://127.0.0.1:" + port + "/system_stats") && Http.Ok("http://127.0.0.1:" + port + "/"))   // engine health + the interface is served
                 {
                     File.WriteAllText(sessionFile, "{\"port\":" + port + ",\"pid\":" + server.Id + "}");   // only now can a second launch reuse it
                     return true;
@@ -846,6 +882,67 @@ namespace Local3D
             browser = Process.Start(psi);
             if (job != IntPtr.Zero) Native.AssignProcessToJobObject(job, browser.Handle);   // the window dies with the launcher, never orphaned on a dead engine
             Log.Write("Edge app window opened, pid " + browser.Id);
+        }
+
+        // The frontend names its window after the open app ("... Local3D_Image_to_3D - ComfyUI"); the splash is only "ComfyUI".
+        private bool InterfaceReady()
+        {
+            foreach (Process p in ProfileBrowsers())
+                try { p.Refresh(); if (p.MainWindowTitle.IndexOf("Local3D", StringComparison.OrdinalIgnoreCase) >= 0) return true; } catch { }
+            return false;
+        }
+
+        private static int ReadyTimeoutSeconds()
+        {
+            int n; string e = Environment.GetEnvironmentVariable("LOCAL3D_READY_TIMEOUT");   // test hook; default 90
+            return (!string.IsNullOrEmpty(e) && int.TryParse(e, out n) && n > 0) ? n : 90;
+        }
+
+        // Starting engine -> health -> loading interface -> ready, every step bounded. Returns false when Local3D should quit.
+        private bool AwaitInterface()
+        {
+            int stalls = 0;
+            while (true)
+            {
+                form.Set("Starting Local3D...", "Loading the interface");
+                form.Indeterminate();
+                DateTime until = DateTime.Now.AddSeconds(ReadyTimeoutSeconds());
+                bool seen = false;
+                while (DateTime.Now < until)
+                {
+                    if (form.CancelRequested) return false;
+                    if (server.HasExited) { Fail(6, "Local3D's engine stopped while the interface was loading.", "Restart Local3D. If it happens again, see the troubleshooting guide.", Tail(Path.Combine(env.LogDir, "comfyui.log"), 40)); return false; }
+                    if (InterfaceReady()) { Log.Write("Interface ready"); return true; }
+                    bool alive = WindowAlive();
+                    if (alive) seen = true; else if (seen) { Log.Write("App window closed before the interface was ready"); return true; }   // the person closed it
+                    Thread.Sleep(1000);
+                }
+                stalls++;
+                string details = "Interface not ready after " + ReadyTimeoutSeconds() + " s (window title never named a Local3D app).\n\n--- launcher.log\n" +
+                                 Tail(Path.Combine(env.LogDir, "launcher.log"), 15) + "\n--- comfyui.log\n" + Tail(Path.Combine(env.LogDir, "comfyui.log"), 25);
+                Log.Write("ERROR: interface not ready in time (stall " + stalls + ")");
+                string choice = Ui.AutoYes ? (stalls == 1 ? "repair" : "quit") : (string)Invoke(delegate { return StallDialog.Ask(details); });
+                if (choice == "diag") { Invoke(delegate { Diagnostics_.Show(env); return null; }); choice = (string)Invoke(delegate { return StallDialog.Ask(details); }); }
+                if (choice == "retry") { KillProfileBrowsers(); OpenBrowser(port); continue; }
+                if (choice == "repair") { RepairInterface(); OpenBrowser(port); continue; }
+                Close();
+                return false;
+            }
+        }
+
+        // Resets only what Local3D owns: its private browser profile and the frontend settings it writes. Never the person's Edge data.
+        private void RepairInterface()
+        {
+            Log.Write("Repairing the interface: removing Local3D's browser profile and frontend settings");
+            KillProfileBrowsers();
+            Thread.Sleep(1500);
+            for (int i = 0; i < 5; i++)
+            {
+                try { if (Directory.Exists(ProfileDir)) Directory.Delete(ProfileDir, true); break; }
+                catch (Exception ex) { Log.Write("repair: " + ex.Message); Thread.Sleep(1000); }
+            }
+            try { File.Delete(Path.Combine(env.Workspace, @"user\default\comfy.settings.json")); } catch { }
+            try { Workspace.Prepare(env, gpuClass); } catch (Exception ex) { Log.Write("repair: " + ex.Message); }
         }
 
         private string ProfileDir { get { return Path.Combine(env.DataDir, "browser-profile"); } }
