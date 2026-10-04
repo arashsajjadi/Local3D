@@ -1,8 +1,8 @@
 {
- "id": "39f5fdc0-0b0f-5871-a2e5-263a05bafa71",
+ "id": "247bc882-d743-5cc7-afb5-3678e5524e96",
  "revision": 0,
- "last_node_id": 340,
- "last_link_id": 1328,
+ "last_node_id": 358,
+ "last_link_id": 1350,
  "nodes": [
   {
    "id": 3,
@@ -1080,62 +1080,6 @@
    }
   },
   {
-   "id": 122,
-   "type": "LoadImage",
-   "pos": [
-    -5080,
-    510
-   ],
-   "size": [
-    740,
-    870
-   ],
-   "flags": {},
-   "order": 9,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "image",
-     "type": "COMBO",
-     "widget": {
-      "name": "image"
-     },
-     "label": "Image",
-     "link": null
-    }
-   ],
-   "outputs": [
-    {
-     "name": "IMAGE",
-     "type": "IMAGE",
-     "links": [
-      888,
-      1260
-     ]
-    },
-    {
-     "name": "MASK",
-     "type": "MASK",
-     "links": [
-      1318
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.33.0",
-    "Node name for S&R": "LoadImage"
-   },
-   "widgets_values": [
-    "Local3D_example_owl.jpg",
-    "image"
-   ],
-   "widgets_values_named": {
-    "image": "viking_wolf_rune_axe.png",
-    "upload": "image"
-   }
-  },
-  {
    "id": 125,
    "type": "RescaleCFG",
    "pos": [
@@ -1409,7 +1353,7 @@
     {
      "name": "image",
      "type": "IMAGE",
-     "link": 888
+     "link": 1348
     }
    ],
    "outputs": [
@@ -1417,8 +1361,7 @@
      "name": "mask",
      "type": "MASK",
      "links": [
-      1319,
-      1324
+      1329
      ]
     }
    ],
@@ -2330,59 +2273,6 @@
    }
   },
   {
-   "id": 248,
-   "type": "ComfySwitchNode",
-   "pos": [
-    -3840,
-    580
-   ],
-   "size": [
-    270,
-    110
-   ],
-   "flags": {},
-   "order": 16,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "on_false",
-     "type": "MASK",
-     "link": 1326
-    },
-    {
-     "name": "on_true",
-     "type": "MASK",
-     "link": 1327
-    },
-    {
-     "name": "switch",
-     "type": "BOOLEAN",
-     "link": 1328,
-     "widget": {
-      "name": "switch"
-     }
-    }
-   ],
-   "outputs": [
-    {
-     "name": "output",
-     "type": "MASK",
-     "links": [
-      1240
-     ]
-    }
-   ],
-   "title": "Switch: Keep (your cutout)",
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.33.0",
-    "Node name for S&R": "ComfySwitchNode"
-   },
-   "widgets_values": [
-    false
-   ]
-  },
-  {
    "id": 250,
    "type": "Note",
    "pos": [
@@ -2855,7 +2745,7 @@
     {
      "name": "mask",
      "type": "MASK",
-     "link": 1240
+     "link": 1329
     }
    ],
    "outputs": [
@@ -2891,7 +2781,7 @@
     {
      "name": "images",
      "type": "IMAGE",
-     "link": 1260
+     "link": 1349
     },
     {
      "name": "masks",
@@ -3238,7 +3128,7 @@
     "ver": "0.33.0"
    },
    "widgets_values": [
-    "Local3D/model",
+    "models/prompt",
     "",
     1024,
     1024
@@ -3448,65 +3338,6 @@
    ]
   },
   {
-   "id": 326,
-   "type": "CustomCombo",
-   "pos": [
-    -4380,
-    -1560
-   ],
-   "size": [
-    330,
-    190
-   ],
-   "flags": {},
-   "order": 326,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "choice",
-     "type": "COMBO",
-     "widget": {
-      "name": "choice"
-     },
-     "label": "Background",
-     "localized_name": "choice",
-     "link": null
-    }
-   ],
-   "outputs": [
-    {
-     "name": "STRING",
-     "type": "STRING",
-     "localized_name": "STRING",
-     "links": []
-    },
-    {
-     "name": "INDEX",
-     "type": "INT",
-     "localized_name": "INDEX",
-     "links": [
-      1321,
-      1322
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "CustomCombo",
-    "local3d_tip": "Auto removes the background. Keep uses your image's own transparency."
-   },
-   "title": "Background",
-   "widgets_values": [
-    "Auto",
-    0,
-    "Auto",
-    "Remove",
-    "Keep",
-    ""
-   ]
-  },
-  {
    "id": 327,
    "type": "PrimitiveInt",
    "pos": [
@@ -3541,7 +3372,8 @@
       1314,
       1315,
       1316,
-      1317
+      1317,
+      1340
      ]
     }
    ],
@@ -3945,254 +3777,6 @@
    ]
   },
   {
-   "id": 335,
-   "type": "InvertMask",
-   "pos": [
-    -4300,
-    -1320
-   ],
-   "size": [
-    260,
-    60
-   ],
-   "flags": {},
-   "order": 335,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "mask",
-     "type": "MASK",
-     "link": 1318
-    }
-   ],
-   "outputs": [
-    {
-     "name": "MASK",
-     "type": "MASK",
-     "links": [
-      1320,
-      1327
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "InvertMask"
-   },
-   "title": "Your cutout (alpha)"
-  },
-  {
-   "id": 336,
-   "type": "MaskComposite",
-   "pos": [
-    -4300,
-    -1200
-   ],
-   "size": [
-    300,
-    160
-   ],
-   "flags": {},
-   "order": 336,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "destination",
-     "type": "MASK",
-     "link": 1319
-    },
-    {
-     "name": "source",
-     "type": "MASK",
-     "link": 1320
-    }
-   ],
-   "outputs": [
-    {
-     "name": "MASK",
-     "type": "MASK",
-     "links": [
-      1323
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "MaskComposite"
-   },
-   "title": "Auto: AI matte × your cutout",
-   "widgets_values": [
-    0,
-    0,
-    "multiply"
-   ]
-  },
-  {
-   "id": 337,
-   "type": "ComfyMathExpression",
-   "pos": [
-    -4300,
-    -960
-   ],
-   "size": [
-    360,
-    120
-   ],
-   "flags": {},
-   "order": 337,
-   "mode": 0,
-   "inputs": [
-    {
-     "label": "a",
-     "localized_name": "values.a",
-     "name": "values.a",
-     "type": "FLOAT,INT,BOOLEAN",
-     "link": 1321
-    }
-   ],
-   "outputs": [
-    {
-     "localized_name": "FLOAT",
-     "name": "FLOAT",
-     "type": "FLOAT",
-     "links": []
-    },
-    {
-     "localized_name": "INT",
-     "name": "INT",
-     "type": "INT",
-     "links": []
-    },
-    {
-     "localized_name": "BOOL",
-     "name": "BOOL",
-     "type": "BOOLEAN",
-     "links": [
-      1325
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "ComfyMathExpression"
-   },
-   "title": "Background is Remove?",
-   "widgets_values": [
-    "a == 1"
-   ]
-  },
-  {
-   "id": 338,
-   "type": "ComfyMathExpression",
-   "pos": [
-    -4300,
-    -810
-   ],
-   "size": [
-    360,
-    120
-   ],
-   "flags": {},
-   "order": 338,
-   "mode": 0,
-   "inputs": [
-    {
-     "label": "a",
-     "localized_name": "values.a",
-     "name": "values.a",
-     "type": "FLOAT,INT,BOOLEAN",
-     "link": 1322
-    }
-   ],
-   "outputs": [
-    {
-     "localized_name": "FLOAT",
-     "name": "FLOAT",
-     "type": "FLOAT",
-     "links": []
-    },
-    {
-     "localized_name": "INT",
-     "name": "INT",
-     "type": "INT",
-     "links": []
-    },
-    {
-     "localized_name": "BOOL",
-     "name": "BOOL",
-     "type": "BOOLEAN",
-     "links": [
-      1328
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "ComfyMathExpression"
-   },
-   "title": "Background is Keep?",
-   "widgets_values": [
-    "a == 2"
-   ]
-  },
-  {
-   "id": 339,
-   "type": "ComfySwitchNode",
-   "pos": [
-    -3900,
-    -1200
-   ],
-   "size": [
-    300,
-    110
-   ],
-   "flags": {},
-   "order": 339,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "on_false",
-     "type": "MASK",
-     "link": 1323
-    },
-    {
-     "name": "on_true",
-     "type": "MASK",
-     "link": 1324
-    },
-    {
-     "name": "switch",
-     "type": "BOOLEAN",
-     "link": 1325,
-     "widget": {
-      "name": "switch"
-     }
-    }
-   ],
-   "outputs": [
-    {
-     "name": "output",
-     "type": "MASK",
-     "links": [
-      1326
-     ]
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "ComfySwitchNode"
-   },
-   "title": "Switch: Remove (AI matte only)",
-   "widgets_values": [
-    false
-   ]
-  },
-  {
    "id": 340,
    "type": "MarkdownNote",
    "pos": [
@@ -4216,6 +3800,778 @@
    "title": "Local3D",
    "widgets_values": [
     "## Local3D — Image to 3D\n\nThis graph is the official **Pixal3D & TRELLIS.2** workflow with a few Comfy Core nodes added for the app controls (Model, Quality, Background, Seed). The quality presets live in the *Preset* Math Expression nodes (generated from `data/presets.json`).\n\nDiagnostic previews are muted; un-mute them to inspect stages. Upstream: Comfy-Org/workflow_templates (MIT)."
+   ],
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 341,
+   "type": "PrimitiveStringMultiline",
+   "pos": [
+    -4380,
+    -1560
+   ],
+   "size": [
+    380,
+    200
+   ],
+   "flags": {},
+   "order": 341,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "label": "Prompt",
+     "localized_name": "value",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1330,
+      1331
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveStringMultiline"
+   },
+   "title": "Prompt",
+   "widgets_values": [
+    "A mechanical owl made of brass"
+   ]
+  },
+  {
+   "id": 342,
+   "type": "PrimitiveBoolean",
+   "pos": [
+    -3960,
+    -1560
+   ],
+   "size": [
+    330,
+    90
+   ],
+   "flags": {},
+   "order": 342,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "value"
+     },
+     "label": "3D-friendly reference",
+     "localized_name": "value",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "BOOLEAN",
+     "type": "BOOLEAN",
+     "links": [
+      1333
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "PrimitiveBoolean"
+   },
+   "title": "3D-friendly reference",
+   "widgets_values": [
+    true
+   ]
+  },
+  {
+   "id": 343,
+   "type": "StringConcatenate",
+   "pos": [
+    -7000,
+    -920
+   ],
+   "size": [
+    340,
+    170
+   ],
+   "flags": {},
+   "order": 343,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "string_a",
+     "type": "STRING",
+     "link": 1330,
+     "widget": {
+      "name": "string_a"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      1332
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "StringConcatenate"
+   },
+   "title": "Add 3D-friendly framing",
+   "widgets_values": [
+    "",
+    ", a single complete object centered in the frame and fully visible with nothing cropped, shown in a three-quarter front view from slightly above, soft even studio lighting, plain seamless neutral grey background, clean unmarked surfaces, photorealistic 3D render",
+    ""
+   ]
+  },
+  {
+   "id": 344,
+   "type": "ComfySwitchNode",
+   "pos": [
+    -6620,
+    -920
+   ],
+   "size": [
+    300,
+    110
+   ],
+   "flags": {},
+   "order": 344,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "STRING",
+     "link": 1331
+    },
+    {
+     "name": "on_true",
+     "type": "STRING",
+     "link": 1332
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 1333,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "STRING",
+     "links": [
+      1335
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfySwitchNode"
+   },
+   "title": "Use 3D-friendly framing?",
+   "widgets_values": [
+    true
+   ]
+  },
+  {
+   "id": 345,
+   "type": "UNETLoader",
+   "pos": [
+    -7000,
+    -680
+   ],
+   "size": [
+    340,
+    100
+   ],
+   "flags": {},
+   "order": 345,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      1337
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "UNETLoader",
+    "models": [
+     {
+      "name": "flux-2-klein-4b-fp8.safetensors",
+      "directory": "diffusion_models",
+      "url": "https://huggingface.co/black-forest-labs/FLUX.2-klein-4b-fp8/resolve/5b4408e59397a4a37ccb46afe426d8ed86379441/flux-2-klein-4b-fp8.safetensors",
+      "hash": "97ed34fe0567e436200f2faee3939b88f2b5d99f8af2a4dc16532c4245c0ccb6",
+      "hash_type": "SHA256"
+     }
+    ]
+   },
+   "title": "FLUX.2 klein 4B (distilled)",
+   "widgets_values": [
+    "flux-2-klein-4b-fp8.safetensors",
+    "default"
+   ]
+  },
+  {
+   "id": 346,
+   "type": "CLIPLoader",
+   "pos": [
+    -7000,
+    -540
+   ],
+   "size": [
+    340,
+    120
+   ],
+   "flags": {},
+   "order": 346,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [
+      1334
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "CLIPLoader",
+    "models": [
+     {
+      "name": "qwen_3_4b.safetensors",
+      "directory": "text_encoders",
+      "url": "https://huggingface.co/Comfy-Org/vae-text-encorder-for-flux-klein-4b/resolve/5f526678002e43af5551dadb73ce2e8c91b43afe/split_files/text_encoders/qwen_3_4b.safetensors",
+      "hash": "6c671498573ac2f7a5501502ccce8d2b08ea6ca2f661c458e708f36b36edfc5a",
+      "hash_type": "SHA256"
+     }
+    ]
+   },
+   "title": "Qwen3 text encoder",
+   "widgets_values": [
+    "qwen_3_4b.safetensors",
+    "flux2",
+    "default"
+   ]
+  },
+  {
+   "id": 347,
+   "type": "VAELoader",
+   "pos": [
+    -7000,
+    -380
+   ],
+   "size": [
+    340,
+    80
+   ],
+   "flags": {},
+   "order": 347,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      1347
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "VAELoader",
+    "models": [
+     {
+      "name": "flux2-vae.safetensors",
+      "directory": "vae",
+      "url": "https://huggingface.co/Comfy-Org/vae-text-encorder-for-flux-klein-4b/resolve/5f526678002e43af5551dadb73ce2e8c91b43afe/split_files/vae/flux2-vae.safetensors",
+      "hash": "868fe7b343cc8f3a19dbcfcafbc3d5f888802be3f89bd81b65b3621a066ce8f3",
+      "hash_type": "SHA256"
+     }
+    ]
+   },
+   "title": "FLUX.2 VAE",
+   "widgets_values": [
+    "flux2-vae.safetensors"
+   ]
+  },
+  {
+   "id": 348,
+   "type": "CLIPTextEncode",
+   "pos": [
+    -6620,
+    -680
+   ],
+   "size": [
+    340,
+    120
+   ],
+   "flags": {},
+   "order": 348,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 1334
+    },
+    {
+     "name": "text",
+     "type": "STRING",
+     "link": 1335,
+     "widget": {
+      "name": "text"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      1336,
+      1338
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "CLIPTextEncode"
+   },
+   "title": "Encode prompt",
+   "widgets_values": [
+    ""
+   ]
+  },
+  {
+   "id": 349,
+   "type": "ConditioningZeroOut",
+   "pos": [
+    -6620,
+    -520
+   ],
+   "size": [
+    260,
+    60
+   ],
+   "flags": {},
+   "order": 349,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "conditioning",
+     "type": "CONDITIONING",
+     "link": 1336
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      1339
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ConditioningZeroOut"
+   }
+  },
+  {
+   "id": 350,
+   "type": "CFGGuider",
+   "pos": [
+    -6240,
+    -680
+   ],
+   "size": [
+    260,
+    120
+   ],
+   "flags": {},
+   "order": 350,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 1337
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 1338
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 1339
+    }
+   ],
+   "outputs": [
+    {
+     "name": "GUIDER",
+     "type": "GUIDER",
+     "links": [
+      1342
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "CFGGuider"
+   },
+   "widgets_values": [
+    1
+   ]
+  },
+  {
+   "id": 351,
+   "type": "KSamplerSelect",
+   "pos": [
+    -6240,
+    -520
+   ],
+   "size": [
+    260,
+    60
+   ],
+   "flags": {},
+   "order": 351,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "SAMPLER",
+     "type": "SAMPLER",
+     "links": [
+      1343
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "KSamplerSelect"
+   },
+   "widgets_values": [
+    "euler"
+   ]
+  },
+  {
+   "id": 352,
+   "type": "Flux2Scheduler",
+   "pos": [
+    -6240,
+    -420
+   ],
+   "size": [
+    260,
+    110
+   ],
+   "flags": {},
+   "order": 352,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "SIGMAS",
+     "type": "SIGMAS",
+     "links": [
+      1344
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "Flux2Scheduler"
+   },
+   "widgets_values": [
+    4,
+    1024,
+    1024
+   ]
+  },
+  {
+   "id": 353,
+   "type": "RandomNoise",
+   "pos": [
+    -6240,
+    -270
+   ],
+   "size": [
+    260,
+    110
+   ],
+   "flags": {},
+   "order": 353,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "noise_seed",
+     "type": "INT",
+     "link": 1340,
+     "widget": {
+      "name": "noise_seed"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "NOISE",
+     "type": "NOISE",
+     "links": [
+      1341
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "RandomNoise"
+   },
+   "widgets_values": [
+    0,
+    "fixed"
+   ]
+  },
+  {
+   "id": 354,
+   "type": "EmptyFlux2LatentImage",
+   "pos": [
+    -6240,
+    -120
+   ],
+   "size": [
+    260,
+    130
+   ],
+   "flags": {},
+   "order": 354,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      1345
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "EmptyFlux2LatentImage"
+   },
+   "widgets_values": [
+    1024,
+    1024,
+    1
+   ]
+  },
+  {
+   "id": 355,
+   "type": "SamplerCustomAdvanced",
+   "pos": [
+    -5920,
+    -680
+   ],
+   "size": [
+    260,
+    140
+   ],
+   "flags": {},
+   "order": 355,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "noise",
+     "type": "NOISE",
+     "link": 1341
+    },
+    {
+     "name": "guider",
+     "type": "GUIDER",
+     "link": 1342
+    },
+    {
+     "name": "sampler",
+     "type": "SAMPLER",
+     "link": 1343
+    },
+    {
+     "name": "sigmas",
+     "type": "SIGMAS",
+     "link": 1344
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 1345
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "LATENT",
+     "links": [
+      1346
+     ]
+    },
+    {
+     "name": "denoised_output",
+     "type": "LATENT",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "SamplerCustomAdvanced"
+   }
+  },
+  {
+   "id": 356,
+   "type": "VAEDecode",
+   "pos": [
+    -5920,
+    -480
+   ],
+   "size": [
+    260,
+    60
+   ],
+   "flags": {},
+   "order": 356,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 1346
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 1347
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      1348,
+      1349,
+      1350
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "VAEDecode"
+   },
+   "title": "Reference image"
+  },
+  {
+   "id": 357,
+   "type": "SaveImage",
+   "pos": [
+    -5550,
+    -920
+   ],
+   "size": [
+    320,
+    280
+   ],
+   "flags": {},
+   "order": 357,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 1350
+    }
+   ],
+   "outputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "SaveImage"
+   },
+   "title": "Reference image (saved)",
+   "widgets_values": [
+    "Local3D_reference"
+   ]
+  },
+  {
+   "id": 358,
+   "type": "MarkdownNote",
+   "pos": [
+    -5100,
+    -1940
+   ],
+   "size": [
+    760,
+    200
+   ],
+   "flags": {},
+   "order": 358,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "MarkdownNote"
+   },
+   "title": "Local3D",
+   "widgets_values": [
+    "## Local3D — Prompt to 3D\n\nPrompt → reference image (FLUX.2 klein 4B) → 3D model. The reference image is saved as `Local3D_reference_*.png` so you can reuse it in *Image to 3D*."
    ],
    "color": "#233",
    "bgcolor": "#355"
@@ -4429,14 +4785,6 @@
    192,
    0,
    "BACKGROUND_REMOVAL"
-  ],
-  [
-   888,
-   122,
-   0,
-   192,
-   1,
-   "IMAGE"
   ],
   [
    900,
@@ -4711,14 +5059,6 @@
    "CLIP_VISION"
   ],
   [
-   1240,
-   248,
-   0,
-   303,
-   0,
-   "MASK"
-  ],
-  [
    1241,
    302,
    0,
@@ -4747,14 +5087,6 @@
    312,
    0,
    302,
-   0,
-   "IMAGE"
-  ],
-  [
-   1260,
-   122,
-   0,
-   312,
    0,
    "IMAGE"
   ],
@@ -5135,92 +5467,180 @@
    "INT"
   ],
   [
-   1318,
-   122,
-   1,
-   335,
-   0,
-   "MASK"
-  ],
-  [
-   1319,
+   1329,
    192,
    0,
-   336,
+   303,
    0,
    "MASK"
   ],
   [
-   1320,
-   335,
+   1330,
+   341,
    0,
-   336,
+   343,
+   0,
+   "STRING"
+  ],
+  [
+   1331,
+   341,
+   0,
+   344,
+   0,
+   "STRING"
+  ],
+  [
+   1332,
+   343,
+   0,
+   344,
    1,
-   "MASK"
+   "STRING"
   ],
   [
-   1321,
-   326,
-   1,
-   337,
+   1333,
+   342,
    0,
-   "INT"
-  ],
-  [
-   1322,
-   326,
-   1,
-   338,
-   0,
-   "INT"
-  ],
-  [
-   1323,
-   336,
-   0,
-   339,
-   0,
-   "MASK"
-  ],
-  [
-   1324,
-   192,
-   0,
-   339,
-   1,
-   "MASK"
-  ],
-  [
-   1325,
-   337,
-   2,
-   339,
+   344,
    2,
    "BOOLEAN"
   ],
   [
-   1326,
-   339,
+   1334,
+   346,
    0,
-   248,
+   348,
    0,
-   "MASK"
+   "CLIP"
   ],
   [
-   1327,
-   335,
+   1335,
+   344,
    0,
-   248,
+   348,
    1,
-   "MASK"
+   "STRING"
   ],
   [
-   1328,
-   338,
+   1336,
+   348,
+   0,
+   349,
+   0,
+   "CONDITIONING"
+  ],
+  [
+   1337,
+   345,
+   0,
+   350,
+   0,
+   "MODEL"
+  ],
+  [
+   1338,
+   348,
+   0,
+   350,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   1339,
+   349,
+   0,
+   350,
    2,
-   248,
+   "CONDITIONING"
+  ],
+  [
+   1340,
+   327,
+   0,
+   353,
+   0,
+   "INT"
+  ],
+  [
+   1341,
+   353,
+   0,
+   355,
+   0,
+   "NOISE"
+  ],
+  [
+   1342,
+   350,
+   0,
+   355,
+   1,
+   "GUIDER"
+  ],
+  [
+   1343,
+   351,
+   0,
+   355,
    2,
-   "BOOLEAN"
+   "SAMPLER"
+  ],
+  [
+   1344,
+   352,
+   0,
+   355,
+   3,
+   "SIGMAS"
+  ],
+  [
+   1345,
+   354,
+   0,
+   355,
+   4,
+   "LATENT"
+  ],
+  [
+   1346,
+   355,
+   0,
+   356,
+   0,
+   "LATENT"
+  ],
+  [
+   1347,
+   347,
+   0,
+   356,
+   1,
+   "VAE"
+  ],
+  [
+   1348,
+   356,
+   0,
+   192,
+   1,
+   "IMAGE"
+  ],
+  [
+   1349,
+   356,
+   0,
+   312,
+   0,
+   "IMAGE"
+  ],
+  [
+   1350,
+   356,
+   0,
+   357,
+   0,
+   "IMAGE"
   ]
  ],
  "groups": [
@@ -5403,6 +5823,19 @@
    "color": "#b58b2a",
    "font_size": 24,
    "flags": {}
+  },
+  {
+   "id": 21,
+   "title": "Reference image (FLUX.2 klein 4B, 4 steps)",
+   "bounding": [
+    -7040,
+    -1000,
+    1440,
+    1100
+   ],
+   "color": "#3f789e",
+   "font_size": 24,
+   "flags": {}
   }
  ],
  "config": {},
@@ -5419,10 +5852,17 @@
   "linearData": {
    "inputs": [
     [
-     122,
-     "image",
+     341,
+     "value",
      {
-      "description": "Drop ONE object, fully in frame"
+      "description": "Describe ONE object"
+     }
+    ],
+    [
+     342,
+     "value",
+     {
+      "description": "Adds framing that helps 3D"
      }
     ],
     [
@@ -5440,13 +5880,6 @@
      }
     ],
     [
-     326,
-     "choice",
-     {
-      "description": "Auto removes it. Keep = cutout"
-     }
-    ],
-    [
      327,
      "value",
      {
@@ -5455,12 +5888,12 @@
     ]
    ],
    "outputs": [
-    322,
-    302
+    357,
+    322
    ]
   },
   "local3d": {
-   "app": "image-to-3d",
+   "app": "prompt-to-3d",
    "version": "0.1.0"
   }
  },

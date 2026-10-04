@@ -108,6 +108,25 @@ class Provisioning(unittest.TestCase):
         self.assertTrue(core and len(both) > len(core))
         self.assertEqual([f["id"] for f in pm.select_files(manifest, ["core"], ["birefnet"])], ["birefnet"])
 
+    def test_gpu_classes_pick_exactly_one_of_each_klein_part(self):
+        manifest = json.loads((ROOT / "data" / "models.json").read_text(encoding="utf-8"))
+        for gpu in ("blackwell", "ada", "legacy"):
+            files = pm.select_files(manifest, ["prompt"], [], gpu)
+            for kind in ("diffusion_models/", "text_encoders/", "vae/"):
+                self.assertEqual(sum(f["dest"].startswith(kind) for f in files), 1, (gpu, kind))
+        # RTX 50-series gets the small nvfp4 build, older cards never get it
+        self.assertIn("klein-dit", [f["id"] for f in pm.select_files(manifest, ["prompt"], [], "blackwell")])
+        self.assertNotIn("klein-dit", [f["id"] for f in pm.select_files(manifest, ["prompt"], [], "legacy")])
+
+    def test_prompt_app_variants_load_the_matching_weights(self):
+        manifest = {f["id"]: f for f in json.loads((ROOT / "data" / "models.json").read_text(encoding="utf-8"))["files"]}
+        for variant, (dit, te) in bw.KLEIN_VARIANTS.items():
+            d = bw.build_prompt_app(variant)
+            unets = [n["widgets_values"][0] for n in d["nodes"] if n["type"] == "UNETLoader" and "klein" in n["widgets_values"][0]]
+            clips = [n["widgets_values"][0] for n in d["nodes"] if n["type"] == "CLIPLoader"]
+            self.assertEqual(unets, [manifest[dit]["dest"].split("/")[-1]])
+            self.assertEqual(clips, [manifest[te]["dest"].split("/")[-1]])
+
     def test_disk_preflight_refuses_when_full(self):
         big = dict(self.f, size=10 ** 18)
         with self.assertRaises(pm.Failure) as cm:

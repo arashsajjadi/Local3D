@@ -20,6 +20,7 @@ import hashlib
 import json
 import os
 import shutil
+import subprocess
 import sys
 import time
 import traceback
@@ -67,11 +68,23 @@ def load_manifest(path: Path) -> dict:
         return json.load(fh)
 
 
-def select_files(manifest: dict, packs: list[str], only: list[str]) -> list[dict]:
-    files = [f for f in manifest["files"] if f["pack"] in packs]
+def detect_gpu_class() -> str:
+    """blackwell (RTX 50) / ada (RTX 40) / legacy, from the GPU's compute capability; legacy when unknown."""
+    try:
+        out = subprocess.run(["nvidia-smi", "--query-gpu=compute_cap", "--format=csv,noheader"],
+                             capture_output=True, text=True, timeout=8).stdout.split()[0]
+        cc = float(out)
+    except Exception:  # noqa: BLE001 - no NVIDIA driver, or an unexpected answer
+        return "legacy"
+    return "blackwell" if cc >= 10 else "ada" if cc >= 8.9 else "legacy"
+
+
+def select_files(manifest: dict, packs: list[str], only: list[str], gpu: str = "") -> list[dict]:
+    """Files of the chosen packs. Entries with a 'gpu' list (e.g. the FLUX.2 klein weight formats) are
+    included only for that GPU class; ``only`` (testing) bypasses the filter."""
     if only:
-        files = [f for f in manifest["files"] if f["id"] in only]
-    return files
+        return [f for f in manifest["files"] if f["id"] in only]
+    return [f for f in manifest["files"] if f["pack"] in packs and (not f.get("gpu") or not gpu or gpu in f["gpu"])]
 
 
 class VerifyCache:
@@ -194,6 +207,7 @@ def main(argv=None) -> int:
     ap.add_argument("--models-dir", type=Path, required=True)
     ap.add_argument("--pack", action="append", default=None, help="core (default), prompt")
     ap.add_argument("--only", action="append", default=[], help="download only these file ids (testing)")
+    ap.add_argument("--gpu", choices=["blackwell", "ada", "legacy"], help="weight format family (default: detect from the GPU)")
     ap.add_argument("--check", action="store_true", help="report what is installed; download nothing")
     ap.add_argument("--json", action="store_true", help="emit JSON lines")
     args = ap.parse_args(argv)
@@ -202,7 +216,8 @@ def main(argv=None) -> int:
 
     try:
         manifest = load_manifest(args.manifest)
-        files = select_files(manifest, packs, args.only)
+        gpu = args.gpu or detect_gpu_class()
+        files = select_files(manifest, packs, args.only, gpu)
         models_dir = args.models_dir
         cache = VerifyCache(models_dir)
 

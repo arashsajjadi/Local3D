@@ -44,7 +44,7 @@ namespace Local3D
             {
                 Cli cli = new Cli(args);
                 Ui.AutoYes = cli.Has("--yes");
-                if (cli.Has("--version")) { MessageBox.Show("Local3D " + Version, "Local3D"); return 0; }
+                if (cli.Has("--version")) { Native.AttachConsole(-1); Console.WriteLine("Local3D " + Version); return 0; }   // stdout, never a dialog (CI-friendly)
                 Env env = new Env();
                 if (cli.Has("--diagnostics")) { Diagnostics_.Show(env); return 0; }
                 bool created;
@@ -292,6 +292,7 @@ namespace Local3D
         [DllImport("kernel32.dll")] public static extern bool SetInformationJobObject(IntPtr job, int cls, IntPtr info, uint len);
         [DllImport("kernel32.dll")] public static extern bool AssignProcessToJobObject(IntPtr job, IntPtr proc);
         [DllImport("kernel32.dll")] public static extern bool CloseHandle(IntPtr h);
+        [DllImport("kernel32.dll")] public static extern bool AttachConsole(int pid);
 
         [StructLayout(LayoutKind.Sequential)]
         public struct BASIC { public long PerProcessUserTimeLimit, PerJobUserTimeLimit; public uint LimitFlags; public UIntPtr MinWs, MaxWs; public uint ActiveLimit; public UIntPtr Affinity; public uint Priority, Sched; }
@@ -324,6 +325,7 @@ namespace Local3D
         private Process browser;
         private IntPtr job = IntPtr.Zero;
         private int port;
+        private string gpuClass = "legacy";   // blackwell (RTX 50) | ada (RTX 40) | legacy: picks the FLUX.2 weight format
         private volatile int exitCode;
         private readonly List<Process> children = new List<Process>();
 
@@ -402,7 +404,7 @@ namespace Local3D
         private bool CheckGpu()
         {
             form.Set("Checking your graphics card...", null);
-            string o = Proc.Capture("nvidia-smi", "--query-gpu=name,memory.total --format=csv,noheader,nounits", 8000);
+            string o = Proc.Capture("nvidia-smi", "--query-gpu=name,memory.total,compute_cap --format=csv,noheader,nounits", 8000);
             Log.Write("GPU: " + (o ?? "(nvidia-smi unavailable)").Trim());
             if (string.IsNullOrEmpty(o) || o.IndexOf(',') < 0)
             {
@@ -415,6 +417,10 @@ namespace Local3D
                 return true;
             }
             long mib; string[] parts = o.Trim().Split(',');
+            double cc;
+            if (parts.Length > 2 && double.TryParse(parts[2].Trim(), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out cc))
+                gpuClass = cc >= 10 ? "blackwell" : (cc >= 8.9 ? "ada" : "legacy");
+            Log.Write("GPU class: " + gpuClass);
             if (parts.Length > 1 && long.TryParse(parts[1].Trim(), out mib) && mib < 9000 && !File.Exists(Path.Combine(env.DataDir, "vram-warned")))
             {
                 Invoke(delegate
@@ -533,7 +539,7 @@ namespace Local3D
             string script = Path.Combine(env.Root, "scripts", "provision_models.py");
             form.Set("Checking model files...", null);
             form.Indeterminate();
-            string baseArgs = "\"" + script + "\" --models-dir \"" + env.ModelsDir + "\"";
+            string baseArgs = "\"" + script + "\" --models-dir \"" + env.ModelsDir + "\" --gpu " + gpuClass;
             Dictionary<string, object> check = Json.Parse(Proc.Capture(env.Python, baseArgs + " --pack core --pack prompt --check --json", 120000) ?? "{}")
                                                ?? new Dictionary<string, object>();
             object filesObj; System.Collections.IEnumerable files = null;
@@ -602,13 +608,15 @@ namespace Local3D
         {
             form.Set("Starting Local3D...", "Preparing the workspace");
             form.Indeterminate();
-            Workspace.Prepare(env);
+            Workspace.Prepare(env, gpuClass);
             port = FreePort();
             string rt = env.RuntimeDir;
             string args = "-s ComfyUI\\main.py --windows-standalone-build --listen 127.0.0.1 --port " + port +
                 " --disable-auto-launch --disable-all-custom-nodes --whitelist-custom-nodes local3d_pack --disable-api-nodes" +
                 " --base-directory \"" + env.Workspace + "\" --models-directory \"" + env.ModelsDir + "\"" +
                 " --input-directory \"" + env.OutputDir + "\" --output-directory \"" + env.OutputDir + "\"";
+            string extraEngine = Environment.GetEnvironmentVariable("LOCAL3D_ENGINE_ARGS");   // advanced / support: extra ComfyUI flags
+            if (!string.IsNullOrEmpty(extraEngine)) { args += " " + extraEngine; Log.Write("extra engine args: " + extraEngine); }
             ProcessStartInfo psi = new ProcessStartInfo(env.Python, args);
             psi.WorkingDirectory = rt;
             psi.UseShellExecute = false; psi.CreateNoWindow = true;
@@ -684,6 +692,8 @@ namespace Local3D
             string profile = Path.Combine(env.DataDir, "browser-profile");
             string a = "--app=\"" + url + "\" --user-data-dir=\"" + profile + "\" --window-size=1440,920 --no-first-run --no-default-browser-check" +
                        " --disable-features=msEdgeSidebarV2,msShoppingAssistant --disable-sync";
+            string extra = Environment.GetEnvironmentVariable("LOCAL3D_BROWSER_ARGS");   // developer hook, e.g. --remote-debugging-port=9333
+            if (!string.IsNullOrEmpty(extra)) a += " " + extra;
             ProcessStartInfo psi = new ProcessStartInfo(edge, a);
             psi.UseShellExecute = false;
             browser = Process.Start(psi);
@@ -731,7 +741,7 @@ namespace Local3D
     internal static class Workspace
     {
         // Everything ComfyUI reads at startup that Local3D owns: the pack, the apps, and the frontend settings.
-        public static void Prepare(Env env)
+        public static void Prepare(Env env, string gpuClass)
         {
             string ws = env.Workspace;
             Directory.CreateDirectory(env.OutputDir);
@@ -742,11 +752,15 @@ namespace Local3D
             // never recurse through a junction/symlink (a developer may link the repo's pack here): remove only the link
             if (Directory.Exists(dest))
                 Directory.Delete(dest, (File.GetAttributes(dest) & FileAttributes.ReparsePoint) == 0);
-            CopyDir(pack, dest);
+            CopyDir(pack, dest, "variants");
+            // apps that depend on the GPU's weight format (FLUX.2 klein): overlay the variant for this GPU class
+            string variant = Path.Combine(pack, "variants", gpuClass);
+            if (Directory.Exists(variant))
+                foreach (string f in Directory.GetFiles(variant, "*.app.json")) File.Copy(f, Path.Combine(dest, "example_workflows", Path.GetFileName(f)), true);
 
             // the same apps appear in the Apps sidebar (switch between them without touching templates)
             string wf = Path.Combine(ws, @"user\default\workflows");
-            foreach (string f in Directory.GetFiles(Path.Combine(pack, "example_workflows"), "*.app.json"))
+            foreach (string f in Directory.GetFiles(Path.Combine(dest, "example_workflows"), "*.app.json"))
             {
                 string name = Path.GetFileName(f).Replace("Local3D_", "Local3D - ").Replace("_", " ");
                 File.Copy(f, Path.Combine(wf, name), true);
@@ -755,7 +769,7 @@ namespace Local3D
             // first-run sample picture so the Image app never opens on a missing file
             string samples = Path.Combine(env.Root, "assets", "examples");
             if (Directory.Exists(samples))
-                foreach (string f in Directory.GetFiles(samples, "Local3D_example_*.png"))
+                foreach (string f in Directory.GetFiles(samples, "Local3D_example_*.*"))
                 {
                     string t = Path.Combine(env.OutputDir, Path.GetFileName(f));
                     if (!File.Exists(t)) File.Copy(f, t);
@@ -769,11 +783,12 @@ namespace Local3D
             File.WriteAllText(sp, new JavaScriptSerializer().Serialize(s), new UTF8Encoding(false));
         }
 
-        private static void CopyDir(string from, string to)
+        private static void CopyDir(string from, string to, string skipDir)
         {
             Directory.CreateDirectory(to);
             foreach (string f in Directory.GetFiles(from)) File.Copy(f, Path.Combine(to, Path.GetFileName(f)), true);
-            foreach (string d in Directory.GetDirectories(from)) CopyDir(d, Path.Combine(to, Path.GetFileName(d)));
+            foreach (string d in Directory.GetDirectories(from))
+                if (!string.Equals(Path.GetFileName(d), skipDir, StringComparison.OrdinalIgnoreCase)) CopyDir(d, Path.Combine(to, Path.GetFileName(d)), skipDir);
         }
     }
 

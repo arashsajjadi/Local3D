@@ -58,6 +58,16 @@ def check_data():
                 err(f"{tag}: size must be a positive integer")
             if f["dest"].split("/")[0] not in known_dirs:
                 err(f"{tag}: unexpected destination folder {f['dest']!r}")
+            for g in f.get("gpu", []):
+                if g not in manifest.get("gpu_classes", {}):
+                    err(f"{tag}: unknown gpu class {g!r}")
+        # every GPU class must resolve to exactly one diffusion model, text encoder and VAE in the prompt pack
+        for cls in manifest.get("gpu_classes", {}):
+            chosen = [f for f in manifest["files"] if f["pack"] == "prompt" and (not f.get("gpu") or cls in f["gpu"])]
+            for kind in ("diffusion_models", "text_encoders", "vae"):
+                n = sum(1 for f in chosen if f["dest"].startswith(kind + "/"))
+                if n != 1:
+                    err(f"models.json: prompt pack for gpu class {cls!r} has {n} files in {kind}/ (need exactly 1)")
     if runtime:
         if not re.fullmatch(r"[0-9a-f]{64}", runtime["sha256"]):
             err("runtime.json: sha256 must be 64 hex characters")
@@ -168,7 +178,7 @@ def check_models_in_graph(rel: str, d: dict, manifest: dict | None):
 def check_workflows(manifest, core):
     core_types = set(core["node_types"]) | set(core.get("frontend_only", [])) if core else set()
     used_all: set[str] = set()
-    apps = sorted((ROOT / "local3d_pack" / "example_workflows").glob("*.app.json"))
+    apps = sorted((ROOT / "local3d_pack").rglob("*.app.json"))   # includes the per-GPU variants
     if not apps:
         err("local3d_pack/example_workflows has no *.app.json apps")
     for p in apps:

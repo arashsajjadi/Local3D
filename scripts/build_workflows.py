@@ -23,7 +23,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 UPSTREAM = ROOT / "workflows" / "upstream"
-OUT = ROOT / "local3d_pack" / "example_workflows"
+OUT = ROOT / "local3d_pack"
 PRESETS = ROOT / "data" / "presets.json"
 VERSION = "0.1.0"
 FRONTEND = "1.53.6"  # frontend pinned by the tested ComfyUI release (informational)
@@ -302,6 +302,7 @@ def _image_graph():
     # ---- outputs / naming ---------------------------------------------------------------------
     g.nodes[322]["widgets_values"][0] = "Local3D/model"
     g.nodes[302]["title"] = "Prepared image (what the model sees)"
+    g.nodes[122]["widgets_values"][0] = "Local3D_example_owl.jpg"  # copied into the input folder on first run
     g.label_widget(122, "image", "Image", "COMBO")
 
     # ---- documentation inside the graph -----------------------------------------------------------
@@ -365,9 +366,20 @@ def enrich_upstream_models(g: Graph):
                 m["hash"], m["hash_type"] = f["sha256"], "SHA256"
 
 
-def add_reference_stage(g: Graph, prompt: int, friendly: int, seed: int, batch_src, origin) -> int:
+# FLUX.2 klein weight formats per GPU class (picked at launch from the GPU's compute capability)
+KLEIN_VARIANTS = {"blackwell": ("klein-dit", "klein-te"), "ada": ("klein-dit-fp8", "klein-te-bf16"), "legacy": ("klein-dit-bf16", "klein-te-bf16")}
+
+
+def klein_files(variant: str) -> tuple[str, str, str, str]:
+    files = {f["id"]: f for f in json.loads(MANIFEST.read_text(encoding="utf-8"))["files"]}
+    dit_id, te_id = KLEIN_VARIANTS[variant]
+    return dit_id, te_id, files[dit_id]["dest"].split("/")[-1], files[te_id]["dest"].split("/")[-1]
+
+
+def add_reference_stage(g: Graph, prompt: int, friendly: int, seed: int, batch_src, origin, variant: str = "blackwell") -> int:
     """Add prompt framing + FLUX.2 klein 4B distilled text-to-image. Returns the VAEDecode node (IMAGE)."""
     x, y = origin
+    dit_id, te_id, dit_name, te_name = klein_files(variant)
     S = {"type": "STRING"}
     concat = g.add("StringConcatenate", title="Add 3D-friendly framing", pos=(x, y), size=(340, 170),
                    widgets=["", PROMPT_SUFFIX, ""], outputs=[{"name": "STRING", **S}])
@@ -379,11 +391,11 @@ def add_reference_stage(g: Graph, prompt: int, friendly: int, seed: int, batch_s
     g.connect(friendly, 0, pick, "switch", dtype="BOOLEAN", widget=True)
 
     unet = g.add("UNETLoader", title="FLUX.2 klein 4B (distilled)", pos=(x, y + 240), size=(340, 100),
-                 widgets=["flux-2-klein-4b-nvfp4.safetensors", "default"], outputs=[{"name": "MODEL", "type": "MODEL"}],
-                 props=model_props("klein-dit"))
+                 widgets=[dit_name, "default"], outputs=[{"name": "MODEL", "type": "MODEL"}],
+                 props=model_props(dit_id))
     clip = g.add("CLIPLoader", title="Qwen3 text encoder", pos=(x, y + 380), size=(340, 120),
-                 widgets=["qwen_3_4b_fp4_flux2.safetensors", "flux2", "default"], outputs=[{"name": "CLIP", "type": "CLIP"}],
-                 props=model_props("klein-te"))
+                 widgets=[te_name, "flux2", "default"], outputs=[{"name": "CLIP", "type": "CLIP"}],
+                 props=model_props(te_id))
     vae = g.add("VAELoader", title="FLUX.2 VAE", pos=(x, y + 540), size=(340, 80),
                 widgets=["flux2-vae.safetensors"], outputs=[{"name": "VAE", "type": "VAE"}], props=model_props("klein-vae"))
     enc = g.add("CLIPTextEncode", title="Encode prompt", pos=(x + 380, y + 240), size=(340, 120), widgets=[""],
@@ -431,7 +443,7 @@ def prompt_controls(g: Graph, origin):
     return prompt, friendly
 
 
-def build_prompt_app() -> dict:
+def build_prompt_app(variant: str = "blackwell") -> dict:
     g, ids = _image_graph()
     # the picture comes from the prompt, so the image-specific parts go away
     for nid in ids["bg_nodes"] + [248, ids["background"], 122]:
@@ -439,7 +451,7 @@ def build_prompt_app() -> dict:
     g.connect(192, "mask", 303, "mask")  # BiRefNet matte straight into the crop step
     X, Y = -5100, -1560
     prompt, friendly = prompt_controls(g, (X + 720, Y))
-    decode = add_reference_stage(g, prompt, friendly, ids["seed"], None, (X - 1900, Y + 640))
+    decode = add_reference_stage(g, prompt, friendly, ids["seed"], None, (X - 1900, Y + 640), variant)
     g.connect(decode, 0, 192, "image")
     g.connect(decode, 0, 312, "images")
     ref = g.add("SaveImage", title="Reference image (saved)", pos=(X - 450, Y + 640), size=(320, 280),
@@ -457,10 +469,10 @@ def build_prompt_app() -> dict:
             "The reference image is saved as `Local3D_reference_*.png` so you can reuse it in *Image to 3D*.",
          (X, Y - 380), (760, 200))
     app_meta(g, "prompt-to-3d", inputs, [ref, 322])
-    return g.finish("prompt-to-3d")
+    return g.finish("prompt-to-3d/" + variant)
 
 
-def build_reference_app() -> dict:
+def build_reference_app(variant: str = "blackwell") -> dict:
     g = Graph({"nodes": [], "links": [], "groups": [], "config": {}, "extra": {}, "version": 0.4,
                "last_node_id": 0, "last_link_id": 0, "revision": 0})
     X, Y = 0, 0
@@ -470,7 +482,7 @@ def build_reference_app() -> dict:
                  outputs=[{"name": "INT", "type": "INT"}])
     cands = combo(g, "Pictures", "Pictures", CANDIDATE_OPTIONS, "4", (X + 1140, Y), "How many reference pictures to make.")
     batch = math(g, "Pictures to make", "1 if a == 0 else (2 if a == 1 else 4)", cands, "INDEX", (X + 1140, Y + 240))
-    decode = add_reference_stage(g, prompt, friendly, seed, batch, (X, Y + 300))
+    decode = add_reference_stage(g, prompt, friendly, seed, batch, (X, Y + 300), variant)
     out = g.add("SaveImage", title="Reference pictures", pos=(X + 1480, Y + 540), size=(320, 280),
                 widgets=["Local3D_reference"], inputs=[{"name": "images", "type": "IMAGE"}], outputs=[{"name": "images", "type": "IMAGE"}])
     g.connect(decode, 0, out, "images")
@@ -483,21 +495,23 @@ def build_reference_app() -> dict:
         [seed, "value", {"description": "Same seed = same pictures"}],
     ]
     app_meta(g, "reference-pictures", inputs, [out])
-    return g.finish("reference-pictures")
+    return g.finish("reference-pictures/" + variant)
 
 
-APPS = {
-    "Local3D_Image_to_3D.app.json": build_image_app,
-    "Local3D_Prompt_to_3D.app.json": build_prompt_app,
-    "Local3D_Reference_Pictures.app.json": build_reference_app,
+APPS = {  # path relative to local3d_pack/  ->  builder
+    "example_workflows/Local3D_Image_to_3D.app.json": build_image_app,
+    "example_workflows/Local3D_Prompt_to_3D.app.json": lambda: build_prompt_app("blackwell"),
+    "example_workflows/Local3D_Reference_Pictures.app.json": lambda: build_reference_app("blackwell"),
 }
+for _v in ("ada", "legacy"):  # same apps with the weight formats that GPU class can run; the launcher copies these over
+    APPS[f"variants/{_v}/Local3D_Prompt_to_3D.app.json"] = (lambda v=_v: build_prompt_app(v))
+    APPS[f"variants/{_v}/Local3D_Reference_Pictures.app.json"] = (lambda v=_v: build_reference_app(v))
 
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true")
     args = ap.parse_args(argv)
-    OUT.mkdir(parents=True, exist_ok=True)
     stale = []
     for name, fn in APPS.items():
         text = json.dumps(fn(), indent=1, ensure_ascii=False) + "\n"
@@ -506,6 +520,7 @@ def main(argv=None) -> int:
             if not path.exists() or path.read_text(encoding="utf-8") != text:
                 stale.append(name)
         else:
+            path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(text, encoding="utf-8", newline="\n")
             print("wrote", path.relative_to(ROOT))
     if stale:

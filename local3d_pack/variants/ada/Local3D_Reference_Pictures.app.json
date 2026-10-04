@@ -378,17 +378,17 @@
     "Node name for S&R": "UNETLoader",
     "models": [
      {
-      "name": "flux-2-klein-4b-nvfp4.safetensors",
+      "name": "flux-2-klein-4b-fp8.safetensors",
       "directory": "diffusion_models",
-      "url": "https://huggingface.co/black-forest-labs/FLUX.2-klein-4b-nvfp4/resolve/1db2b2f776c24b76f1122e5f69ab1949fc620068/flux-2-klein-4b-nvfp4.safetensors",
-      "hash": "d8c5007b6a3bbbdfd38538bbcef5101a55dfde81894f58d2e3c8701cdef3542b",
+      "url": "https://huggingface.co/black-forest-labs/FLUX.2-klein-4b-fp8/resolve/5b4408e59397a4a37ccb46afe426d8ed86379441/flux-2-klein-4b-fp8.safetensors",
+      "hash": "97ed34fe0567e436200f2faee3939b88f2b5d99f8af2a4dc16532c4245c0ccb6",
       "hash_type": "SHA256"
      }
     ]
    },
    "title": "FLUX.2 klein 4B (distilled)",
    "widgets_values": [
-    "flux-2-klein-4b-nvfp4.safetensors",
+    "flux-2-klein-4b-fp8.safetensors",
     "default"
    ]
   },
@@ -422,17 +422,17 @@
     "Node name for S&R": "CLIPLoader",
     "models": [
      {
-      "name": "qwen_3_4b_fp4_flux2.safetensors",
+      "name": "qwen_3_4b.safetensors",
       "directory": "text_encoders",
-      "url": "https://huggingface.co/Comfy-Org/vae-text-encorder-for-flux-klein-4b/resolve/5f526678002e43af5551dadb73ce2e8c91b43afe/split_files/text_encoders/qwen_3_4b_fp4_flux2.safetensors",
-      "hash": "3eab03a77adb0ee5304a4e677d5c10ac22f9049c1d7c894adca4f8bb39206ca8",
+      "url": "https://huggingface.co/Comfy-Org/vae-text-encorder-for-flux-klein-4b/resolve/5f526678002e43af5551dadb73ce2e8c91b43afe/split_files/text_encoders/qwen_3_4b.safetensors",
+      "hash": "6c671498573ac2f7a5501502ccce8d2b08ea6ca2f661c458e708f36b36edfc5a",
       "hash_type": "SHA256"
      }
     ]
    },
    "title": "Qwen3 text encoder",
    "widgets_values": [
-    "qwen_3_4b_fp4_flux2.safetensors",
+    "qwen_3_4b.safetensors",
     "flux2",
     "default"
    ]
@@ -1172,5 +1172,5 @@
  "last_node_id": 21,
  "last_link_id": 21,
  "revision": 0,
- "id": "9a1d1feb-1f25-5ec0-a2e2-9541bd4ec75f"
+ "id": "908ff52a-2c8c-5035-8982-738f2b2c6ee7"
 }
