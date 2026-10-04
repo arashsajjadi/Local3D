@@ -16,6 +16,7 @@ Logs (the details behind any friendly message) are in `%LOCALAPPDATA%\Local3D\lo
 | "Local3D's engine stopped while starting" | The ComfyUI process exited. The technical details show its last lines | Update your NVIDIA driver and start again; if it repeats, see *Engine problems* below |
 | Nothing happens after clicking the shortcut | Local3D may already be running or still starting (its window can be behind others) | Click the shortcut again: once the engine is up it opens another window on it; while it is still starting, a message says so |
 | `Local3D.exe` is missing, or Windows says it cannot find it, after installing | Antivirus software may have quarantined the unsigned launcher (a common false positive for small unsigned programs) | Windows Security > Virus & threat protection > Protection history > Restore / Allow, or add an exclusion for `%LOCALAPPDATA%\Programs\Local3D`. The source is public and `SHA256SUMS.txt` covers the installer |
+| The window stays on a dark ComfyUI logo screen | Fixed in 0.1.1 (v0.1.0 shut its engine down when Edge handed the window to another process). Local3D now waits at most 90 s for the interface | Install 0.1.1 or newer. If the interface still does not load, a dialog offers Retry, Repair interface (resets only Local3D's own browser data), Open diagnostics and Quit |
 | First start takes a minute before the window appears | The engine initialises GPU kernels the very first time | Normal; later starts take a few seconds |
 
 ## Downloads

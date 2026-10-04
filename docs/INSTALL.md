@@ -12,8 +12,8 @@
 
 ## Install
 
-1. Download `Local3D-Setup-0.1.0.exe` from the [latest release](https://github.com/arashsajjadi/Local3D/releases/latest)
-   (and, if you like, check it: `Get-FileHash .\Local3D-Setup-0.1.0.exe` in PowerShell must print the value in `SHA256SUMS.txt`
+1. Download `Local3D-Setup-0.1.1.exe` from the [latest release](https://github.com/arashsajjadi/Local3D/releases/latest)
+   (and, if you like, check it: `Get-FileHash .\Local3D-Setup-0.1.1.exe` in PowerShell must print the value in `SHA256SUMS.txt`
    on the same page; the release also carries a GitHub build-provenance attestation).
 2. Run it. Windows may show **"Windows protected your PC"** because the installer is not code-signed yet:
    click **More info**, then **Run anyway**. If your antivirus removes `Local3D.exe`, see [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
@@ -94,7 +94,7 @@ only the *Prompt to 3D* files in `data/models.json` whose `gpu` list contains yo
 ## Unattended or scripted install
 
 ```
-Local3D-Setup-0.1.0.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
+Local3D-Setup-0.1.1.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
 "%LOCALAPPDATA%\Programs\Local3D\Local3D.exe" --yes
 ```
 `--yes` accepts the default of every consent dialog (downloads the runtime and the models for your GPU). It is not headless: afterwards

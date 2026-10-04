@@ -4,7 +4,7 @@
 ;   ISCC.exe installer\Local3D.iss            (after: powershell -File scripts\build_launcher.ps1)
 
 #define AppName "Local3D"
-#define AppVersion "0.1.0"
+#define AppVersion "0.1.1"
 #define AppPublisher "Arash Sajjadi"
 #define AppURL "https://github.com/arashsajjadi/Local3D"
 #ifndef TEST_DATA_ANSWER

@@ -5,6 +5,18 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follo
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-04
+
+Fixes a start-up failure in 0.1.0: on some PCs the app window opened and stayed on the dark ComfyUI splash forever.
+
+### Fixed
+- **Stuck on the ComfyUI splash.** Edge sometimes hands the app window to another process and the one Local3D started exits
+  at once; 0.1.0 took that for "window closed" and shut the engine down, leaving a window with nothing to connect to.
+  Local3D now finds its window by its own private browser profile, closes leftovers of that profile before opening a new
+  window, and its window closes with Local3D even after a crash.
+- Start-up can no longer wait forever: the interface must report ready within 90 seconds, otherwise a dialog offers
+  **Retry**, **Repair interface** (resets only Local3D's own browser data), **Open diagnostics** and **Quit**.
+
 ## [0.1.0] - 2026-10-04
 
 First public version.
@@ -26,5 +38,6 @@ First public version.
 - Hunyuan3D and multi-view Pixal3D are not included (see docs/MODELS.md).
 - The installer is not code-signed; Windows SmartScreen will warn.
 
-[Unreleased]: https://github.com/arashsajjadi/Local3D/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/arashsajjadi/Local3D/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/arashsajjadi/Local3D/releases/tag/v0.1.1
 [0.1.0]: https://github.com/arashsajjadi/Local3D/releases/tag/v0.1.0
