@@ -1,0 +1,25 @@
+name: Feature request
+description: Suggest an improvement
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Local3D is intentionally a thin layer over official ComfyUI. Requests that ComfyUI Core, an official template or an
+        official model repository could serve are the easiest to accept; see [the architecture decision](https://github.com/arashsajjadi/Local3D/blob/main/docs/ARCHITECTURE_DECISION.md).
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: The problem or goal, before the solution.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like to see?
+  - type: textarea
+    id: upstream
+    attributes:
+      label: Does ComfyUI or an official model already offer this?
+      description: Links to a Comfy Core node, template, or model card help a lot.

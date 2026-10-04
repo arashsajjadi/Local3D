@@ -1,0 +1,53 @@
+name: Bug report
+description: Something did not work as expected
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Please check [docs/TROUBLESHOOTING.md](https://github.com/arashsajjadi/Local3D/blob/main/docs/TROUBLESHOOTING.md) first.
+        **Do not attach private pictures or prompts** unless you choose to and they are safe to share publicly.
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostics
+      description: "Start menu > Local3D tools > Diagnostics > Copy to clipboard, then paste here. It lists versions, GPU and installed model files; it contains no paths, pictures, prompts or tokens."
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: gpu
+    attributes:
+      label: GPU and driver
+      description: "For example: GeForce RTX 4080 16 GB, driver 581.xx (already in the diagnostics; add anything notable such as other GPU-heavy programs open)"
+  - type: dropdown
+    id: app
+    attributes:
+      label: Which app?
+      options: ["Image to 3D", "Prompt to 3D", "Reference Pictures", "Installer / first start / downloads", "Other"]
+    validations:
+      required: true
+  - type: input
+    id: settings
+    attributes:
+      label: Model and Quality
+      description: "For example: Model Auto, Quality Balanced"
+  - type: textarea
+    id: steps
+    attributes:
+      label: What did you do?
+      description: Steps to reproduce, as exactly as you can.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log excerpt
+      description: "Last lines of %LOCALAPPDATA%\\Local3D\\logs\\launcher.log and comfyui.log (or the technical details shown in the error window). Remove anything private."
+      render: text

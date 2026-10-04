@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Validate workflows, data files, hygiene and links
+        run: python scripts/validate.py
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
+
+  package:
+    name: Build launcher and installer (Windows)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Compile the launcher
+        shell: pwsh
+        run: ./scripts/build_launcher.ps1
+      - name: Build the installer
+        shell: pwsh
+        run: |
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) { choco install innosetup --no-progress -y; }
+          & $iscc /Q installer\Local3D.iss
+          if ($LASTEXITCODE -ne 0) { throw "ISCC failed" }
+          Get-ChildItem dist
+      - name: Smoke-test the installer (silent install, shortcut, version, uninstall)
+        shell: pwsh
+        run: |
+          $setup = Get-ChildItem dist\Local3D-Setup-*.exe | Select-Object -First 1
+          $dir = Join-Path $env:RUNNER_TEMP "Local3D-installed"
+          Start-Process $setup.FullName -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART","/DIR=$dir" -Wait
+          foreach ($f in "Local3D.exe","data\models.json","data\runtime.json","scripts\provision_models.py","local3d_pack\__init__.py") {
+            if (-not (Test-Path (Join-Path $dir $f))) { throw "missing after install: $f" }
+          }
+          $lnk = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\Local3D.lnk"
+          if (-not (Test-Path $lnk)) { throw "Start Menu shortcut was not created" }
+          Start-Process (Join-Path $dir "Local3D.exe") -ArgumentList "--version" -Wait -RedirectStandardOutput version.txt
+          $v = (Get-Content version.txt -Raw).Trim()
+          if ($v -notmatch '^Local3D \d+\.\d+\.\d+$') { throw "unexpected version output: '$v'" }
+          Write-Host "installed OK: $v"
+          Start-Process (Join-Path $dir "unins000.exe") -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART" -Wait
+          if (Test-Path $lnk) { throw "Start Menu shortcut survived uninstall" }
+      - name: Checksums
+        shell: pwsh
+        run: |
+          Push-Location dist
+          Get-ChildItem Local3D-Setup-*.exe | ForEach-Object {
+            "{0}  {1}" -f (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower(), $_.Name
+          } | Set-Content SHA256SUMS.txt -Encoding ascii
+          Get-Content SHA256SUMS.txt
+      - uses: actions/upload-artifact@v7
+        with:
+          name: Local3D-installer
+          path: |
+            dist/Local3D-Setup-*.exe
+            dist/SHA256SUMS.txt
+          if-no-files-found: error
