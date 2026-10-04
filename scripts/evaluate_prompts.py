@@ -17,14 +17,16 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import bench_presets as bp  # noqa: E402
 import evaluate_samples as es  # noqa: E402
+from build_workflows import PROMPT_SUFFIX  # noqa: E402
 
 VARIANTS = {
-    "A: current": ", a single complete object centered in the frame and fully visible with nothing cropped, shown in a "
-                  "three-quarter front view from slightly above, soft even studio lighting, plain seamless neutral grey "
-                  "background, clean unmarked surfaces, photorealistic 3D render",
-    "B: margin": ", a single complete object, small in the frame with a wide empty margin of plain background on every side, "
-                 "fully visible and not cropped, three-quarter front view from slightly above, soft even studio lighting, "
-                 "seamless neutral grey background, clean unmarked surfaces, photorealistic 3D render",
+    "A: first wording": ", a single complete object centered in the frame and fully visible with nothing cropped, shown in a "
+                        "three-quarter front view from slightly above, soft even studio lighting, plain seamless neutral grey "
+                        "background, clean unmarked surfaces, photorealistic 3D render",
+    "B: wide margin (shipped)": PROMPT_SUFFIX,
+    "C: 60% in frame": ", one complete object shown in full at about 60 percent of the frame height, centered, with plenty of empty "
+                       "plain background around it on all sides, three-quarter front view from slightly above, soft even studio "
+                       "lighting, seamless neutral grey background, clean unmarked surfaces, photorealistic 3D render",
     "none (raw prompt)": None,
 }
 

@@ -34,22 +34,43 @@ SAMPLES = [  # (key, category, prompt)
 ]
 
 
+def _background_model(im: np.ndarray) -> tuple[np.ndarray, float]:
+    """Fit a smooth quadratic surface to the outer ring of pixels (soft vignettes are normal in generated backdrops)."""
+    h, w, _ = im.shape
+    ring = np.zeros((h, w), bool)
+    ring[:14] = ring[-14:] = True
+    ring[:, :14] = ring[:, -14:] = True
+    ys, xs = np.nonzero(ring)
+    x, y = xs / w - 0.5, ys / h - 0.5
+    A = np.stack([np.ones_like(x), x, y, x * x, y * y, x * y], 1)
+    gx, gy = np.meshgrid(np.arange(w) / w - 0.5, np.arange(h) / h - 0.5)
+    G = np.stack([np.ones_like(gx), gx, gy, gx * gx, gy * gy, gx * gy], -1)
+    pred = np.empty_like(im)
+    resid = []
+    for c in range(3):
+        coef, *_ = np.linalg.lstsq(A, im[ys, xs, c], rcond=None)
+        pred[..., c] = G @ coef
+        resid.append(float(np.std(im[ys, xs, c] - A @ coef)))
+    return pred, float(np.mean(resid))
+
+
 def score_reference(path: Path) -> dict:
     """Cheap automatic check of the criteria in docs/QUALITY.md (not a quality judgement of the art)."""
     im = np.asarray(Image.open(path).convert("RGB")).astype(np.float32)
     h, w, _ = im.shape
-    ring = np.concatenate([im[:12].reshape(-1, 3), im[-12:].reshape(-1, 3), im[:, :12].reshape(-1, 3), im[:, -12:].reshape(-1, 3)])
-    bg = np.median(ring, axis=0)
-    bg_noise = float(np.mean(np.std(ring, axis=0)))
-    mask = np.linalg.norm(im - bg, axis=2) > 32.0
-    ys, xs = np.nonzero(mask)
+    bg, bg_noise = _background_model(im)
+    mask = np.linalg.norm(im - bg, axis=2) > 30.0
+    # ignore specks and thin shadow fringes: an erosion-like cleanup by requiring 3x3 neighbourhood agreement
+    m = mask.copy()
+    m[1:-1, 1:-1] = mask[1:-1, 1:-1] & mask[:-2, 1:-1] & mask[2:, 1:-1] & mask[1:-1, :-2] & mask[1:-1, 2:]
+    ys, xs = np.nonzero(m)
     if len(ys) < 500:
-        return {"ok": False, "reason": "no clear object", "fill": 0.0, "touches_border": False, "bg_noise": bg_noise}
-    touches = bool(mask[:6].any() or mask[-6:].any() or mask[:, :6].any() or mask[:, -6:].any())
+        return {"ok": False, "reason": "no clear object", "fill": 0.0, "touches_border": False, "bg_noise": round(bg_noise, 1)}
+    border = 6
+    touches = bool(m[:border].sum() + m[-border:].sum() + m[:, :border].sum() + m[:, -border:].sum() > 40)
     fill = float(max(ys.max() - ys.min(), xs.max() - xs.min()) / max(h, w))
-    ok = (not touches) and 0.35 <= fill <= 0.92 and bg_noise < 22
-    reason = "cropped at the border" if touches else "object too small or too large" if not 0.35 <= fill <= 0.92 else \
-        "busy background" if bg_noise >= 22 else ""
+    ok = (not touches) and 0.35 <= fill <= 0.92 and bg_noise < 12
+    reason = "cropped at the border" if touches else "object too small or too large" if not 0.35 <= fill <= 0.92 else         "busy background" if bg_noise >= 12 else ""
     return {"ok": ok, "reason": reason, "fill": round(fill, 2), "touches_border": touches, "bg_noise": round(bg_noise, 1)}
 
 

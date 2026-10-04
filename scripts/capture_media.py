@@ -8,6 +8,7 @@ Dev tool; needs `pip install websocket-client pillow`. Start Local3D with a debu
 
     python scripts/capture_media.py shot docs/images/app-image-ready.png
     python scripts/capture_media.py run  docs/images/demo.gif --prefix docs/images/app
+    python scripts/capture_media.py app  docs/images/app-prompt-ready.png --template Local3D_Prompt_to_3D.app
 """
 from __future__ import annotations
 
@@ -76,22 +77,35 @@ class Page:
         self.call("Input.dispatchMouseEvent", type="mouseReleased", x=x1, y=y1, button="left")
 
 
-def save_gif(frames: list[Image.Image], path: str, width: int = 960, first_ms=1200, ms=140, last_ms=2500):
-    small = [f.resize((width, int(f.height * width / f.width)), Image.LANCZOS).convert("P", palette=Image.ADAPTIVE, colors=96) for f in frames]
+def save_gif(frames: list[Image.Image], path: str, width: int = 880, first_ms=1500, ms=170, last_ms=2800, max_frames: int = 34):
+    import numpy as np
+    kept = [frames[0]]
+    for f in frames[1:]:
+        if float(np.abs(np.asarray(f.resize((160, 100))).astype(np.int16) - np.asarray(kept[-1].resize((160, 100))).astype(np.int16)).mean()) > 0.8:
+            kept.append(f)
+    if len(kept) > max_frames:   # keep the first and the last few, thin the middle
+        step = (len(kept) - 6) / (max_frames - 6)
+        kept = kept[:1] + [kept[1 + int(i * step)] for i in range(max_frames - 6)] + kept[-5:]
+    small = [f.resize((width, int(f.height * width / f.width)), Image.LANCZOS).convert("P", palette=Image.ADAPTIVE, colors=64) for f in kept]
     durations = [first_ms] + [ms] * (len(small) - 2) + [last_ms]
     small[0].save(path, save_all=True, append_images=small[1:], duration=durations, loop=0, optimize=True, disposal=2)
+    return len(small)
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("mode", choices=["shot", "run"])
+    ap.add_argument("mode", choices=["shot", "run", "app"])
     ap.add_argument("out")
     ap.add_argument("--port", type=int, default=9333)
     ap.add_argument("--prefix", default="")
+    ap.add_argument("--template", default="Local3D_Prompt_to_3D.app", help="for mode 'app': which app to open")
     args = ap.parse_args()
     page = Page(args.port)
+    if args.mode == "app":
+        page.call("Page.navigate", url=f"{page.base}/?template={args.template}&source=local3d_pack&mode=linear")
+        time.sleep(4)
     page.wait_ready()
-    if args.mode == "shot":
+    if args.mode in ("shot", "app"):
         page.png().save(args.out)
         print("saved", args.out)
         return
@@ -107,15 +121,22 @@ def main():
             frames.append(page.png())
         if k > 3 and page.queue_idle():
             break
-    time.sleep(3)
+    time.sleep(4)
     done = page.png()
     done.save(f"{args.prefix}-result.png")
     frames.append(done)
-    if len(frames) > 36:  # keep the GIF small: thin out the waiting frames, keep the first and the last few
-        keep = frames[:1] + frames[1:-3:max(1, (len(frames) - 4) // 30)] + frames[-3:]
-        frames = keep
-    save_gif(frames, args.out)
-    print("saved", args.out, len(frames), "frames")
+    # orbit the result a little so the GIF shows that the model is interactive (drag inside the viewer)
+    for _ in page.drag(560, 420, 560, 420, steps=1):
+        pass
+    x = 560
+    page.call("Input.dispatchMouseEvent", type="mousePressed", x=x, y=430, button="left", clickCount=1)
+    for k in range(1, 9):
+        page.call("Input.dispatchMouseEvent", type="mouseMoved", x=x + k * 22, y=430, buttons=1)
+        time.sleep(0.25)
+        frames.append(page.png())
+    page.call("Input.dispatchMouseEvent", type="mouseReleased", x=x + 8 * 22, y=430, button="left")
+    n = save_gif(frames, args.out)
+    print("saved", args.out, n, "frames")
 
 
 if __name__ == "__main__":
