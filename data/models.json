@@ -1,0 +1,138 @@
+{
+  "schema": 1,
+  "comment": "Single source of truth for downloadable model files. Sizes/hashes verified against Hugging Face on 2026-10-04. Workflows embed the same URLs in properties.models; scripts/validate.py checks they agree.",
+  "packs": {
+    "core": {
+      "label": "Image to 3D (Pixal3D + TRELLIS.2)",
+      "required": true
+    },
+    "prompt": {
+      "label": "Prompt to 3D reference images (FLUX.2 klein 4B)",
+      "required": false
+    }
+  },
+  "files": [
+    {
+      "id": "pixal3d-dit",
+      "pack": "core",
+      "label": "Pixal3D diffusion model (int8)",
+      "license": "MIT",
+      "repo": "Comfy-Org/Pixal3D",
+      "revision": "f37641be376725d324c56626007cc477f1249a69",
+      "path": "diffusion_models/pixal3d_int8_convrot.safetensors",
+      "dest": "diffusion_models/pixal3d_int8_convrot.safetensors",
+      "size": 5584555824,
+      "sha256": "4621eac3b715484f79303c7152af641fe0b2b14f4d0e3d394fd6922d00f955ec"
+    },
+    {
+      "id": "trellis2-dit",
+      "pack": "core",
+      "label": "TRELLIS.2 diffusion model (int8)",
+      "license": "MIT",
+      "repo": "Comfy-Org/TRELLIS.2",
+      "revision": "430a9d09b2416687018c8fe8edced2ad4858a439",
+      "path": "diffusion_models/trellis_2_int8_convrot.safetensors",
+      "dest": "diffusion_models/trellis_2_int8_convrot.safetensors",
+      "size": 5253048192,
+      "sha256": "d01952ad137213f6a868f86b6b877026276f84af5eec23069217475a0bad3a31"
+    },
+    {
+      "id": "trellis2-shape-vae",
+      "pack": "core",
+      "label": "Shape VAE (shared)",
+      "license": "MIT",
+      "repo": "Comfy-Org/Pixal3D",
+      "revision": "f37641be376725d324c56626007cc477f1249a69",
+      "path": "vae/trellis_2_shape_vae_bf16.safetensors",
+      "dest": "vae/trellis_2_shape_vae_bf16.safetensors",
+      "size": 1095844024,
+      "sha256": "de0cb4949a76c59ee5c091a995a69bcc8c51d5aeda939f0c641a50d2a72341f4"
+    },
+    {
+      "id": "trellis2-texture-vae",
+      "pack": "core",
+      "label": "Texture VAE (shared)",
+      "license": "MIT",
+      "repo": "Comfy-Org/Pixal3D",
+      "revision": "f37641be376725d324c56626007cc477f1249a69",
+      "path": "vae/trellis_2_texture_vae_bf16.safetensors",
+      "dest": "vae/trellis_2_texture_vae_bf16.safetensors",
+      "size": 948461364,
+      "sha256": "714e5ebf094a610e12a8e3b5175c18a62f37f6ea4218acb6073644456b73ab0e"
+    },
+    {
+      "id": "dinov3-naf",
+      "pack": "core",
+      "label": "DINOv3 image encoder (shared)",
+      "license": "Meta DINOv3 License",
+      "repo": "Comfy-Org/Pixal3D",
+      "revision": "f37641be376725d324c56626007cc477f1249a69",
+      "path": "clip_vision/dino_v3_L_naf_fp32.safetensors",
+      "dest": "clip_vision/dino_v3_L_naf_fp32.safetensors",
+      "size": 1215214176,
+      "sha256": "4ad2ec4e0879a5b5b04cd97325cc37da954a7b6edca5170b86510f17f2b2290f",
+      "note": "Not MIT; see THIRD_PARTY_NOTICES.md"
+    },
+    {
+      "id": "moge2",
+      "pack": "core",
+      "label": "MoGe-2 camera/FOV estimation",
+      "license": "MIT",
+      "repo": "Comfy-Org/MoGe",
+      "revision": "1484985258ba7ef45c314144fcf0e90924ffbf44",
+      "path": "geometry_estimation/moge_2_vitl_normal_fp16.safetensors",
+      "dest": "geometry_estimation/moge_2_vitl_normal_fp16.safetensors",
+      "size": 661859924,
+      "sha256": "cb1a692d03235671e959e81360d7b4d9f44aefadb1f852d6ca6aa17799d5e31f"
+    },
+    {
+      "id": "birefnet",
+      "pack": "core",
+      "label": "BiRefNet background removal",
+      "license": "MIT",
+      "repo": "Comfy-Org/BiRefNet",
+      "revision": "25511f8787e51912e1480706b4e47b8f467fbf72",
+      "path": "background_removal/birefnet.safetensors",
+      "dest": "background_removal/birefnet.safetensors",
+      "size": 444473596,
+      "sha256": "9ab37426bf4de0567af6b5d21b16151357149139362e6e8992021b8ce356a154"
+    },
+    {
+      "id": "klein-dit",
+      "pack": "prompt",
+      "label": "FLUX.2 klein 4B (nvfp4)",
+      "license": "Apache-2.0",
+      "repo": "black-forest-labs/FLUX.2-klein-4b-nvfp4",
+      "revision": "1db2b2f776c24b76f1122e5f69ab1949fc620068",
+      "path": "flux-2-klein-4b-nvfp4.safetensors",
+      "dest": "diffusion_models/flux-2-klein-4b-nvfp4.safetensors",
+      "size": 2460413488,
+      "sha256": "d8c5007b6a3bbbdfd38538bbcef5101a55dfde81894f58d2e3c8701cdef3542b",
+      "note": "RTX 50-series (Blackwell) only"
+    },
+    {
+      "id": "klein-te",
+      "pack": "prompt",
+      "label": "Qwen3-4B text encoder (fp4)",
+      "license": "Apache-2.0",
+      "repo": "Comfy-Org/vae-text-encorder-for-flux-klein-4b",
+      "revision": "5f526678002e43af5551dadb73ce2e8c91b43afe",
+      "path": "split_files/text_encoders/qwen_3_4b_fp4_flux2.safetensors",
+      "dest": "text_encoders/qwen_3_4b_fp4_flux2.safetensors",
+      "size": 3848213998,
+      "sha256": "3eab03a77adb0ee5304a4e677d5c10ac22f9049c1d7c894adca4f8bb39206ca8"
+    },
+    {
+      "id": "klein-vae",
+      "pack": "prompt",
+      "label": "FLUX.2 VAE",
+      "license": "Apache-2.0",
+      "repo": "Comfy-Org/vae-text-encorder-for-flux-klein-4b",
+      "revision": "5f526678002e43af5551dadb73ce2e8c91b43afe",
+      "path": "split_files/vae/flux2-vae.safetensors",
+      "dest": "vae/flux2-vae.safetensors",
+      "size": 336211292,
+      "sha256": "868fe7b343cc8f3a19dbcfcafbc3d5f888802be3f89bd81b65b3621a066ce8f3"
+    }
+  ]
+}
