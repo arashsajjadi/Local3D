@@ -8,11 +8,13 @@
     },
     "prompt": {
       "label": "Prompt to 3D reference images (FLUX.2 klein 4B)",
-      "required": false
+      "required": false,
+      "first_run": true
     },
     "multiview": {
       "label": "Character from views (Pixal3D multi-view)",
-      "required": false
+      "required": false,
+      "first_run": false
     }
   },
   "files": [

@@ -26,7 +26,7 @@ using Microsoft.Win32;
 
 [assembly: AssemblyTitle("Local3D")]
 [assembly: AssemblyVersion("0.1.2.0")]
-[assembly: AssemblyInformationalVersion("0.1.2")]
+[assembly: AssemblyInformationalVersion("0.2.0")]
 [assembly: AssemblyProduct("Local3D")]
 [assembly: AssemblyCopyright("Copyright (c) 2026 Arash Sajjadi. MIT License.")]
 
@@ -93,6 +93,7 @@ namespace Local3D
         public string OutputDir;   // Documents\Local3D: generated models, reference pictures, and input pictures
         public string SettingsFile;
         public Dictionary<string, object> Runtime;
+        public Dictionary<string, object> Manifest;   // data\models.json: packs and files
 
         public Env()
         {
@@ -106,6 +107,7 @@ namespace Local3D
             OutputDir = Pick("LOCAL3D_OUTPUT_DIR", s, "outputDir",
                 Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Local3D"));
             Runtime = Json.ReadFile(Path.Combine(Root, "data", "runtime.json"));
+            Manifest = Json.ReadFile(Path.Combine(Root, "data", "models.json"));
             Directory.CreateDirectory(Path.Combine(DataDir, "logs"));
         }
 
@@ -143,6 +145,16 @@ namespace Local3D
         public string Workspace { get { return Path.Combine(DataDir, "workspace"); } }
         public string LogDir { get { return Path.Combine(DataDir, "logs"); } }
         public string RuntimeTag { get { return Json.Str(Runtime, "tag"); } }
+
+        // "--pack core --pack prompt ..." for every pack the manifest knows
+        public string PackArgs()
+        {
+            StringBuilder sb = new StringBuilder();
+            object packs;
+            if (Manifest != null && Manifest.TryGetValue("packs", out packs) && packs is Dictionary<string, object>)
+                foreach (string id in ((Dictionary<string, object>)packs).Keys) sb.Append(" --pack ").Append(id);
+            return sb.Length == 0 ? " --pack core" : sb.ToString();
+        }
     }
 
     internal static class Json
@@ -409,6 +421,7 @@ namespace Local3D
                 string a = cli.Value("--app", "image");
                 if (a == "prompt") return "Local3D_Prompt_to_3D.app";
                 if (a == "reference") return "Local3D_Reference_Pictures.app";
+                if (a == "views") return "Local3D_Character_from_Views.app";
                 return "Local3D_Image_to_3D.app";
             }
         }
@@ -425,7 +438,31 @@ namespace Local3D
             int p = (int)Json.Long(s, "port");
             if (p == 0 || !Http.Ok("http://127.0.0.1:" + p + "/system_stats")) return false;
             Session tmp = new Session(env, cli);
+            string pack = tmp.PackNeededByApp();
+            if (pack == "multiview" && !PackFilesPresent(env, pack))
+            {
+                // the running engine was started for another app: say what is missing instead of opening an app that cannot run
+                Ui.Info("Local3D", "Character from views needs one optional model (5.6 GB) that is not installed yet.\n\nClose Local3D, then start Character from views again: it offers the download.");
+                return true;
+            }
             tmp.OpenBrowser(p);
+            return true;
+        }
+
+        // Are all the files of an (optional) pack in the models folder with the expected size? A quick look, no hashing.
+        private static bool PackFilesPresent(Env env, string pack)
+        {
+            object filesObj;
+            if (env.Manifest == null || !env.Manifest.TryGetValue("files", out filesObj)) return true;
+            System.Collections.IEnumerable files = filesObj as System.Collections.IEnumerable;
+            if (files == null) return true;
+            foreach (object o in files)
+            {
+                Dictionary<string, object> f = o as Dictionary<string, object>;
+                if (f == null || Json.Str(f, "pack") != pack) continue;
+                FileInfo fi = new FileInfo(Path.Combine(env.ModelsDir, Json.Str(f, "dest").Replace('/', Path.DirectorySeparatorChar)));
+                if (!fi.Exists || fi.Length != Json.Long(f, "size")) return false;
+            }
             return true;
         }
 
@@ -642,32 +679,72 @@ namespace Local3D
         }
 
         // --- models -------------------------------------------------------------------------------------------
-        private sealed class ModelState { public long DlCore, DlPrompt, NeedCore, NeedPrompt; public bool Ok; public string Raw; }
+        // One entry per pack of data\models.json: "core" is required, the others are optional downloads.
+        private sealed class PackInfo
+        {
+            public string Id, Label; public bool Required, FirstRun;
+            public long Total;        // bytes of every file in the pack (installed or not)
+            public long Missing;      // bytes that have to be downloaded
+            public long Unverified;   // bytes already on disk that only need their checksum computed
+            public long Need { get { return Missing + Unverified; } }
+        }
+
+        private sealed class ModelState
+        {
+            public bool Ok; public string Raw;
+            public List<PackInfo> Packs = new List<PackInfo>();
+            public PackInfo Find(string id) { foreach (PackInfo p in Packs) if (p.Id == id) return p; return null; }
+        }
 
         // One call to the provisioning script's --check: what must be downloaded (missing) and what only needs hashing (unverified).
         private ModelState CheckModels(string modelsDir)
         {
             string script = Path.Combine(env.Root, "scripts", "provision_models.py");
             ModelState st = new ModelState();
-            st.Raw = Proc.Capture(env.Python, Proc.Q(script) + " --models-dir " + Proc.Q(modelsDir) + " --gpu " + gpuClass + " --pack core --pack prompt --check --json", 120000);
+            st.Raw = Proc.Capture(env.Python, Proc.Q(script) + " --models-dir " + Proc.Q(modelsDir) + " --gpu " + gpuClass + env.PackArgs() + " --check --json", 120000);
             Dictionary<string, object> check = null;
             try { check = Json.Parse(st.Raw ?? "{}"); } catch { }
             object filesObj; System.Collections.IEnumerable files = null;
             if (check != null && check.TryGetValue("files", out filesObj)) files = filesObj as System.Collections.IEnumerable;
             if (files == null) return st;
             st.Ok = true;
+            object packsObj;
+            if (env.Manifest != null && env.Manifest.TryGetValue("packs", out packsObj) && packsObj is Dictionary<string, object>)
+                foreach (KeyValuePair<string, object> kv in (Dictionary<string, object>)packsObj)
+                {
+                    Dictionary<string, object> meta = kv.Value as Dictionary<string, object>;
+                    PackInfo p = new PackInfo();
+                    p.Id = kv.Key;
+                    p.Label = Json.Str(meta, "label");
+                    p.Required = meta != null && meta.ContainsKey("required") && meta["required"] is bool && (bool)meta["required"];
+                    p.FirstRun = meta != null && meta.ContainsKey("first_run") && meta["first_run"] is bool && (bool)meta["first_run"];
+                    st.Packs.Add(p);
+                }
             foreach (object o in files)
             {
                 Dictionary<string, object> f = (Dictionary<string, object>)o;
                 string status = Json.Str(f, "status");
-                if (status == "ok") continue;
-                bool core = Json.Str(f, "pack") == "core";
+                PackInfo p = st.Find(Json.Str(f, "pack"));
+                if (p == null) continue;
                 long size = Json.Long(f, "size");
-                if (core) st.NeedCore += size; else st.NeedPrompt += size;
-                if (status == "missing") { if (core) st.DlCore += size; else st.DlPrompt += size; }
+                p.Total += size;
+                if (status == "ok") continue;
+                if (status == "missing") p.Missing += size; else p.Unverified += size;
             }
             return st;
         }
+
+        // The pack the app being opened cannot work without (null: none).
+        private string PackNeededByApp()
+        {
+            string a = cli.Value("--app", "image");
+            if (a == "prompt" || a == "reference") return "prompt";
+            if (a == "views") return "multiview";
+            return null;
+        }
+
+        // Declining an optional pack is remembered, so the next start does not ask again (the file name of the first one is kept).
+        private string DeclinedFile(string pack) { return Path.Combine(env.DataDir, pack == "prompt" ? "prompt-pack-declined" : "declined-" + pack); }
 
         private bool EnsureModels()
         {
@@ -681,37 +758,66 @@ namespace Local3D
                 return false;
             }
             string baseArgs = Proc.Q(script) + " --models-dir " + Proc.Q(env.ModelsDir) + " --gpu " + gpuClass;
-            // the prompt pack is optional: once declined, only "Local3D.exe --models" and the Prompt/Reference shortcuts ask again
-            string declined = Path.Combine(env.DataDir, "prompt-pack-declined");
-            if (cli.Has("--models")) { try { File.Delete(declined); } catch { } }
-            string app = cli.Value("--app", "image");
-            bool needsPromptPack = app == "prompt" || app == "reference";
-            bool askPrompt = st.DlPrompt > 0 && (needsPromptPack || !File.Exists(declined));
-            bool wantPrompt = false;
-            if (st.DlCore > 0 || askPrompt)
+            string needed = PackNeededByApp();
+            bool all = cli.Has("--models");   // "Download more models": offer every optional pack again
+            bool requiredMissing = false;
+            List<ModelDialog.Row> rows = new List<ModelDialog.Row>();
+            foreach (PackInfo p in st.Packs)
             {
-                bool?[] result = new bool?[2];
-                long[] cur = new long[] { st.DlCore, askPrompt ? st.DlPrompt : 0 };
-                Func<string, long[]> rescan = delegate(string dir)
+                if (all && !p.Required) { try { File.Delete(DeclinedFile(p.Id)); } catch { } }
+                if (p.Missing <= 0) continue;
+                bool ask = p.Required || p.Id == needed || all || (p.FirstRun && !File.Exists(DeclinedFile(p.Id)));
+                if (!ask) continue;
+                if (p.Required) requiredMissing = true;
+                rows.Add(new ModelDialog.Row { Id = p.Id, Label = p.Label, Bytes = p.Missing, Update = p.Missing < p.Total, Required = p.Required, Checked = p.Required || p.Id == needed || all || p.FirstRun });
+            }
+            List<string> chosen = new List<string>();
+            if (rows.Count > 0)
+            {
+                Func<string, Dictionary<string, long>> rescan = delegate(string dir)
                 {
-                    ModelState again = CheckModels(dir);
-                    return new long[] { again.DlCore, again.DlPrompt };
+                    Dictionary<string, long> again = new Dictionary<string, long>();
+                    foreach (PackInfo p in CheckModels(dir).Packs) again[p.Id] = p.Missing;
+                    return again;
                 };
-                DialogResult dr = (DialogResult)Invoke(delegate { return ModelDialog.Ask(env, cur[0], cur[1], result, FreeBytes(env.ModelsDir), rescan); });
+                DialogResult dr = (DialogResult)Invoke(delegate { return ModelDialog.Ask(env, rows, chosen, FreeBytes(env.ModelsDir), rescan); });
                 if (dr != DialogResult.OK)
                 {
-                    if (st.DlCore > 0) { Close(); return false; }   // the core models are required
-                    return true;                                    // only the optional pack was offered: "Not now"
+                    if (requiredMissing) { Close(); return false; }   // the core models are required
+                    foreach (ModelDialog.Row r in rows) { try { File.WriteAllText(DeclinedFile(r.Id), "1"); } catch { } }
                 }
-                wantPrompt = result[1] == true;
-                if (askPrompt && !wantPrompt) { try { File.WriteAllText(declined, "1"); } catch { } }
+                else
+                    foreach (ModelDialog.Row r in rows)
+                    {
+                        if (r.Required) continue;
+                        if (chosen.Contains(r.Id)) { try { File.Delete(DeclinedFile(r.Id)); } catch { } }
+                        else { try { File.WriteAllText(DeclinedFile(r.Id), "1"); } catch { } }
+                    }
                 st = CheckModels(env.ModelsDir);   // the person may have chosen another folder
                 if (!st.Ok) { Fail(1, "Local3D could not check its model files.", "Restart Local3D. If it keeps happening, open the log folder and send the log in a bug report.", st.Raw ?? ""); return false; }
             }
-            else if (st.DlPrompt == 0 && st.NeedPrompt > 0) wantPrompt = true;   // present but not yet hashed (e.g. an existing ComfyUI folder)
-            long total = st.NeedCore + (wantPrompt ? st.NeedPrompt : 0);
+            // packs to install or verify: the required ones, the ones the person ticked, and optional ones already on disk (they only need hashing)
+            string args = baseArgs;
+            long total = 0;
+            foreach (PackInfo p in st.Packs)
+            {
+                bool include = p.Required || chosen.Contains(p.Id) || (p.Missing == 0 && p.Unverified > 0);
+                if (!include || p.Need <= 0) continue;
+                args += " --pack " + p.Id;
+                total += p.Need;
+            }
+            if (needed != null)
+            {
+                PackInfo need = st.Find(needed);
+                if (need != null && need.Missing > 0 && !chosen.Contains(needed))
+                {
+                    Ui.Info("Local3D", "This app needs the optional model pack:\n\n" + need.Label + " (" + Gb(need.Missing) + ")\n\nStart it again and choose Download to get it, or open Image to 3D.");
+                    Close();
+                    return false;
+                }
+            }
             if (total == 0) return true;
-            string args = baseArgs + " --pack core" + (wantPrompt ? " --pack prompt" : "") + " --json";
+            args += " --json";
             Dictionary<string, long> done = new Dictionary<string, long>();
             Dictionary<string, long> sizes = new Dictionary<string, long>();
             Dictionary<string, string> labels = new Dictionary<string, string>();
@@ -1204,7 +1310,7 @@ namespace Local3D
             string script = Path.Combine(env.Root, "scripts", "provision_models.py");
             if (File.Exists(env.Python) && Directory.Exists(env.ModelsDir))
             {
-                string c = Proc.Capture(env.Python, Proc.Q(script) + " --models-dir " + Proc.Q(env.ModelsDir) + " --pack core --pack prompt --check", 120000);
+                string c = Proc.Capture(env.Python, Proc.Q(script) + " --models-dir " + Proc.Q(env.ModelsDir) + env.PackArgs() + " --check", 120000);
                 sb.AppendLine("Model files:");
                 sb.AppendLine(c == null ? "  (could not check)" : c.TrimEnd());
             }
@@ -1253,74 +1359,96 @@ namespace Local3D
         }
     }
 
-    // Consent + location dialog for the model download.
+    // Consent + location dialog for the model download: the required pack(s) and any optional ones on offer.
     internal static class ModelDialog
     {
         private const long Margin = 3000000000L;   // keep 3 GB free on the drive after the download
 
-        public static DialogResult Ask(Env env, long core, long prompt, bool?[] result, long free, Func<string, long[]> rescan)
+        public sealed class Row { public string Id, Label; public long Bytes; public bool Required, Checked, Update; }
+
+        public static DialogResult Ask(Env env, List<Row> rows, List<string> chosen, long free, Func<string, Dictionary<string, long>> rescan)
         {
-            if (Ui.AutoYes) { result[0] = true; result[1] = prompt > 0; return DialogResult.OK; }
+            if (Ui.AutoYes) { foreach (Row r in rows) if (!r.Required && r.Checked) chosen.Add(r.Id); return DialogResult.OK; }
             using (Form f = new Form())
             {
                 f.Text = "Local3D - download models";
                 f.Icon = Ui.AppIcon();
                 f.StartPosition = FormStartPosition.CenterScreen;
                 f.FormBorderStyle = FormBorderStyle.FixedDialog; f.MaximizeBox = false; f.MinimizeBox = false;
-                f.ClientSize = new Size(560, 330);
-                Label head = new Label { Left = 16, Top = 14, Width = 528, Height = 40, Text = "Local3D needs AI model files. They are downloaded once from Hugging Face and stay on this PC; after that, generation works offline." };
-                CheckBox c1 = new CheckBox { Left = 20, Top = 62, Width = 520, Height = 22, Checked = true, Enabled = false };
-                CheckBox c2 = new CheckBox { Left = 20, Top = 90, Width = 520, Height = 22, AccessibleName = "Also download the Prompt to 3D reference pictures (optional)" };
-                Label licenses = new Label { Left = 20, Top = 120, Width = 520, Height = 58, ForeColor = SystemColors.GrayText,
+                int top = 62;
+                Label head = new Label { Left = 16, Top = 14, Width = 548, Height = 40, Text = "Local3D needs AI model files. They are downloaded once from Hugging Face and stay on this PC; after that, generation works offline." };
+                List<CheckBox> boxes = new List<CheckBox>();
+                foreach (Row r in rows)
+                {
+                    CheckBox c = new CheckBox { Left = 20, Top = top, Width = 540, Height = 22, Checked = r.Required || r.Checked, Enabled = !r.Required, Tag = r,
+                                                AccessibleName = (r.Required ? "" : "Also download ") + r.Label };
+                    boxes.Add(c);
+                    top += 28;
+                }
+                bool anyRequired = false;
+                foreach (Row r in rows) if (r.Required) anyRequired = true;
+                Label licenses = new Label { Left = 20, Top = top + 6, Width = 540, Height = 58, ForeColor = SystemColors.GrayText,
                     Text = "Each model has its own license (MIT, Apache-2.0, and Meta's DINOv3 license, which includes export-control terms). " +
                            "By downloading you accept them; the list is in THIRD_PARTY_NOTICES.md in the Local3D folder and on the project page." };
-                Label loc = new Label { Left = 20, Top = 184, Width = 520, Height = 36 };
-                Label space = new Label { Left = 20, Top = 222, Width = 520, Height = 38 };
-                Button change = new Button { Left = 20, Top = 266, Width = 150, Height = 28, Text = "Change folder..." };
-                Button ok = new Button { Left = 360, Top = 292, Width = 90, Height = 28, Text = "Download", DialogResult = DialogResult.OK };
-                Button cancel = new Button { Left = 456, Top = 292, Width = 90, Height = 28, Text = core > 0 ? "Cancel" : "Not now", DialogResult = DialogResult.Cancel };
+                Label loc = new Label { Left = 20, Top = top + 72, Width = 540, Height = 36 };
+                Label space = new Label { Left = 20, Top = top + 110, Width = 540, Height = 38 };
+                Button change = new Button { Left = 20, Top = top + 154, Width = 150, Height = 28, Text = "Change folder..." };
+                Button ok = new Button { Left = 380, Top = top + 180, Width = 90, Height = 28, Text = "Download", DialogResult = DialogResult.OK };
+                Button cancel = new Button { Left = 476, Top = top + 180, Width = 90, Height = 28, Text = anyRequired ? "Cancel" : "Not now", DialogResult = DialogResult.Cancel };
+                f.ClientSize = new Size(580, top + 220);
                 Action refresh = delegate
                 {
-                    c1.Text = "Image to 3D (Pixal3D + TRELLIS.2)  -  " + (core > 0 ? (core / 1e9).ToString("0.0") + " GB to download" : "installed");
-                    c1.Visible = core > 0;
-                    c2.Enabled = prompt > 0;
-                    if (prompt == 0 && !c2.Checked) c2.Checked = false;
-                    c2.Text = "Prompt to 3D reference pictures (FLUX.2 klein 4B)  -  " + (prompt > 0 ? (prompt / 1e9).ToString("0.0") + " GB to download (optional)" : "installed");
-                    long need = core + (c2.Checked ? prompt : 0);
+                    long need = 0;
+                    foreach (CheckBox c in boxes)
+                    {
+                        Row r = (Row)c.Tag;
+                        c.Text = r.Label + (r.Update ? " (update)" : "") + "  -  " + Size(r.Bytes) + " to download" + (r.Required ? "" : " (optional)");
+                        if (c.Checked) need += r.Bytes;
+                    }
                     long fr = FreeOf(env.ModelsDir, free);
                     bool enough = fr >= need + Margin;
                     loc.Text = "Saved to: " + env.ModelsDir;
-                    space.Text = "Needs " + (need / 1e9).ToString("0.0") + " GB, " + (fr / 1e9).ToString("0.0") + " GB free on that drive." +
+                    space.Text = "Needs " + Size(need) + ", " + Size(fr) + " free on that drive." +
                                  (enough ? "" : "\nNot enough space (3 GB must stay free after the download): free some space or choose another folder.");
                     space.ForeColor = enough ? SystemColors.ControlText : Color.Firebrick;
                     ok.Text = need > 0 ? "Download" : "Continue";
                     ok.Enabled = enough;
                 };
-                c2.Checked = prompt > 0;
-                c2.CheckedChanged += delegate { refresh(); };
+                foreach (CheckBox c in boxes) c.CheckedChanged += delegate { refresh(); };
                 change.Click += delegate
                 {
                     using (FolderBrowserDialog fb = new FolderBrowserDialog())
                     {
-                        fb.Description = "Choose where Local3D stores model files (15 GB, up to 36 GB with Prompt to 3D)";
+                        fb.Description = "Choose where Local3D stores model files (15 GB, up to about 37 GB with every optional pack)";
                         if (fb.ShowDialog() == DialogResult.OK)
                         {
                             env.ModelsDir = fb.SelectedPath; env.SaveSettings();
-                            long[] again = rescan(env.ModelsDir);   // files already in that folder do not need downloading
-                            core = again[0]; prompt = again[1]; free = FreeOf(env.ModelsDir, free);
-                            c2.Checked = prompt > 0;
+                            Dictionary<string, long> again = rescan(env.ModelsDir);   // files already in that folder do not need downloading
+                            free = FreeOf(env.ModelsDir, free);
+                            foreach (CheckBox c in boxes)
+                            {
+                                Row r = (Row)c.Tag; long b;
+                                r.Bytes = again.TryGetValue(r.Id, out b) ? b : r.Bytes;
+                                if (r.Bytes == 0 && !r.Required) c.Checked = false;
+                            }
                             refresh();
                         }
                     }
                 };
-                f.Controls.AddRange(new Control[] { head, c1, c2, licenses, loc, space, change, ok, cancel });
+                List<Control> all = new List<Control> { head };
+                all.AddRange(boxes.ConvertAll<Control>(delegate(CheckBox c) { return c; }));
+                all.AddRange(new Control[] { licenses, loc, space, change, ok, cancel });
+                f.Controls.AddRange(all.ToArray());
                 f.AcceptButton = ok; f.CancelButton = cancel;
                 refresh();
-                DialogResult r = f.ShowDialog();
-                result[0] = true; result[1] = c2.Checked && prompt > 0;
-                return r;
+                DialogResult res = f.ShowDialog();
+                if (res == DialogResult.OK)   // "Not now" / Cancel / the close button choose nothing, whatever is ticked
+                    foreach (CheckBox c in boxes) { Row r = (Row)c.Tag; if (!r.Required && c.Checked && r.Bytes > 0) chosen.Add(r.Id); }
+                return res;
             }
         }
+
+        private static string Size(long bytes) { return bytes < 1000000000L ? Math.Max(1, (long)Math.Round(bytes / 1e6)) + " MB" : (bytes / 1e9).ToString("0.0") + " GB"; }
 
         private static long FreeOf(string path, long fallback)
         {

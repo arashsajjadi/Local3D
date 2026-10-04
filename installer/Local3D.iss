@@ -70,6 +70,7 @@ Source: "..\THIRD_PARTY_NOTICES.md"; DestDir: "{app}"; Flags: ignoreversion
 ; The one entry people look for.
 Name: "{autoprograms}\{#AppName}"; Filename: "{app}\Local3D.exe"; WorkingDir: "{app}"; IconFilename: "{app}\assets\branding\icon.ico"; AppUserModelID: "Local3D.App"; Comment: "Turn a photo or a text prompt into a 3D model, locally"
 Name: "{autoprograms}\Local3D tools\Prompt to 3D"; Filename: "{app}\Local3D.exe"; Parameters: "--app prompt"; WorkingDir: "{app}"; IconFilename: "{app}\assets\branding\icon.ico"; AppUserModelID: "Local3D.App"
+Name: "{autoprograms}\Local3D tools\Character from views"; Filename: "{app}\Local3D.exe"; Parameters: "--app views"; WorkingDir: "{app}"; IconFilename: "{app}\assets\branding\icon.ico"; AppUserModelID: "Local3D.App"
 Name: "{autoprograms}\Local3D tools\Reference pictures"; Filename: "{app}\Local3D.exe"; Parameters: "--app reference"; WorkingDir: "{app}"; IconFilename: "{app}\assets\branding\icon.ico"; AppUserModelID: "Local3D.App"
 Name: "{autoprograms}\Local3D tools\Download more models"; Filename: "{app}\Local3D.exe"; Parameters: "--models"; WorkingDir: "{app}"; IconFilename: "{app}\assets\branding\icon.ico"
 Name: "{autoprograms}\Local3D tools\Diagnostics"; Filename: "{app}\Local3D.exe"; Parameters: "--diagnostics"; WorkingDir: "{app}"; IconFilename: "{app}\assets\branding\icon.ico"
