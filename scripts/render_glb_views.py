@@ -154,7 +154,8 @@ def main() -> int:
                 shoot(name)
         return 0
     finally:
-        proc.terminate()
+        # kill the whole Edge process tree: terminating only the parent leaves its renderer and GPU processes (and their cache) behind
+        subprocess.run(["taskkill", "/T", "/F", "/PID", str(proc.pid)], capture_output=True)
         srv.shutdown()
         time.sleep(1)
         shutil.rmtree(work, ignore_errors=True)

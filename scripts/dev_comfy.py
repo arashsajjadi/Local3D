@@ -12,6 +12,7 @@ The engine is started with the same flags Local3D uses (see launcher/Local3D.cs)
 """
 from __future__ import annotations
 
+import atexit
 import json
 import os
 import shutil
@@ -53,6 +54,7 @@ class Engine:
         self.stop()
 
     def start(self):
+        atexit.register(self.stop)   # never leave the engine or the hidden Edge window (and their caches) running
         for d in (self.input_dir, self.output_dir, self.work / "base" / "custom_nodes", self.work / "logs"):
             d.mkdir(parents=True, exist_ok=True)
         if self.pack:
