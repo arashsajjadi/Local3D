@@ -9,6 +9,10 @@
     "prompt": {
       "label": "Prompt to 3D reference images (FLUX.2 klein 4B)",
       "required": false
+    },
+    "multiview": {
+      "label": "Character from views (Pixal3D multi-view)",
+      "required": false
     }
   },
   "files": [
@@ -211,6 +215,19 @@
       "size": 5423900,
       "sha256": "a98c4806081d40eba35102a0f6dc0000c2e1388b72cf24e691703d0605bd888a",
       "note": "Used by Subject: Auto and the Character bust framing"
+    },
+    {
+      "id": "pixal3d-multiview-dit",
+      "pack": "multiview",
+      "label": "Pixal3D multi-view diffusion model (int8)",
+      "license": "MIT",
+      "repo": "Comfy-Org/Pixal3D",
+      "revision": "f37641be376725d324c56626007cc477f1249a69",
+      "path": "diffusion_models/pixal3d_multiview_int8_convrot.safetensors",
+      "dest": "diffusion_models/pixal3d_multiview_int8_convrot.safetensors",
+      "size": 5584555824,
+      "sha256": "6b1eb3328930d921d3b57508d9c46cceec1c174dcedeebc14f176ab67d49f477",
+      "note": "Optional: builds a model from 2 to 4 real views of the same subject"
     }
   ],
   "gpu_classes": {

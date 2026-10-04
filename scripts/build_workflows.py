@@ -566,6 +566,117 @@ def build_image_app() -> dict:
 
 
 # --------------------------------------------------------------------------------------------------
+# Character from views app: Pixal3D multi-view on 2 to 4 REAL views of the same subject (official template, patched)
+# --------------------------------------------------------------------------------------------------
+VIEWS_OPTIONS = ["All four views — best", "Front + back only"]
+VIEW_FILES = {"front": "Local3D_example_views_front.jpg", "left": "Local3D_example_views_left.jpg",
+              "back": "Local3D_example_views_back.jpg", "right": "Local3D_example_views_right.jpg"}
+VIEWS_STAGES = {
+    192: "Cutting out the front view", 348: "Cutting out the left view", 351: "Cutting out the back view", 353: "Cutting out the right view",
+    312: "Preparing the front view", 349: "Preparing the left view", 350: "Preparing the back view", 352: "Preparing the right view",
+    15: "Loading models", 193: "Loading models", 117: "Loading models", 118: "Loading models", 319: "Loading models",
+    3: "Generating coarse geometry", 119: "Generating coarse geometry", 87: "Generating coarse geometry",
+    91: "Refining geometry", 18: "Refining geometry", 94: "Refining geometry", 23: "Refining geometry", 92: "Refining geometry",
+    98: "Generating materials", 12: "Generating materials", 93: "Generating materials",
+    202: "Cleaning up the mesh", 241: "Cleaning up the mesh", 186: "Simplifying the mesh", 238: "Processing the mesh",
+    196: "Unwrapping textures", 147: "Baking colour textures", 224: "Baking surface detail", 233: "Baking shading",
+    210: "Packing the model", 260: "Packing the model", 285: "Packing the model", 372: "Saving the model",
+}
+
+
+def build_views_app() -> dict:
+    up = json.loads((UPSTREAM / "3d_pixal3d_multi_views.json").read_text(encoding="utf-8"))
+    g = Graph(up)
+    X, Y = -5100, -1560
+
+    # ---- the template cuts ONE turnaround sheet into four views; the app takes four pictures instead ----------------
+    for nid in (364, 338, 341, 342, 345, 374, 376):
+        g.remove(nid)
+    loaders = {}
+    labels = {"front": "Front view", "left": "Left view", "back": "Back view", "right": "Right view"}
+    for i, view in enumerate(("front", "left", "back", "right")):
+        loaders[view] = g.add(
+            "LoadImage", title=labels[view], pos=(X + i * 360, Y + 620), size=(330, 360), widgets=[VIEW_FILES[view], "image"],
+            inputs=[{"name": "image", "type": "COMBO", "widget": {"name": "image"}, "label": "Image", "localized_name": "image"},
+                    {"name": "upload", "type": "IMAGEUPLOAD", "widget": {"name": "upload"}}],
+            outputs=[{"name": "IMAGE", "type": "IMAGE"}, {"name": "MASK", "type": "MASK"}])
+        g.label_widget(loaders[view], "image", labels[view], "COMBO")
+    cut = {"front": (192, 312), "left": (348, 349), "back": (351, 350), "right": (353, 352)}   # (RemoveBackground, ImageCropToMask)
+    for view, (rb, crop) in cut.items():
+        g.connect(loaders[view], 0, rb, "image")
+        g.connect(loaders[view], 0, crop, "images")
+    # the template saved each prepared view to disk on its way into the conditioning: connect them directly instead
+    for nid in (340, 343, 344, 346):
+        g.remove(nid)
+    for view, (rb, crop) in cut.items():
+        g.connect(crop, 0, 324, view)
+
+    # ---- two conditioning variants; the control picks one (the other is never executed: the switch is lazy) --------------
+    cond4 = 324
+    n324 = g.nodes[324]
+    cond2 = g.add("Pixal3DMultiViewConditioning", title="Pixal3D Multi-View Conditioning (front + back)", pos=(n324["pos"][0], n324["pos"][1] + 420),
+                  size=n324["size"], widgets=[20.0],
+                  inputs=[{"name": "clip_vision_model", "type": "CLIP_VISION"}],
+                  outputs=[{"name": "positive", "type": "CONDITIONING"}, {"name": "negative", "type": "CONDITIONING"}])
+    g.connect(15, 0, cond2, "clip_vision_model")
+    g.connect(cut["front"][1], 0, cond2, "front", dtype="IMAGE")
+    g.connect(cut["back"][1], 0, cond2, "back", dtype="IMAGE")
+    views_combo = combo(g, "Views", "Views", VIEWS_OPTIONS, VIEWS_OPTIONS[0], (X + 1440, Y + 620),
+                        "All four views gives the best model. With only a front and a back picture, choose Front + back only.")
+    only_two = math(g, "Front + back only?", "a == 1", views_combo, "INDEX", (X + 1440, Y + 860))
+    for out_slot, nm in ((0, "positive"), (1, "negative")):
+        sw = g.add("ComfySwitchNode", title=f"Switch: views ({nm})", pos=(n324["pos"][0] + 420, n324["pos"][1] + out_slot * 110), size=(280, 100),
+                   widgets=[False], inputs=[{"name": "on_false", "type": "CONDITIONING", "shape": 7}, {"name": "on_true", "type": "CONDITIONING", "shape": 7}],
+                   outputs=[{"name": "output", "type": "CONDITIONING"}])
+        g.connect(cond4, out_slot, sw, "on_false")
+        g.connect(cond2, out_slot, sw, "on_true")
+        g.connect(only_two, "BOOL", sw, "switch", dtype="BOOLEAN", widget=True)
+        for consumer in (3, 91):   # the sampler and the shape stage read the conditioning
+            g.connect(sw, 0, consumer, nm)
+
+    # ---- controls shared with the Image app ----------------------------------------------------------------------------
+    quality = combo(g, "Quality", "Quality", QUALITY_OPTIONS, QUALITY_OPTIONS[1], (X, Y), "Fast = quick preview, Balanced = recommended, Maximum = most detail.")
+    output = combo(g, "Output", "Output", INTENT_OPTIONS, INTENT_OPTIONS[0], (X + 360, Y),
+                   "High fidelity keeps all detail. Game asset caps polygons and textures; it re-uses the generated shape.")
+    seed = g.add("PrimitiveInt", title="Seed", pos=(X + 720, Y), size=(300, 110), widgets=[1234, "randomize"],
+                 inputs=[{"name": "value", "type": "INT", "widget": {"name": "value"}, "label": "Seed", "localized_name": "value"}],
+                 outputs=[{"name": "INT", "type": "INT", "localized_name": "INT"}])
+    apply_quality(g, quality, output, seed, (X + 400, Y + 240))
+
+    # ---- app outputs: the model and what the model saw ------------------------------------------------------------------
+    previews = {}
+    for i, view in enumerate(("front", "left", "back", "right")):
+        previews[view] = g.add("PreviewImage", title=f"Prepared {view} view (what the model sees)", pos=(X + 2200, Y + i * 330), size=(300, 300),
+                               inputs=[{"name": "images", "type": "IMAGE"}], outputs=[{"name": "IMAGE", "type": "IMAGE"}])
+        g.connect(cut[view][1], 0, previews[view], "images")
+    g.mute(246, 323, 262, 261)
+    g.nodes[372]["widgets_values"][0] = "models/views"   # -> <output folder>/models/views_00001.glb
+    g.nodes[372]["title"] = "Save 3D model"
+
+    note(g, "## Local3D — Character from views\n\nThis graph is the official **Pixal3D multi-view** workflow. Instead of one turnaround sheet it takes "
+            "four separate pictures of the SAME subject (front, left, back, right: the camera moves 90 degrees between views, same distance, "
+            "same pose). Each picture is cut out and framed on its own, exactly as the template does. *Front + back only* uses just two views.\n\n"
+            "Generated or invented views are NOT a substitute: if the views disagree, the model averages them and the result gets blurry or warped "
+            "(measured in docs/CHARACTER_ROUTING_DECISION.md). Upstream: Comfy-Org/workflow_templates (MIT).", (X, Y - 380), (860, 300))
+    g.group("Local3D controls (public app inputs)", X - 40, Y - 80, 1100, 280, "#8A8")
+    g.group("The four views (public app inputs)", X - 40, Y + 580, 1480, 440, "#a1309b")
+    enrich_upstream_models(g)
+    describe_stages(g, VIEWS_STAGES)
+    inputs = [
+        [loaders["front"], "image", {"description": "Front of the subject"}],
+        [loaders["left"], "image", {"description": "Subject's left side"}],
+        [loaders["back"], "image", {"description": "Back of the subject"}],
+        [loaders["right"], "image", {"description": "Subject's right side"}],
+        [views_combo, "choice", {"description": "Front + back needs just two"}],
+        [quality, "choice", {"description": "Balanced is recommended"}],
+        [output, "choice", {"description": "Game asset = ~30k triangles"}],
+        [seed, "value", {"description": "Same seed = same result"}],
+    ]
+    app_meta(g, "character-from-views", inputs, [372] + [previews[v] for v in ("front", "left", "back", "right")])
+    return g.finish("character-from-views")
+
+
+# --------------------------------------------------------------------------------------------------
 # Prompt -> reference image stage (FLUX.2 klein 4B distilled; parameters copied from the official template)
 # --------------------------------------------------------------------------------------------------
 # Chosen by measurement (scripts/evaluate_prompts.py, see docs/QUALITY.md): with this wording 96% of generated pictures
@@ -741,6 +852,7 @@ APPS = {  # path relative to local3d_pack/  ->  builder
     "example_workflows/Local3D_Image_to_3D.app.json": build_image_app,
     "example_workflows/Local3D_Prompt_to_3D.app.json": lambda: build_prompt_app("blackwell"),
     "example_workflows/Local3D_Reference_Pictures.app.json": lambda: build_reference_app("blackwell"),
+    "example_workflows/Local3D_Character_from_Views.app.json": build_views_app,
 }
 for _v in ("ada", "legacy"):  # same apps with the weight formats that GPU class can run; the launcher copies these over
     APPS[f"variants/{_v}/Local3D_Prompt_to_3D.app.json"] = (lambda v=_v: build_prompt_app(v))

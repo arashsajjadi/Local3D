@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parent.parent
 PACK = ROOT / "local3d_pack" / "example_workflows"
 IMAGE_APP = json.loads((PACK / "Local3D_Image_to_3D.app.json").read_text(encoding="utf-8"))
 PROMPT_APP = json.loads((PACK / "Local3D_Prompt_to_3D.app.json").read_text(encoding="utf-8"))
+VIEWS_APP = json.loads((PACK / "Local3D_Character_from_Views.app.json").read_text(encoding="utf-8"))
 ROUTING = json.loads((ROOT / "data" / "presets.json").read_text(encoding="utf-8"))["routing"]
 
 
@@ -164,6 +165,18 @@ class GraphWiring(unittest.TestCase):
         types = {n["type"] for n in PROMPT_APP["nodes"]}
         self.assertNotIn("RTDETR_detect", types)
         self.assertNotIn("MediaPipeFaceLandmarker", types)
+
+    def test_views_app_takes_four_pictures_and_switches_lazily(self):
+        loaders = [n for n in VIEWS_APP["nodes"] if n["type"] == "LoadImage"]
+        self.assertEqual(sorted(n["title"] for n in loaders), ["Back view", "Front view", "Left view", "Right view"])
+        types = [n["type"] for n in VIEWS_APP["nodes"]]
+        self.assertEqual(types.count("Pixal3DMultiViewConditioning"), 2)   # four views / front + back
+        self.assertEqual(types.count("ComfySwitchNode"), 2)                 # positive + negative
+        self.assertNotIn("ImageCropV2", types)                              # no turnaround-sheet slicing any more
+        for n in VIEWS_APP["nodes"]:
+            if n["type"] == "Pixal3DMultiViewConditioning" and "front + back" in n.get("title", ""):
+                names = [i["name"] for i in n["inputs"] if i.get("link") is not None]
+                self.assertEqual(sorted(names), ["back", "clip_vision_model", "front"])
 
     def test_routing_constants_match_the_generated_expressions(self):
         self.assertIn(str(ROUTING["bust_cut_face_heights"]), expression(IMAGE_APP, "Bust cut: last picture row kept"))
