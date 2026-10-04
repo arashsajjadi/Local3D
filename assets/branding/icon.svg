@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Local3D cube icon">
+  <!-- Simple isometric cube: three flat tones, one triangulated face as a nod to meshes. -->
+  <polygon points="128,22 218,74 128,126 38,74" fill="#5EEAD4"/>
+  <polygon points="38,74 128,126 128,234 38,182" fill="#14B8A6"/>
+  <polygon points="128,126 218,74 218,182 128,234" fill="#0F766E"/>
+  <line x1="38" y1="74" x2="218" y2="74" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="4" stroke-linecap="round"/>
+</svg>
