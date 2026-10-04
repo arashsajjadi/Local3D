@@ -16,6 +16,7 @@ import shutil
 import sys
 import tempfile
 import time
+import urllib.request
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -64,9 +65,9 @@ def main() -> int:
     with Engine(runtime=args.runtime, models=args.models, workdir=work, port=args.port) as eng:
         api = eng.to_api(app)
         report_id = next(k for k, v in api.items() if v["class_type"] == "PreviewAny" and "report" in (v.get("_meta", {}).get("title") or "").lower())
-        for k in [k for k, v in api.items() if v["class_type"] in ("Save3DAdvanced", "Preview3D", "PreviewImage", "SaveImage")]:
-            del api[k]
-        for k in [k for k, v in api.items() if v["class_type"] == "PreviewAny" and k != report_id]:
+        # keep the report as the only output node, so that only what it needs (the detectors) is executed
+        info = json.load(urllib.request.urlopen(eng.base + "/object_info"))
+        for k in [k for k, v in api.items() if k != report_id and info.get(v["class_type"], {}).get("output_node")]:
             del api[k]
         for pic in pictures:
             shutil.copy(pic, eng.input_dir / pic.name)
@@ -87,7 +88,7 @@ def main() -> int:
             want = expected.get(pic.stem)
             ok = True
             if want and args.subject == "Auto":
-                ok = got["subject"].startswith(want["subject"]) and got["note"] == want.get("note")
+                ok = got["subject"].startswith(want["subject"]) and got["note"] == want.get("note") and got["cut"] == want.get("cut", got["cut"])
             print(f"{pic.stem:20s} {got['subject']:16s} note={got['note'] or '-':7s} cut={'yes' if got['cut'] else 'no':3s} "
                   f"{'ok' if ok else 'DIFFERENT from expected ' + json.dumps(want)}  ({time.time() - t0:.1f} s)")
             if not ok:

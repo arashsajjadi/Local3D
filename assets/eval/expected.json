@@ -1,46 +1,67 @@
 {
  "portrait_woman": {
   "subject": "Character bust",
-  "note": null
+  "note": null,
+  "cut": false
  },
  "glasses_man": {
   "subject": "Character bust",
-  "note": null
+  "note": null,
+  "cut": false
  },
  "raised_hand_woman": {
   "subject": "Character bust",
-  "note": null
+  "note": null,
+  "cut": false
  },
  "comic_wizard": {
   "subject": "Object",
-  "note": "person"
+  "note": "person",
+  "cut": false
  },
  "full_body_walker": {
   "subject": "Object",
-  "note": "person"
+  "note": "person",
+  "cut": false
  },
  "figurine_fox": {
   "subject": "Object",
-  "note": null
+  "note": null,
+  "cut": false
  },
  "toy_astronaut": {
   "subject": "Object",
-  "note": "toy"
+  "note": "toy",
+  "cut": false
  },
  "bicycle_wheel": {
   "subject": "Object",
-  "note": null
+  "note": null,
+  "cut": false
  },
  "fern_plant": {
   "subject": "Object",
-  "note": null
+  "note": null,
+  "cut": false
  },
  "comic_general": {
   "subject": "Character bust",
-  "note": null
+  "note": null,
+  "cut": false
  },
  "armored_knight": {
   "subject": "Character bust",
-  "note": null
+  "note": null,
+  "cut": false
+ },
+ "comic_general_tall": {
+  "subject": "Character bust",
+  "note": null,
+  "cut": true
+ },
+ "armored_knight_tall": {
+  "subject": "Character bust",
+  "note": null,
+  "cut": true
  }
 }
