@@ -186,6 +186,11 @@ namespace Local3D
     {
         public static bool AutoYes;   // --yes: accept the default choice of every consent dialog (unattended installs, tests)
 
+        public static Icon AppIcon()
+        {
+            try { return Icon.ExtractAssociatedIcon(Application.ExecutablePath); } catch { return null; }
+        }
+
         public static void Info(string title, string text) { MessageBox.Show(text, title, MessageBoxButtons.OK, MessageBoxIcon.Information); }
 
         public static bool Confirm(string title, string text, string ok)
@@ -201,6 +206,7 @@ namespace Local3D
             using (Form f = new Form())
             {
                 f.Text = "Local3D";
+                f.Icon = AppIcon();
                 f.StartPosition = FormStartPosition.CenterScreen;
                 f.FormBorderStyle = FormBorderStyle.FixedDialog;
                 f.MaximizeBox = false; f.MinimizeBox = false;
@@ -240,7 +246,7 @@ namespace Local3D
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             ClientSize = new Size(520, 168);
-            try { Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath); } catch { }
+            Icon = Ui.AppIcon();
             title.Text = "Local3D";
             title.Font = new Font(SystemFonts.MessageBoxFont.FontFamily, 16f, FontStyle.Bold);
             title.SetBounds(18, 12, 480, 34);
@@ -896,7 +902,7 @@ namespace Local3D
             string text = sb.ToString();
             using (Form f = new Form())
             {
-                f.Text = "Local3D diagnostics"; f.StartPosition = FormStartPosition.CenterScreen; f.ClientSize = new Size(600, 400);
+                f.Text = "Local3D diagnostics"; f.Icon = Ui.AppIcon(); f.StartPosition = FormStartPosition.CenterScreen; f.ClientSize = new Size(600, 400);
                 TextBox t = new TextBox { Text = text.Replace("\n", "\r\n"), Multiline = true, ReadOnly = true, Dock = DockStyle.Fill, ScrollBars = ScrollBars.Both, WordWrap = false };
                 Button copy = new Button { Text = "Copy to clipboard", Dock = DockStyle.Bottom, Height = 34 };
                 copy.Click += delegate { Clipboard.SetText(text); copy.Text = "Copied"; };
@@ -930,6 +936,7 @@ namespace Local3D
             using (Form f = new Form())
             {
                 f.Text = "Local3D - download models";
+                f.Icon = Ui.AppIcon();
                 f.StartPosition = FormStartPosition.CenterScreen;
                 f.FormBorderStyle = FormBorderStyle.FixedDialog; f.MaximizeBox = false; f.MinimizeBox = false;
                 f.ClientSize = new Size(560, 270);

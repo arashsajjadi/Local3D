@@ -93,6 +93,7 @@ def main():
     ap.add_argument("--image", help="file name inside ComfyUI's input folder")
     ap.add_argument("--output-dir", type=Path, required=True, help="ComfyUI output folder (to read the GLBs)")
     ap.add_argument("--out", type=Path, default=Path("bench.jsonl"))
+    ap.add_argument("--fixed-seed", type=int, help="use this seed for every run (to observe ComfyUI's caching between settings)")
     ap.add_argument("--matrix", default="Fast:Auto,Balanced:Auto,Maximum:Auto,Balanced:TRELLIS.2",
                     help="comma list of Quality:Model (Model = first word of the combo label)")
     args = ap.parse_args()
@@ -106,12 +107,13 @@ def main():
             opts = [p[nid]["inputs"][f"option{k}"] for k in range(1, 8) if p[nid]["inputs"].get(f"option{k}")]
             idx = next(k for k, o in enumerate(opts) if o.split()[0] == want)
             p[nid]["inputs"]["choice"], p[nid]["inputs"]["index"] = opts[idx], idx
-        p[find(p, "Seed")]["inputs"]["value"] = 5000 + i
+        seed = args.fixed_seed if args.fixed_seed is not None else 5000 + i
+        p[find(p, "Seed")]["inputs"]["value"] = seed
         if args.image:
             for v in p.values():
                 if v["class_type"] == "LoadImage":
                     v["inputs"]["image"] = args.image
-        res = {"quality": quality, "model": model, "seed": 5000 + i, **run_once(args.base, p, args.output_dir)}
+        res = {"quality": quality, "model": model, "seed": seed, **run_once(args.base, p, args.output_dir)}
         print(json.dumps(res), flush=True)
         with open(args.out, "a", encoding="utf-8") as fh:
             fh.write(json.dumps(res) + "\n")
