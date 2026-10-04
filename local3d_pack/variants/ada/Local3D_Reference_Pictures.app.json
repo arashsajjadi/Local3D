@@ -43,7 +43,7 @@
    },
    "title": "Prompt",
    "widgets_values": [
-    "A mechanical owl made of brass"
+    "A vintage red metal toolbox with a folding carry handle"
    ]
   },
   {
@@ -291,7 +291,7 @@
    "title": "Add 3D-friendly framing",
    "widgets_values": [
     "",
-    ", a single complete object centered in the frame and fully visible with nothing cropped, shown in a three-quarter front view from slightly above, soft even studio lighting, plain seamless neutral grey background, clean unmarked surfaces, photorealistic 3D render",
+    ", a single complete object, small in the frame with a wide empty margin of plain background on every side, fully visible and not cropped, three-quarter front view from slightly above, soft even studio lighting, seamless neutral grey background, clean unmarked surfaces, photorealistic 3D render",
     ""
    ]
   },

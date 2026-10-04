@@ -1,14 +1,42 @@
 {
   "schema": 1,
-  "comment": "Single source of truth for the Fast / Balanced / Maximum quality presets. scripts/build_workflows.py writes these values into the apps. Maximum equals the official Comfy-Org template defaults (the validated upstream ceiling); Fast and Balanced only reduce memory/time drivers and are measured in docs/PRESETS.md.",
-  "levels": ["Fast", "Balanced", "Maximum"],
+  "comment": "Single source of truth for the Fast / Balanced / Maximum quality presets. scripts/build_workflows.py writes these values into the apps. Maximum equals the official Comfy-Org template defaults (the validated upstream ceiling); Fast and Balanced only reduce memory/time drivers and are measured in docs/QUALITY.md.",
+  "levels": [
+    "Fast",
+    "Balanced",
+    "Maximum"
+  ],
   "parameters": {
-    "cascade_resolution": [1024, 1536, 1536],
-    "remesh_resolution": [512, 768, 768],
-    "max_faces": [100000, 300000, 700000],
-    "texture_size": [2048, 2048, 4096],
-    "normal_map_size": [1024, 2048, 2048],
-    "ao_map_size": [512, 1024, 1024]
+    "cascade_resolution": [
+      1024,
+      1536,
+      1536
+    ],
+    "remesh_resolution": [
+      512,
+      768,
+      768
+    ],
+    "max_faces": [
+      100000,
+      300000,
+      700000
+    ],
+    "texture_size": [
+      2048,
+      2048,
+      4096
+    ],
+    "normal_map_size": [
+      1024,
+      2048,
+      2048
+    ],
+    "ao_map_size": [
+      512,
+      1024,
+      1024
+    ]
   },
   "documentation": {
     "cascade_resolution": "Trellis2UpsampleStage.target_resolution - voxel resolution of the refined shape. Upstream default 1536; Pixal3D's own low-VRAM mode uses 1024.",
@@ -16,6 +44,18 @@
     "max_faces": "DecimateMesh.target_face_count - polygon budget of the exported mesh. Upstream default 700000.",
     "texture_size": "UnwrapMesh.resolution and BakeTextureFromVoxel.texture_size - base colour / metallic / roughness atlas. Upstream default 4096.",
     "normal_map_size": "BakeNormalMapFromMesh.resolution. Upstream default 2048.",
-    "ao_map_size": "BakeAmbientOcclusion.resolution. Upstream default 1024."
+    "ao_map_size": "BakeAmbientOcclusion.resolution. Upstream default 1024.",
+    "intents": "Game asset caps the polygon budget at 30000 triangles and the texture at 2048 px; normal and ambient-occlusion maps are still baked from the full-detail mesh before decimation. 3D-print optimization is deliberately not offered: ComfyUI Core cannot guarantee a watertight, printable mesh (upstream issue #16147)."
+  },
+  "intents": {
+    "levels": [
+      "High fidelity",
+      "Game asset"
+    ],
+    "caps": {
+      "max_faces": 30000,
+      "texture_size": 2048
+    },
+    "comment": "Output intent only changes post-processing (decimation and texture size), so switching it re-uses the generated geometry from ComfyUI's cache. High fidelity applies no cap. A cap lowers a value, it never raises it."
   }
 }

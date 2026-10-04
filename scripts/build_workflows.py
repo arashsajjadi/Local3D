@@ -189,6 +189,11 @@ def table(values: list, key: str) -> str:
     return expr
 
 
+def table_capped(values: list, cap: int) -> str:
+    """Quality table, lowered by the Output intent (b == 1 means "Game asset"); a cap never raises a value."""
+    return f"min({table(values, '')}, {cap} if b == 1 else 1000000000)"
+
+
 def note(g: Graph, text: str, pos, size=(520, 320), title="Local3D") -> int:
     return g.add("MarkdownNote", title=title, pos=pos, size=size, widgets=[text],
                  props={"Node name for S&R": "MarkdownNote"}, color="#233", bgcolor="#355")
@@ -208,8 +213,9 @@ def app_meta(g: Graph, name: str, inputs: list, outputs: list):
 # Image -> 3D app
 # --------------------------------------------------------------------------------------------------
 MODEL_OPTIONS = ["Auto — Recommended", "Pixal3D — Best match to reference", "TRELLIS.2 — Complex geometry & PBR"]
-QUALITY_OPTIONS = ["Fast", "Balanced", "Maximum"]
-BACKGROUND_OPTIONS = ["Auto", "Remove", "Keep"]
+QUALITY_OPTIONS = ["Fast — quick preview", "Balanced — recommended", "Maximum — most detail, 16 GB GPU"]
+INTENT_OPTIONS = ["High fidelity — keep all detail", "Game asset — about 30k triangles"]
+BACKGROUND_OPTIONS = ["Auto — recommended", "Remove — AI cutout only", "Keep — my transparent PNG"]
 
 
 def load_presets() -> dict:
@@ -247,10 +253,12 @@ def _image_graph():
     # ---- public controls -------------------------------------------------------------------------
     model = combo(g, "Model", "Model", MODEL_OPTIONS, MODEL_OPTIONS[0], (X, Y),
                   "Auto uses Pixal3D. Choose TRELLIS.2 for complex or thin geometry.")
-    quality = combo(g, "Quality", "Quality", QUALITY_OPTIONS, "Balanced", (X + 360, Y),
+    quality = combo(g, "Quality", "Quality", QUALITY_OPTIONS, QUALITY_OPTIONS[1], (X + 360, Y),
                     "Fast = quick preview, Balanced = recommended, Maximum = most detail (needs the most GPU memory).")
-    background = combo(g, "Background", "Background", BACKGROUND_OPTIONS, "Auto", (X + 720, Y),
+    background = combo(g, "Background", "Background", BACKGROUND_OPTIONS, BACKGROUND_OPTIONS[0], (X + 720, Y),
                        "Auto removes the background. Keep uses your image's own transparency.")
+    output = combo(g, "Output", "Output", INTENT_OPTIONS, INTENT_OPTIONS[0], (X + 1440, Y),
+                   "High fidelity keeps all detail. Game asset caps polygons and textures; it re-uses the generated shape.")
     seed = g.add("PrimitiveInt", title="Seed", pos=(X + 1080, Y), size=(300, 110), widgets=[1234, "randomize"],
                  inputs=[{"name": "value", "type": "INT", "widget": {"name": "value"}, "label": "Seed", "localized_name": "value"}],
                  outputs=[{"name": "INT", "type": "INT", "localized_name": "INT"}])
@@ -272,8 +280,13 @@ def _image_graph():
         ("Preset: AO map size", "ao_map_size", 233, "resolution"),
     ]
     tex_math = None
+    caps = load_presets()["intents"]["caps"]
     for i, (title, key, nid, inp) in enumerate(rows):
-        m = math(g, title, table(P[key], key), quality, "INDEX", (X + 400, Y + 240 + i * 150))
+        pos = (X + 400, Y + 240 + i * 150)
+        if key in caps:   # post-processing values that the Output intent may lower
+            m = math(g, title, table_capped(P[key], caps[key]), quality, "INDEX", pos, extra_in=[(output, "INDEX", "b")])
+        else:
+            m = math(g, title, table(P[key], key), quality, "INDEX", pos)
         if nid is not None:
             g.connect(m, "INT", nid, inp, dtype="INT", widget=True)
         else:
@@ -321,9 +334,9 @@ def _image_graph():
     g.mute(246, 323, 262, 261)
 
     # ---- outputs / naming ---------------------------------------------------------------------
-    g.nodes[322]["widgets_values"][0] = "Local3D/model"
+    g.nodes[322]["widgets_values"][0] = "models/image"   # -> <output folder>/models/image_00001.glb
     g.nodes[302]["title"] = "Prepared image (what the model sees)"
-    g.nodes[122]["widgets_values"][0] = "Local3D_example_owl.jpg"  # copied into the input folder on first run
+    g.nodes[122]["widgets_values"][0] = "Local3D_example_robot.jpg"  # copied into the input folder on first run
     g.label_widget(122, "image", "Image", "COMBO")
 
     # ---- documentation inside the graph -----------------------------------------------------------
@@ -332,13 +345,13 @@ def _image_graph():
             "the *Preset* Math Expression nodes (generated from `data/presets.json`).\n\n"
             "Diagnostic previews are muted; un-mute them to inspect stages. Upstream: Comfy-Org/workflow_templates (MIT).",
          (X, Y - 380), (760, 260))
-    g.group("Local3D controls (public app inputs)", X - 40, Y - 80, 1460, 460, "#8A8")
+    g.group("Local3D controls (public app inputs)", X - 40, Y - 80, 1820, 460, "#8A8")
     g.group("Quality presets (data/presets.json)", X + 360, Y + 200, 380, 960, "#a1309b")
     g.group("Background handling", X + 780, Y + 200, 740, 800, "#b58b2a")
 
     enrich_upstream_models(g)
     describe_stages(g, IMAGE_STAGES)
-    ids = {"model": model, "quality": quality, "background": background, "seed": seed, "bg_nodes": [inv, auto_mask, bg_is_remove, bg_is_keep, sw_remove]}
+    ids = {"model": model, "quality": quality, "output": output, "background": background, "seed": seed, "bg_nodes": [inv, auto_mask, bg_is_remove, bg_is_keep, sw_remove]}
     return g, ids
 
 
@@ -348,7 +361,8 @@ def build_image_app() -> dict:
         [122, "image", {"description": "Drop ONE object, fully in frame"}],
         [ids["model"], "choice", {"description": "Auto = Pixal3D (recommended)"}],
         [ids["quality"], "choice", {"description": "Balanced is recommended"}],
-        [ids["background"], "choice", {"description": "Auto removes it. Keep = cutout"}],
+        [ids["output"], "choice", {"description": "Game asset = ~30k triangles"}],
+        [ids["background"], "choice", {"description": "Keep needs a transparent PNG"}],
         [ids["seed"], "value", {"description": "Same seed = same result"}],
     ]
     app_meta(g, "image-to-3d", inputs, [322, 302])
@@ -358,10 +372,12 @@ def build_image_app() -> dict:
 # --------------------------------------------------------------------------------------------------
 # Prompt -> reference image stage (FLUX.2 klein 4B distilled; parameters copied from the official template)
 # --------------------------------------------------------------------------------------------------
-PROMPT_SUFFIX = (", a single complete object centered in the frame and fully visible with nothing cropped, "
-                 "shown in a three-quarter front view from slightly above, soft even studio lighting, "
-                 "plain seamless neutral grey background, clean unmarked surfaces, photorealistic 3D render")
-DEFAULT_PROMPT = "A mechanical owl made of brass"
+# Chosen by measurement (scripts/evaluate_prompts.py, see docs/QUALITY.md): with this wording 96% of generated pictures
+# passed the framing check, against 48% for the raw prompt and 70% for the first wording we tried.
+PROMPT_SUFFIX = (", a single complete object, small in the frame with a wide empty margin of plain background on every side, "
+                 "fully visible and not cropped, three-quarter front view from slightly above, soft even studio lighting, "
+                 "seamless neutral grey background, clean unmarked surfaces, photorealistic 3D render")
+DEFAULT_PROMPT = "A vintage red metal toolbox with a folding carry handle"
 MANIFEST = ROOT / "data" / "models.json"
 CANDIDATE_OPTIONS = ["1", "2", "4"]
 
@@ -488,6 +504,7 @@ def build_prompt_app(variant: str = "blackwell") -> dict:
         [friendly, "value", {"description": "Adds framing that helps 3D"}],
         [ids["model"], "choice", {"description": "Auto = Pixal3D (recommended)"}],
         [ids["quality"], "choice", {"description": "Balanced is recommended"}],
+        [ids["output"], "choice", {"description": "Game asset = ~30k triangles"}],
         [ids["seed"], "value", {"description": "Same seed = same result"}],
     ]
     note(g, "## Local3D — Prompt to 3D\n\nPrompt → reference image (FLUX.2 klein 4B) → 3D model. "

@@ -82,6 +82,10 @@ def check_data():
                 err(f"presets.json[{k}]: need {n} positive integers")
             if v != sorted(v):
                 err(f"presets.json[{k}]: values must not decrease from Fast to Maximum ({v})")
+        intents = presets.get("intents", {})
+        for k, cap in intents.get("caps", {}).items():
+            if k not in presets["parameters"] or not isinstance(cap, int) or cap <= 0:
+                err(f"presets.json intents.caps[{k}]: must name a preset parameter and be a positive integer")
     if core and runtime and core.get("comfyui_version") != runtime.get("comfyui_version"):
         err("core_node_types.json was generated for a different ComfyUI version than data/runtime.json")
     return manifest, core

@@ -1,5 +1,6 @@
 """Preset tables, graph-editing invariants and the model provisioning logic."""
 import json
+import os
 import sys
 import tempfile
 import unittest
@@ -29,8 +30,38 @@ class PresetTables(unittest.TestCase):
     def test_apps_embed_exactly_the_preset_values(self):
         d = bw.build_image_app()
         exprs = [n["widgets_values"][0] for n in d["nodes"] if n["type"] == "ComfyMathExpression"]
+        caps = PRESETS["intents"]["caps"]
         for key, values in PRESETS["parameters"].items():
-            self.assertIn(bw.table(values, key), exprs, key)
+            want = bw.table_capped(values, caps[key]) if key in caps else bw.table(values, key)
+            self.assertIn(want, exprs, key)
+
+    def test_output_intent_only_ever_lowers_values(self):
+        caps = PRESETS["intents"]["caps"]
+        for key, cap in caps.items():
+            expr = bw.table_capped(PRESETS["parameters"][key], cap)
+            for qi, base in enumerate(PRESETS["parameters"][key]):
+                env = {"min": min}
+                high = eval(expr, {"__builtins__": {}, **env}, {"a": qi, "b": 0})   # noqa: S307 - trusted literal
+                game = eval(expr, {"__builtins__": {}, **env}, {"a": qi, "b": 1})   # noqa: S307
+                self.assertEqual(high, base, (key, qi))                 # High fidelity = the preset, untouched
+                self.assertEqual(game, min(base, cap), (key, qi))       # Game asset = lowered, never raised
+
+    def test_output_only_feeds_post_processing_nodes(self):
+        """The Output combo must not reach the generation stages, or switching it would re-run them."""
+        d = bw.build_image_app()
+        byid = {n["id"]: n for n in d["nodes"]}
+        out_id = next(n["id"] for n in d["nodes"] if n["type"] == "CustomCombo" and n.get("title") == "Output")
+        links = d["links"]
+        reach, frontier = set(), [out_id]
+        while frontier:
+            cur = frontier.pop()
+            for l in links:
+                if l[1] == cur and l[3] not in reach:
+                    reach.add(l[3]); frontier.append(l[3])
+        types = {byid[i]["type"] for i in reach}
+        for generation in ("KSampler", "Trellis2ShapeStage", "Trellis2UpsampleStage", "Trellis2TextureStage", "VaeDecodeShapeTrellis"):
+            self.assertNotIn(generation, types)
+        self.assertIn("DecimateMesh", types)
 
     def test_apps_are_deterministic(self):
         a = json.dumps(bw.build_prompt_app(), sort_keys=True)
@@ -98,7 +129,9 @@ class Provisioning(unittest.TestCase):
         dest.write_bytes(b"hello world")
         cache = pm.VerifyCache(self.tmp)
         cache.remember(self.f, dest)
-        dest.write_bytes(b"HELLO WORLD")  # same size, different content and mtime
+        dest.write_bytes(b"HELLO WORLD")  # same size, different content
+        st = dest.stat()
+        os.utime(dest, ns=(st.st_atime_ns, st.st_mtime_ns + 5_000_000_000))  # file times can be too coarse to differ by themselves
         self.assertNotEqual(pm.status_of(self.f, self.tmp, pm.VerifyCache(self.tmp)), "ok")
 
     def test_pack_selection(self):
