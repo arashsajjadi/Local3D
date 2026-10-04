@@ -81,8 +81,10 @@ asset looks nearly identical to the 300 k one:
 ![Owl at 300 k triangles (left) and as a 30 k-triangle game asset (right)](images/owl-intent.jpg)
 
 **3D-print optimization is not offered.** ComfyUI Core cannot guarantee a watertight, printable mesh (meshes can contain an
-inner shell, upstream issue #16147), and promising "printable" would be dishonest. Use the viewer's STL export and your slicer's
-repair tools.
+inner shell, upstream issue #16147), and promising "printable" would be dishonest. In v0.2 the two clean-up options Core has were
+measured on a character bust: a signed-distance remesh made the mesh much worse (9 % open edges) and *Fill Holes* closed almost
+nothing (see *3D printing* in [CHARACTER_ROUTING_DECISION.md](CHARACTER_ROUTING_DECISION.md)). Use the viewer's STL export and your
+slicer's repair tools, and keep a *High fidelity* run as the master next to any *Game asset* run.
 
 ## Re-running and caching
 

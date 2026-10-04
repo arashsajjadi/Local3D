@@ -11,7 +11,7 @@ Black Forest Labs, Alibaba, NVIDIA or anyone else listed here.
 
 | Component | What we include | License |
 | --- | --- | --- |
-| [Comfy-Org/workflow_templates](https://github.com/Comfy-Org/workflow_templates) | `workflows/upstream/*.json` are unmodified copies of two official templates; `local3d_pack/example_workflows/*.app.json` and `local3d_pack/variants/*/*.app.json` are generated from them by `scripts/build_workflows.py` | MIT, see below |
+| [Comfy-Org/workflow_templates](https://github.com/Comfy-Org/workflow_templates) | `workflows/upstream/*.json` are unmodified copies of three official templates; `local3d_pack/example_workflows/*.app.json` and `local3d_pack/variants/*/*.app.json` are generated from them by `scripts/build_workflows.py` | MIT, see below |
 
 ```
 MIT License
@@ -38,7 +38,9 @@ SOFTWARE.
 ```
 
 The example pictures in `assets/examples/` were generated with FLUX.2 [klein] 4B (Apache-2.0) from prompts written for
-this project; they contain no third-party artwork. Sample input images used by some upstream templates are not redistributed. The benchmark picture behind `docs/images/axe-presets.jpg` is
+this project; they contain no third-party artwork. The four `Local3D_example_views_*` pictures are renders (from four sides) of a
+3D model that Local3D itself generated from one of those pictures. The nine evaluation pictures in `assets/eval/` (subject-routing checks;
+not installed) were also generated with FLUX.2 [klein] 4B from the prompts listed beside them, and the people in them are synthetic. Sample input images used by some upstream templates are not redistributed. The benchmark picture behind `docs/images/axe-presets.jpg` is
 `viking_wolf_rune_axe.png` from Comfy-Org/workflow_templates (MIT); that figure shows Local3D renders of models generated from it, and the PNG itself is not in this repository.
 
 ## 2. Runtime downloaded on first start (not included in this repository or the installer)
@@ -69,13 +71,17 @@ Models are fetched from Hugging Face by Local3D's provisioning step, pinned to e
 | DINOv3 ViT-L image encoder (Meta), repacked in [Comfy-Org/Pixal3D](https://huggingface.co/Comfy-Org/Pixal3D) | conditioning for both 3D models | **Meta DINOv3 License (custom, not MIT).** Read it at <https://ai.meta.com/resources/models-and-libraries/dinov3-license/>. It includes redistribution, trade-control and military end-use terms. Local3D downloads the file for you directly from Hugging Face and does not redistribute it. The same file also bundles the NAF feature-upsampler weights ([valeoai/NAF](https://github.com/valeoai/NAF), Apache-2.0) |
 | [BiRefNet](https://huggingface.co/ZhengPeng7/BiRefNet) (Peng Zheng et al.); repack: [Comfy-Org/BiRefNet](https://huggingface.co/Comfy-Org/BiRefNet) | background removal | MIT |
 | [MoGe-2](https://github.com/microsoft/MoGe) (Microsoft); repack: [Comfy-Org/MoGe](https://huggingface.co/Comfy-Org/MoGe) | camera / field-of-view estimation | MIT (code), includes DINOv2 code under Apache-2.0 |
+| RT-DETR v4 (X, fp16): original [RT-DETRv4](https://github.com/RT-DETRs/RT-DETRv4); ComfyUI repack: [Comfy-Org/SDPose](https://huggingface.co/Comfy-Org/SDPose) | finds a person, for subject routing | Apache-2.0 (original); the Comfy-Org repack is MIT |
+| MediaPipe face detector and landmarker (Google); repack: [Comfy-Org/mediapipe](https://huggingface.co/Comfy-Org/mediapipe) | finds a face, for subject routing | Apache-2.0 |
+| Pixal3D multi-view model (TencentARC), ComfyUI repack in [Comfy-Org/Pixal3D](https://huggingface.co/Comfy-Org/Pixal3D) | *Character from views* (optional download) | MIT |
 | FLUX.2 \[klein\] 4B (Black Forest Labs): [nvfp4 build](https://huggingface.co/black-forest-labs/FLUX.2-klein-4b-nvfp4) on RTX 50-series, [fp8 build](https://huggingface.co/black-forest-labs/FLUX.2-klein-4b-fp8) on RTX 40-series, bf16 build (Comfy-Org repack of `flux-2-klein-4b.safetensors`) on older cards | reference pictures for Prompt to 3D | Apache-2.0 |
 | Qwen3-4B text encoder (Alibaba): fp4 build (RTX 50) or bf16 build (older cards) in [Comfy-Org](https://huggingface.co/Comfy-Org/vae-text-encorder-for-flux-klein-4b) | prompt encoding | Apache-2.0 |
 | FLUX.2 VAE, same repository | image decoding | Apache-2.0 |
 
 Deliberately **not** used: BRIA RMBG-2.0 (CC BY-NC; ComfyUI's template uses MIT BiRefNet instead), FLUX.2 klein 9B and
-other non-commercial FLUX weights, and the Tencent Hunyuan3D models (Tencent Hunyuan Community License, which excludes
-the EU, UK and South Korea and has other restrictions). See [docs/MODELS.md](https://github.com/arashsajjadi/Local3D/blob/main/docs/MODELS.md).
+other non-commercial FLUX weights, the Tencent Hunyuan3D models (Tencent Hunyuan Community License, which excludes
+the EU, UK and South Korea, forbids using outputs to train other AI models and has other restrictions), Qwen-Image 2.1 (research licence, non-commercial),
+and the human-specific research models that were evaluated and rejected (HumanNOVA: no licence file, needs SMPL which is non-commercial; PSHuman: over 40 GB of VRAM; Era3D: AGPL-3.0). See [docs/MODELS.md](https://github.com/arashsajjadi/Local3D/blob/main/docs/MODELS.md).
 
 Outputs: generated meshes and pictures are yours to use, subject to the licenses of the models that produced them
 (all of the models Local3D downloads allow commercial use of outputs at the time of writing; DINOv3's terms apply

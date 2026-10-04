@@ -69,6 +69,28 @@ the old *Maximum* settings; if you have 12 GB or less, start with *Fast* or *Bal
 * **Different result each time:** the seed is randomized on every Run. After a run, the Seed box shows the seed that produced the model on
   screen. To repeat it, click the small control button next to Seed, choose *Fixed*, keep that number and press Run again.
 
+### A person or character comes out wrong
+
+Under the model, *Image to 3D* prints a **Subject report**: what the two detectors found (scores from 0 to 1), which subject was chosen and
+by whom ("Auto picked it" or "your choice"), and how the picture was framed. Start there.
+
+* **The hand, face or glasses are soft or fused:** the model sees the picture at about 1 000 px, so a face that is a small part of
+  the picture gets few pixels. Give it a picture where the person is large: head and shoulders, or half length. A full-length
+  figure stays on the *Object* workflow because its face is too small to crop to; choose **Subject: Character bust** to crop to the
+  upper body, or crop the picture yourself.
+* **The report says "not sure: a person, but no large clear face":** Auto kept the whole picture (the plain *Object* workflow) because it could not be
+  sure the subject is a bust (the face may be hidden by a beard, a hat or a helmet, small, or heavily stylised). If it is a person you
+  want cropped to a bust, choose *Character bust*.
+* **A toy, doll or statue lost its legs:** that is what *Character bust* does to a figure. Auto normally keeps these whole ("a face but no person:
+  this may be a toy, doll or statue"); if you chose *Character bust* yourself, set *Subject* back to *Auto* or *Object*.
+* **The back of the head, the far side, the colour of lenses or the top of a cap differ from run to run:** nothing in a single picture
+  decides them, so they are inferred and depend on the Seed. Try another seed, or use **Character from views** with real views of those sides.
+* **Character from views asks for a 5.6 GB download:** it needs one extra model (Pixal3D's multi-view model). Choose *Not now* to skip it; *Image to 3D* does not need it.
+* **Character from views gives a poor result:** the views must be of the *same* subject, at the same scale and lighting, one complete subject per
+  picture on a plain background, in the order front, left, back, right ("left" is the subject's own left). Two views (front and back) work too.
+  Views made by an image generator are not reliable evidence: they re-draw details (see [CHARACTER_ROUTING_DECISION.md](CHARACTER_ROUTING_DECISION.md)).
+* **The model is not watertight / a slicer complains:** the output is a surface for viewing and games, not a printable solid. See *3D printing* in the same document, and repair it in Blender or your slicer.
+
 ### "Media input missing"
 
 The picture file Local3D opened with is not in its input folder (for example you deleted it). Pick or drop another

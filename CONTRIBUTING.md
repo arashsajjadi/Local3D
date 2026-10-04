@@ -29,6 +29,10 @@ python -m unittest discover -s tests       # unit tests
 | `scripts/provision_models.py` | Hash-verified model downloads (wraps `huggingface_hub`) |
 | `scripts/validate.py` | Repository checks (also run by CI) |
 | `scripts/bench_presets.py`, `evaluate_samples.py` | Measure presets / run the evaluation set against a running server |
+| `scripts/dev_comfy.py` | Drives a private ComfyUI from Python (start it, convert an app to an API prompt, run, sample GPU and RAM). Used by the tools below |
+| `scripts/check_routing.py`, `assets/eval/` | What *Subject: Auto* decides for the evaluation pictures, checked against `expected.json` in seconds (no 3D generation) |
+| `scripts/mesh_report.py`, `render_glb_views.py`, `contact_sheet.py` | Judge a GLB: triangles, components, open edges, watertightness; render it from fixed angles (textured and clay); tile renders |
+| `scripts/make_eval_set.py`, `pin_models.py` | Regenerate the evaluation pictures with FLUX.2 klein; pin a model file (size, SHA-256, revision) into `data/models.json` |
 | `data/` | Single sources of truth: `models.json` (files, hashes), `runtime.json` (pinned ComfyUI), `presets.json`, `frontend-settings.json`, `core_node_types.json` |
 | `launcher/Local3D.cs`, `installer/` | The Windows launcher and the installer |
 | `docs/`, `tests/` | Documentation and unit tests |
@@ -62,8 +66,13 @@ Titles of the Model / Quality / Seed nodes are how the tools find the controls, 
    then run the app for real. Update [docs/MODELS.md](docs/MODELS.md) and `THIRD_PARTY_NOTICES.md` (license!).
 2. **Changing quality presets:** edit `data/presets.json`, regenerate, run `scripts/bench_presets.py` and put the new
    measurements in [docs/QUALITY.md](docs/QUALITY.md). Do not invent values: derive them from upstream defaults and measure.
-3. **Bumping ComfyUI:** see *Upgrading the runtime* in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
-4. **Custom nodes are not accepted** for the shipped apps. If Core cannot do something, document the limitation (with
+3. **Changing how pictures are routed** (`Subject: Auto`): the thresholds are data in `data/presets.json` (`"routing"`), the decision is
+   made by *Math Expression* nodes that `scripts/build_workflows.py` writes, and `tests/test_routing.py` evaluates those expressions without a GPU.
+   Change the data, regenerate, run the tests, then `python scripts/check_routing.py <runtime> <models>` for the real detectors. Add a picture to
+   `assets/eval/` (with `expected.json` and `prompts.json`) for every case you fix, and record what the detectors reported in
+   [docs/CHARACTER_ROUTING_DECISION.md](docs/CHARACTER_ROUTING_DECISION.md).
+4. **Bumping ComfyUI:** see *Upgrading the runtime* in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+5. **Custom nodes are not accepted** for the shipped apps. If Core cannot do something, document the limitation (with
    the upstream issue) first; a tiny isolated extension is the last resort.
 
 ## Rules for changes

@@ -8,7 +8,7 @@ the pieces fit and exactly which parts are ours.
  Start Menu "Local3D"
         |
         v
- Local3D.exe  (launcher, C#, ~1,200 lines, built with the compiler that ships with Windows)
+ Local3D.exe  (launcher, C#, ~1,400 lines, built with the compiler that ships with Windows)
    1. first run:  curl.exe + tar.exe  ->  official ComfyUI portable (pinned, SHA-256 verified)
                   provision_models.py ->  model files from Hugging Face (pinned, SHA-256 verified)
    2. start:      python_embeded\python.exe ComfyUI\main.py --port <free> ...    (inside a Job Object)
@@ -31,9 +31,9 @@ the pieces fit and exactly which parts are ours.
 | Piece | Size | Why it exists (verified limitation of upstream) |
 | --- | --- | --- |
 | `local3d_pack/` apps | generated JSON | Upstream has no App for this and no prompt-to-3D template |
-| `scripts/build_workflows.py` | ~580 lines | Keeps the apps reproducible from the official templates, so an upstream bump is a re-run, not a re-do |
-| `scripts/provision_models.py` | ~250 lines | App Mode has no model-download UI (it only points to the graph *Errors* tab) and the frontend downloader has open bugs; this wraps Hugging Face's own client |
-| `launcher/Local3D.cs` | ~1,200 lines | Comfy Desktop cannot be launched into an app and has no CLI; Windows offers no way to run ComfyUI without a console window and clean up its processes |
+| `scripts/build_workflows.py` | ~890 lines | Keeps the apps reproducible from the official templates, so an upstream bump is a re-run, not a re-do |
+| `scripts/provision_models.py` | ~260 lines | App Mode has no model-download UI (it only points to the graph *Errors* tab) and the frontend downloader has open bugs; this wraps Hugging Face's own client |
+| `launcher/Local3D.cs` | ~1,400 lines | Comfy Desktop cannot be launched into an app and has no CLI; Windows offers no way to run ComfyUI without a console window and clean up its processes |
 | `installer/Local3D.iss` | ~170 lines | Start Menu entry with icon, per-user install, careful uninstall |
 
 Everything else is upstream: the server, queue, history, node execution, model memory management (dynamic VRAM),
@@ -47,10 +47,25 @@ All apps use **Comfy Core nodes only** (enforced by `scripts/validate.py` agains
   `Model` and `Quality` are *Custom Combo* nodes whose `INDEX` output drives small *Math Expression* tables
   (one per parameter, values from `data/presets.json`); `Background` selects between the AI matte, your own
   transparency, or both; one `Seed` feeds every sampler.
+* **Subject routing** is part of *Image to 3D*, not a separate app: `Subject` (Auto, Object, Character bust, Complex) is another
+  *Custom Combo*. Before anything else two small detectors (RT-DETR person, MediaPipe face; both Comfy Core nodes) look at the
+  original picture, *Math Expression* tables decide the subject, and *Crop* nodes cut picture and cut-out to a bust when that is
+  what the picture shows. A *Preview Any* node prints a plain-language report of what was found and chosen (an app output). See
+  [CHARACTER_ROUTING_DECISION.md](CHARACTER_ROUTING_DECISION.md).
+* **Character from views** is the official *Pixal3D multi-view* template with the same controls: two or four real views in,
+  one model out (a *Switch* node chooses between the two-view and four-view conditioning, so only one branch runs).
 * **Prompt to 3D** puts FLUX.2 klein 4B (distilled: 4 steps, CFG 1, parameters copied from the official template) in
   front of the same 3D graph. A *3D-friendly* switch appends a fixed framing sentence (single object, small in the frame
   with a wide margin, fully visible, three-quarter view, neutral background) to the prompt: no LLM involved.
 * **Reference Pictures** makes 1, 2 or 4 candidates in a few seconds, so you can pick before spending minutes on 3D.
+
+### Why the routing lives in the graph
+
+The decision is made by core nodes, so it is visible in the full graph, works in any ComfyUI, and needs no custom code.
+The thresholds are data (`data/presets.json`, `"routing"`); `tests/test_routing.py` reads the *Math Expression* strings back out
+of the generated apps and evaluates them with the names ComfyUI gives them (`a`, `b`, `c`...), so a change that breaks the
+decision fails CI without a GPU. `scripts/check_routing.py` runs the real detectors on the evaluation pictures in seconds.
+A missing detection never fails a run: a sentinel JSON object makes the numbers fall back to "nothing found".
 
 ### Why "Reference pictures" is a separate app
 
@@ -91,7 +106,7 @@ bare `--fast`, `--fp16-vae`/`--bf16-vae`, `--highvram`/`--gpu-only`/`--disable-d
 %LOCALAPPDATA%\Local3D\               (or the folder in settings.json)
     runtime\ComfyUI_windows_portable  official runtime, replaceable
     workspace\                        ComfyUI base dir: custom_nodes\local3d_pack, user\ (settings, apps)
-    models\                           (or modelsDir)  15 to 36 GB
+    models\                           (or modelsDir)  15 to 37 GB
     logs\                             launcher.log, comfyui.log
     browser-profile\                  Edge profile used only for the app window
 Documents\Local3D\                    your results: models\*.glb, Local3D_reference_*.png, images you add
