@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parent.parent
 UPSTREAM = ROOT / "workflows" / "upstream"
 OUT = ROOT / "local3d_pack"
 PRESETS = ROOT / "data" / "presets.json"
-VERSION = "0.1.1"
+VERSION = "0.1.2"
 FRONTEND = "1.53.6"  # frontend pinned by the tested ComfyUI release (informational)
 
 

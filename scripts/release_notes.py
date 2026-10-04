@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Print GitHub release notes for a version: its CHANGELOG section plus the standard install footer.
 
-    python scripts/release_notes.py 0.1.1 --out release-notes.md
+    python scripts/release_notes.py 0.1.2 --out release-notes.md
 """
 import argparse
 import re

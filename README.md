@@ -13,7 +13,7 @@
 
 Windows 10/11 and an NVIDIA RTX 20-series or newer graphics card (12 GB+ recommended). Developed and tested on Windows 11 with an RTX 5080 only; other setups should work but are untested. About 26 GB of disk space on an RTX 50-series card (up to 36 GB on older cards).
 
-1. Download **Local3D-Setup-0.1.1.exe** from the [latest release](https://github.com/arashsajjadi/Local3D/releases/latest).
+1. Download **Local3D-Setup-0.1.2.exe** from the [latest release](https://github.com/arashsajjadi/Local3D/releases/latest).
    Windows SmartScreen will warn because the installer is not code-signed yet: *More info* > *Run anyway*.
 2. Install it, then start **Local3D** from the Start menu.
 3. On first start Local3D asks before each download: **OK** for the ComfyUI engine (2 GB, the open-source tool that runs the models), then **Download** for the AI models (15 GB, plus an optional 7 to 16 GB for prompts).

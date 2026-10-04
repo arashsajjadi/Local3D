@@ -5,6 +5,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follo
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-10-04
+
+### Fixed
+- In about one launch in ten the Local3D launcher kept running (and kept the next start from opening) after the app window was
+  closed, because Edge leaves a background process of its profile behind for a moment. Local3D now treats a visible app
+  window as "open", and stops any background Edge of its own profile when it shuts down.
+
 ## [0.1.1] - 2026-10-04
 
 Fixes a start-up failure in 0.1.0: on some PCs the app window opened and stayed on the dark ComfyUI splash forever.
@@ -38,6 +45,7 @@ First public version.
 - Hunyuan3D and multi-view Pixal3D are not included (see docs/MODELS.md).
 - The installer is not code-signed; Windows SmartScreen will warn.
 
-[Unreleased]: https://github.com/arashsajjadi/Local3D/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/arashsajjadi/Local3D/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/arashsajjadi/Local3D/releases/tag/v0.1.2
 [0.1.1]: https://github.com/arashsajjadi/Local3D/releases/tag/v0.1.1
 [0.1.0]: https://github.com/arashsajjadi/Local3D/releases/tag/v0.1.0
