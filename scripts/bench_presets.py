@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Benchmark the Local3D quality presets against a running ComfyUI server (dev tool, stdlib only).
 
-1. Open the app in the frontend and capture its API prompt once (see docs/CONTRIBUTING.md), or reuse a capture.
+1. Open the app in the frontend and capture its API prompt once (see CONTRIBUTING.md), or reuse a capture.
 2. Run:  python scripts/bench_presets.py --capture <api_image_app.json> --image viking.png --out bench.jsonl
 
 Every run uses a different seed so ComfyUI's cache cannot skip the sampling stages; durations are warm-model

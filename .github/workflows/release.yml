@@ -13,6 +13,7 @@ permissions:
 jobs:
   release:
     runs-on: windows-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -22,13 +23,15 @@ jobs:
         shell: pwsh
         run: |
           python scripts/validate.py
+          if ($LASTEXITCODE -ne 0) { throw "validate.py failed" }
           python -m unittest discover -s tests
+          if ($LASTEXITCODE -ne 0) { throw "unit tests failed" }
       - name: Compile the launcher and build the installer
         shell: pwsh
         run: |
           ./scripts/build_launcher.ps1
           $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
-          if (-not (Test-Path $iscc)) { choco install innosetup --no-progress -y }
+          if (-not (Test-Path $iscc)) { throw "Inno Setup 6 is not installed on this runner image; install a pinned version here before releasing." }
           & $iscc /Q installer\Local3D.iss
           if ($LASTEXITCODE -ne 0) { throw "ISCC failed" }
       - name: Check the tag matches the version in the installer
@@ -40,12 +43,13 @@ jobs:
       - name: Checksums and release notes
         shell: pwsh
         run: |
-          Push-Location dist
-          Get-ChildItem Local3D-Setup-*.exe | ForEach-Object {
+          # LF line endings and no BOM, so `sha256sum -c SHA256SUMS.txt` also works on Linux, WSL and Git Bash
+          $lines = Get-ChildItem dist\Local3D-Setup-*.exe | ForEach-Object {
             "{0}  {1}" -f (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower(), $_.Name
-          } | Set-Content SHA256SUMS.txt -Encoding ascii
-          Pop-Location
-          python scripts/release_notes.py "${{ github.ref_name }}".TrimStart("v") | Set-Content release-notes.md -Encoding utf8
+          }
+          [IO.File]::WriteAllText((Join-Path (Get-Location) "dist\SHA256SUMS.txt"), (($lines -join "`n") + "`n"), (New-Object Text.UTF8Encoding($false)))
+          python scripts/release_notes.py "${{ github.ref_name }}".TrimStart("v") --out release-notes.md
+          if ($LASTEXITCODE -ne 0) { throw "release notes failed" }
       - name: Attest build provenance
         uses: actions/attest-build-provenance@v4
         with:

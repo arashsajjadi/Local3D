@@ -106,6 +106,23 @@ class Hygiene(unittest.TestCase):
         self.assertTrue(any("GitHub token" in m for m in msgs))
         self.assertTrue(any("personal path" in m for m in msgs))
 
+    def test_emails_and_author_machine_paths_are_found(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            (tmp / "a.md").write_text("mail jane.doe@university.example.edu or 1234+x@users.noreply.github.com or a@example.com\n"
+                                      "models in D:\\Local3DModels and token github_pat_" + "B" * 30, encoding="utf-8")
+            old = validate.ROOT
+            validate.ROOT = tmp
+            try:
+                msgs = problems(validate.check_hygiene, [tmp / "a.md"])
+            finally:
+                validate.ROOT = old
+        self.assertTrue(any("jane.doe@university.example.edu" in m for m in msgs))
+        self.assertFalse(any("users.noreply.github.com" in m or "a@example.com" in m for m in msgs))
+        self.assertTrue(any("author's own machine" in m for m in msgs))
+        self.assertTrue(any("fine-grained token" in m for m in msgs))
+
     def test_broken_markdown_link(self):
         import tempfile
         with tempfile.TemporaryDirectory() as tmp:
@@ -119,6 +136,24 @@ class Hygiene(unittest.TestCase):
                 validate.ROOT = old
         self.assertEqual(len(msgs), 1)
         self.assertIn("missing.md", msgs[0])
+
+
+class ReleaseNotes(unittest.TestCase):
+    def test_notes_are_built_from_the_changelog(self):
+        import release_notes
+        notes = release_notes.build(validate_version())
+        self.assertIn("Local3D-Setup-" + validate_version() + ".exe", notes)
+        self.assertIn("SHA256SUMS.txt", notes)
+        with self.assertRaises(LookupError):
+            release_notes.build("9.9.9")
+
+    def test_changelog_check_needs_a_real_section(self):
+        self.assertEqual(problems(validate.check_versions), [])
+
+
+def validate_version():
+    import re
+    return re.search(r'VERSION = "([^"]+)"', (ROOT / "scripts" / "build_workflows.py").read_text(encoding="utf-8")).group(1)
 
 
 if __name__ == "__main__":

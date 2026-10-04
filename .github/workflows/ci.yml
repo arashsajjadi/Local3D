@@ -13,6 +13,7 @@ jobs:
   validate:
     name: Validate and test
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -26,6 +27,7 @@ jobs:
   package:
     name: Build launcher and installer (Windows)
     runs-on: windows-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
       - name: Compile the launcher
@@ -35,7 +37,7 @@ jobs:
         shell: pwsh
         run: |
           $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
-          if (-not (Test-Path $iscc)) { choco install innosetup --no-progress -y; }
+          if (-not (Test-Path $iscc)) { throw "Inno Setup 6 is not installed on this runner image." }
           & $iscc /Q installer\Local3D.iss
           if ($LASTEXITCODE -ne 0) { throw "ISCC failed" }
           Get-ChildItem dist
@@ -59,11 +61,11 @@ jobs:
       - name: Checksums
         shell: pwsh
         run: |
-          Push-Location dist
-          Get-ChildItem Local3D-Setup-*.exe | ForEach-Object {
+          $lines = Get-ChildItem dist\Local3D-Setup-*.exe | ForEach-Object {
             "{0}  {1}" -f (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower(), $_.Name
-          } | Set-Content SHA256SUMS.txt -Encoding ascii
-          Get-Content SHA256SUMS.txt
+          }
+          [IO.File]::WriteAllText((Join-Path (Get-Location) "dist\SHA256SUMS.txt"), (($lines -join "`n") + "`n"), (New-Object Text.UTF8Encoding($false)))
+          Get-Content dist\SHA256SUMS.txt
       - uses: actions/upload-artifact@v7
         with:
           name: Local3D-installer

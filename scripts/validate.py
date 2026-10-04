@@ -225,16 +225,20 @@ def check_versions():
         if not (mi and mi.group(1) == version):
             err(f"version mismatch: installer={mi.group(1) if mi else None} vs {version}")
     ch = ROOT / "CHANGELOG.md"
-    if ch.exists() and f"[{version}]" not in ch.read_text(encoding="utf-8") and "[Unreleased]" not in ch.read_text(encoding="utf-8"):
-        err(f"CHANGELOG.md has no entry for {version}")
+    if ch.exists() and not re.search(rf"^## \[{re.escape(version)}\]", ch.read_text(encoding="utf-8"), re.M):
+        err(f"CHANGELOG.md has no '## [{version}]' section (the release notes are built from it)")
 
 
 # ---------------------------------------------------------------------------------------------- hygiene
 SECRET_PATTERNS = {
     "GitHub token": r"gh[pousr]_[A-Za-z0-9]{30,}", "Hugging Face token": r"hf_[A-Za-z0-9]{30,}",
     "API key": r"sk-[A-Za-z0-9]{32,}", "private key": r"-----BEGIN (RSA |EC |OPENSSH |)PRIVATE KEY-----",
-    "AWS key": r"AKIA[0-9A-Z]{16}",
+    "AWS key": r"AKIA[0-9A-Z]{16}", "GitHub fine-grained token": r"github_pat_[A-Za-z0-9_]{20,}",
+    "Slack token": r"xox[baprs]-[A-Za-z0-9-]{10,}", "bearer token": r"Bearer\s+[A-Za-z0-9._~+/-]{24,}",
 }
+# domains an e-mail address may use in this repository (public noreply and placeholder addresses only)
+EMAIL_OK = re.compile(r"(users\.noreply\.github\.com|noreply\.github\.com|anthropic\.com|example\.(com|org|net)|\.test|localhost)$", re.I)
+AUTHOR_MACHINE = re.compile(r"Local3DData|Local3DModels|Scratch3D|[A-Za-z]:[\\/]New folder|AppData[\\/]Local[\\/]Temp[\\/]claude|scratchpad", re.I)
 BAD_EXT = {".safetensors", ".ckpt", ".pt", ".pth", ".gguf", ".glb", ".gltf", ".obj", ".stl", ".exe", ".zip", ".7z", ".rar", ".dll"}
 TEXT_EXT = {".md", ".json", ".py", ".cs", ".ps1", ".iss", ".yml", ".yaml", ".txt", ".toml", ".gitignore", ".gitattributes", ".svg", ""}
 
@@ -257,7 +261,7 @@ def check_hygiene(files: list[Path]):
             err(f"{rel}: binary/model/3D files must not be committed")
         if f.stat().st_size > 5_000_000:
             err(f"{rel}: larger than 5 MB ({f.stat().st_size / 1e6:.1f} MB)")
-        if f.suffix.lower() in TEXT_EXT and f.name != "validate.py":
+        if f.suffix.lower() in TEXT_EXT and f.name not in ("validate.py", "test_validate.py"):   # these two contain the patterns on purpose
             try:
                 text = f.read_text(encoding="utf-8")
             except UnicodeDecodeError:
@@ -268,8 +272,11 @@ def check_hygiene(files: list[Path]):
             for m in re.finditer(r"[A-Za-z]:\\Users\\([A-Za-z0-9_.-]+)", text):
                 if m.group(1).lower() not in {"user", "username", "you", "name", "public", "<user>", "your-name", "example"}:
                     err(f"{rel}: personal path 'C:\\Users\\{m.group(1)}' - use a generic example")
-            if re.search(r"[A-Za-z0-9._%+-]+@(gmail|outlook|hotmail|yahoo|usask)\.(com|ca)\b", text):
-                err(f"{rel}: contains a personal e-mail address")
+            for m in re.finditer(r"[A-Za-z0-9._%+-]+@([A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,})", text):
+                if not EMAIL_OK.search(m.group(1)):
+                    err(f"{rel}: contains an e-mail address ({m.group(0)}); only public noreply or example addresses belong in the repository")
+            if AUTHOR_MACHINE.search(text):
+                err(f"{rel}: mentions a path or folder name from the author's own machine")
 
 
 def check_links(files: list[Path]):
