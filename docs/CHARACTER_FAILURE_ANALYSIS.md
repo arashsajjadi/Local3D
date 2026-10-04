@@ -3,7 +3,7 @@
 Local3D v0.1.x treated every picture as the same kind of problem: remove the background, hand the picture to one model,
 clean up the mesh. A user's picture of a uniformed officer saluting (a comic-style illustration) showed where that
 breaks. This page records what was measured, what is unavoidable, and what was fixable. The decision that follows from it is in
-`CHARACTER_ROUTING_DECISION.md` (in this folder).
+[CHARACTER_ROUTING_DECISION.md](CHARACTER_ROUTING_DECISION.md).
 
 The picture and every model made from it stay **outside the repository** (they are someone's artwork). This page
 describes them and records numbers; it does not include them. The same procedure can be repeated with any picture
@@ -23,7 +23,7 @@ describes them and records numbers; it does not include them. The same procedure
 
 The user's own run (Pixal3D, *Balanced*, about 297 k triangles, 2048 px textures) and an identical re-run with a fixed seed:
 
-* **Hand**: a flat paddle, the fingers fused into one slab. The clay render (no textures) shows it too, so the *geometry*
+* **Hand**: a flat paddle, the fingers fused into one slab, ending at the ear instead of at the visor. The clay render (no textures) shows it too, so the *geometry*
   is wrong, not the texture.
 * **Face**: small and soft; the glasses read as one dark slab; the cap, laurel braid and epaulettes are present but shallow.
 * **Proportions**: tall and narrow (0.54 m wide x 0.94 m tall against 0.86 x 0.89 m for the improved result below), with
@@ -50,9 +50,9 @@ All with Pixal3D, *Balanced*, same seed unless stated; renders from six angles, 
 | --- | --- |
 | Whole picture (baseline) | Fused hand, small face, narrow figure (above). |
 | Cut at 2.2 face heights below the face top | Hand and braid good, but the bust ends at the top of the chest pockets and the cap top gets a brown noise texture. Too tight. |
-| **Cut at 2.7 face heights (just below the chest)** | Separated fingers and thumb, clear face, glasses frames, wider natural shoulders, ribbons and braid in relief. **Chosen.** |
+| **Cut at 2.7 face heights (just below the chest)** | The hand reaches the visor with a separate thumb and stepped fingertips (better, not five clean fingers), a clear face, glasses frames, wider natural shoulders, ribbons and braid in relief. **Chosen.** |
 | Cut at 3.2 face heights (belt visible) | Still good; the face is smaller in the model's input again, so slightly less facial detail than 2.7. |
-| Seeds 1234, 2 and 3 at 2.7 | Hand, cap, braid, epaulettes, ribbons and torso stay good in all three; only the lenses and the back of the head change. |
+| Seeds 1234, 2 and 3 at 2.7 | Hand, cap, braid, epaulettes, ribbons and torso stay good in all three; the lenses, the back of the head and (once) the texture of the cap top change. |
 | Auxiliary views made by a local image-editing model (Qwen-Image-Edit-2511 with a camera-angle LoRA), fed to Pixal3D's multi-view mode | Views drifted in scale and detail (hands and ribbons are re-drawn each time); the 3D result was **worse** than the single bust crop. Not shipped; see the decision record. |
 | Real views (the official four-view sample sheet from the ComfyUI templates) | Very good: the back and the far side become real. This is what the optional "Character from views" app is for. |
 
