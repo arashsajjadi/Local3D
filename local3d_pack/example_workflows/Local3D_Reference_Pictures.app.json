@@ -384,7 +384,8 @@
       "hash": "d8c5007b6a3bbbdfd38538bbcef5101a55dfde81894f58d2e3c8701cdef3542b",
       "hash_type": "SHA256"
      }
-    ]
+    ],
+    "Execution Message": "Loading the picture model"
    },
    "title": "FLUX.2 klein 4B (distilled)",
    "widgets_values": [
@@ -428,7 +429,8 @@
       "hash": "3eab03a77adb0ee5304a4e677d5c10ac22f9049c1d7c894adca4f8bb39206ca8",
       "hash_type": "SHA256"
      }
-    ]
+    ],
+    "Execution Message": "Loading the picture model"
    },
    "title": "Qwen3 text encoder",
    "widgets_values": [
@@ -473,7 +475,8 @@
       "hash": "868fe7b343cc8f3a19dbcfcafbc3d5f888802be3f89bd81b65b3621a066ce8f3",
       "hash_type": "SHA256"
      }
-    ]
+    ],
+    "Execution Message": "Loading the picture model"
    },
    "title": "FLUX.2 VAE",
    "widgets_values": [
@@ -522,7 +525,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.38.0",
-    "Node name for S&R": "CLIPTextEncode"
+    "Node name for S&R": "CLIPTextEncode",
+    "Execution Message": "Reading your prompt"
    },
    "title": "Encode prompt",
    "widgets_values": [
@@ -827,7 +831,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.38.0",
-    "Node name for S&R": "SamplerCustomAdvanced"
+    "Node name for S&R": "SamplerCustomAdvanced",
+    "Execution Message": "Drawing the reference picture"
    }
   },
   {
@@ -868,7 +873,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.38.0",
-    "Node name for S&R": "VAEDecode"
+    "Node name for S&R": "VAEDecode",
+    "Execution Message": "Finishing the picture"
    },
    "title": "Reference image"
   },
@@ -903,7 +909,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.38.0",
-    "Node name for S&R": "SaveImage"
+    "Node name for S&R": "SaveImage",
+    "Execution Message": "Saving the pictures"
    },
    "title": "Reference pictures",
    "widgets_values": [

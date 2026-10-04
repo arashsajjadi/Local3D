@@ -139,8 +139,8 @@ def check_app(rel: str, d: dict):
         if want and widget != want:
             err(f"{rel}: app input #{nid} ({n['type']}) should expose widget {want!r}, not {widget!r}")
         desc = (entry[2] if len(entry) > 2 else {}).get("description", "")
-        if len(desc) > 36:
-            err(f"{rel}: description of input #{nid} is {len(desc)} characters; App Mode shows one line (<= 36)")
+        if len(desc) > 31:
+            err(f"{rel}: description of input #{nid} is {len(desc)} characters; App Mode shows one line (<= 31)")
     for nid in data.get("outputs", []):
         n = nodes.get(nid)
         if n is None:

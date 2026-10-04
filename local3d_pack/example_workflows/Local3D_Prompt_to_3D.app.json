@@ -60,7 +60,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.17.0",
-    "Node name for S&R": "KSampler"
+    "Node name for S&R": "KSampler",
+    "Execution Message": "Generating coarse geometry"
    },
    "widgets_values": [
     56,
@@ -183,7 +184,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.17.0",
-    "Node name for S&R": "KSampler (1024)"
+    "Node name for S&R": "KSampler (1024)",
+    "Execution Message": "Generating materials"
    },
    "widgets_values": [
     43,
@@ -241,7 +243,8 @@
       "hash": "4ad2ec4e0879a5b5b04cd97325cc37da954a7b6edca5170b86510f17f2b2290f",
       "hash_type": "SHA256"
      }
-    ]
+    ],
+    "Execution Message": "Loading models"
    },
    "widgets_values": [
     "dino_v3_L_naf_fp32.safetensors"
@@ -308,7 +311,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.17.0",
-    "Node name for S&R": "KSampler (512)"
+    "Node name for S&R": "KSampler (512)",
+    "Execution Message": "Refining geometry"
    },
    "widgets_values": [
     42,
@@ -386,7 +390,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.17.0",
-    "Node name for S&R": "KSampler (1024)"
+    "Node name for S&R": "KSampler (1024)",
+    "Execution Message": "Refining geometry"
    },
    "widgets_values": [
     42,
@@ -443,7 +448,8 @@
       "hash": "d01952ad137213f6a868f86b6b877026276f84af5eec23069217475a0bad3a31",
       "hash_type": "SHA256"
      }
-    ]
+    ],
+    "Execution Message": "Loading models"
    },
    "widgets_values": [
     "trellis_2_int8_convrot.safetensors",
@@ -492,7 +498,8 @@
       "hash": "cb1a692d03235671e959e81360d7b4d9f44aefadb1f852d6ca6aa17799d5e31f",
       "hash_type": "SHA256"
      }
-    ]
+    ],
+    "Execution Message": "Loading models"
    },
    "widgets_values": [
     "moge_2_vitl_normal_fp16.safetensors"
@@ -541,7 +548,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.33.0",
-    "Node name for S&R": "MoGeInference"
+    "Node name for S&R": "MoGeInference",
+    "Execution Message": "Estimating the camera"
    },
    "widgets_values": [
     9,
@@ -585,7 +593,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.21.1",
-    "Node name for S&R": "EmptyTrellis2LatentStructure"
+    "Node name for S&R": "EmptyTrellis2LatentStructure",
+    "Execution Message": "Generating coarse geometry"
    },
    "widgets_values": [
     1
@@ -653,7 +662,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.33.0",
-    "Node name for S&R": "Trellis2ShapeStage"
+    "Node name for S&R": "Trellis2ShapeStage",
+    "Execution Message": "Refining geometry"
    }
   },
   {
@@ -702,7 +712,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.17.0",
-    "Node name for S&R": "VaeDecodeShapeTrellis"
+    "Node name for S&R": "VaeDecodeShapeTrellis",
+    "Execution Message": "Refining geometry"
    }
   },
   {
@@ -749,7 +760,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.21.1",
-    "Node name for S&R": "VaeDecodeTextureTrellis"
+    "Node name for S&R": "VaeDecodeTextureTrellis",
+    "Execution Message": "Generating materials"
    }
   },
   {
@@ -824,7 +836,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.33.0",
-    "Node name for S&R": "Trellis2UpsampleStage"
+    "Node name for S&R": "Trellis2UpsampleStage",
+    "Execution Message": "Refining geometry"
    },
    "widgets_values": [
     "1536"
@@ -890,7 +903,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.33.0",
-    "Node name for S&R": "Trellis2TextureStage"
+    "Node name for S&R": "Trellis2TextureStage",
+    "Execution Message": "Generating materials"
    }
   },
   {
@@ -973,7 +987,8 @@
       "hash": "de0cb4949a76c59ee5c091a995a69bcc8c51d5aeda939f0c641a50d2a72341f4",
       "hash_type": "SHA256"
      }
-    ]
+    ],
+    "Execution Message": "Loading models"
    },
    "widgets_values": [
     "trellis_2_shape_vae_bf16.safetensors"
@@ -1020,7 +1035,8 @@
       "hash": "714e5ebf094a610e12a8e3b5175c18a62f37f6ea4218acb6073644456b73ab0e",
       "hash_type": "SHA256"
      }
-    ]
+    ],
+    "Execution Message": "Loading models"
    },
    "widgets_values": [
     "trellis_2_texture_vae_bf16.safetensors"
@@ -1070,7 +1086,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.17.0",
-    "Node name for S&R": "VaeDecodeStructureTrellis2"
+    "Node name for S&R": "VaeDecodeStructureTrellis2",
+    "Execution Message": "Generating coarse geometry"
    },
    "widgets_values": [
     "32"
@@ -1230,7 +1247,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.33.0",
-    "Node name for S&R": "BakeTextureFromVoxel"
+    "Node name for S&R": "BakeTextureFromVoxel",
+    "Execution Message": "Baking colour textures"
    },
    "widgets_values": [
     2048
@@ -1317,7 +1335,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.33.0",
-    "Node name for S&R": "DecimateMesh"
+    "Node name for S&R": "DecimateMesh",
+    "Execution Message": "Simplifying the mesh"
    },
    "widgets_values": [
     700000,
@@ -1368,7 +1387,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.33.0",
-    "Node name for S&R": "RemoveBackground"
+    "Node name for S&R": "RemoveBackground",
+    "Execution Message": "Removing background"
    }
   },
   {
@@ -1407,7 +1427,8 @@
       "hash": "9ab37426bf4de0567af6b5d21b16151357149139362e6e8992021b8ce356a154",
       "hash_type": "SHA256"
      }
-    ]
+    ],
+    "Execution Message": "Loading models"
    },
    "widgets_values": [
     "birefnet.safetensors"
@@ -1463,7 +1484,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.33.0",
-    "Node name for S&R": "UnwrapMesh"
+    "Node name for S&R": "UnwrapMesh",
+    "Execution Message": "Unwrapping textures"
    },
    "widgets_values": [
     "pec",
@@ -1562,7 +1584,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.33.0",
-    "Node name for S&R": "GetMeshInfo"
+    "Node name for S&R": "GetMeshInfo",
+    "Execution Message": "Cleaning up the mesh"
    }
   },
   {
@@ -1701,7 +1724,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.33.0",
-    "Node name for S&R": "ApplyTextureToMesh"
+    "Node name for S&R": "ApplyTextureToMesh",
+    "Execution Message": "Packing the model"
    }
   },
   {
@@ -1750,7 +1774,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.33.0",
-    "Node name for S&R": "BakeNormalMapFromMesh"
+    "Node name for S&R": "BakeNormalMapFromMesh",
+    "Execution Message": "Baking surface detail"
    },
    "widgets_values": [
     2048,
@@ -1846,7 +1871,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.33.0",
-    "Node name for S&R": "BakeAmbientOcclusion"
+    "Node name for S&R": "BakeAmbientOcclusion",
+    "Execution Message": "Baking shading"
    },
    "widgets_values": [
     1024,
@@ -1934,7 +1960,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.33.0",
-    "Node name for S&R": "MeshSmoothNormals"
+    "Node name for S&R": "MeshSmoothNormals",
+    "Execution Message": "Processing the mesh"
    },
    "widgets_values": [
     180
@@ -1986,7 +2013,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.33.0",
-    "Node name for S&R": "RemeshMesh"
+    "Node name for S&R": "RemeshMesh",
+    "Execution Message": "Cleaning up the mesh"
    },
    "widgets_values": [
     768,
@@ -2373,7 +2401,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.33.0",
-    "Node name for S&R": "MeshSmoothNormals"
+    "Node name for S&R": "MeshSmoothNormals",
+    "Execution Message": "Packing the model"
    },
    "widgets_values": [
     180
@@ -2575,7 +2604,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.33.0",
-    "Node name for S&R": "MeshToFile3D"
+    "Node name for S&R": "MeshToFile3D",
+    "Execution Message": "Packing the model"
    }
   },
   {
@@ -2631,7 +2661,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.33.0",
-    "Node name for S&R": "Pixal3DConditioning"
+    "Node name for S&R": "Pixal3DConditioning",
+    "Execution Message": "Reading your picture"
    },
    "widgets_values": [
     49.13
@@ -2685,7 +2716,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.17.0",
-    "Node name for S&R": "Trellis2Conditioning"
+    "Node name for S&R": "Trellis2Conditioning",
+    "Execution Message": "Reading your picture"
    }
   },
   {
@@ -2801,7 +2833,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.33.0",
-    "Node name for S&R": "ImageCropToMask"
+    "Node name for S&R": "ImageCropToMask",
+    "Execution Message": "Preparing your picture"
    },
    "widgets_values": [
     1024,
@@ -3050,7 +3083,8 @@
       "hash": "4621eac3b715484f79303c7152af641fe0b2b14f4d0e3d394fd6922d00f955ec",
       "hash_type": "SHA256"
      }
-    ]
+    ],
+    "Execution Message": "Loading models"
    },
    "widgets_values": [
     "pixal3d_int8_convrot.safetensors",
@@ -3125,7 +3159,8 @@
    ],
    "properties": {
     "cnr_id": "comfy-core",
-    "ver": "0.33.0"
+    "ver": "0.33.0",
+    "Execution Message": "Saving the model"
    },
    "widgets_values": [
     "models/prompt",
@@ -4029,7 +4064,8 @@
       "hash": "d8c5007b6a3bbbdfd38538bbcef5101a55dfde81894f58d2e3c8701cdef3542b",
       "hash_type": "SHA256"
      }
-    ]
+    ],
+    "Execution Message": "Loading the picture model"
    },
    "title": "FLUX.2 klein 4B (distilled)",
    "widgets_values": [
@@ -4073,7 +4109,8 @@
       "hash": "3eab03a77adb0ee5304a4e677d5c10ac22f9049c1d7c894adca4f8bb39206ca8",
       "hash_type": "SHA256"
      }
-    ]
+    ],
+    "Execution Message": "Loading the picture model"
    },
    "title": "Qwen3 text encoder",
    "widgets_values": [
@@ -4118,7 +4155,8 @@
       "hash": "868fe7b343cc8f3a19dbcfcafbc3d5f888802be3f89bd81b65b3621a066ce8f3",
       "hash_type": "SHA256"
      }
-    ]
+    ],
+    "Execution Message": "Loading the picture model"
    },
    "title": "FLUX.2 VAE",
    "widgets_values": [
@@ -4167,7 +4205,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.38.0",
-    "Node name for S&R": "CLIPTextEncode"
+    "Node name for S&R": "CLIPTextEncode",
+    "Execution Message": "Reading your prompt"
    },
    "title": "Encode prompt",
    "widgets_values": [
@@ -4463,7 +4502,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.38.0",
-    "Node name for S&R": "SamplerCustomAdvanced"
+    "Node name for S&R": "SamplerCustomAdvanced",
+    "Execution Message": "Drawing the reference picture"
    }
   },
   {
@@ -4506,7 +4546,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.38.0",
-    "Node name for S&R": "VAEDecode"
+    "Node name for S&R": "VAEDecode",
+    "Execution Message": "Finishing the picture"
    },
    "title": "Reference image"
   },
@@ -4541,7 +4582,8 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.38.0",
-    "Node name for S&R": "SaveImage"
+    "Node name for S&R": "SaveImage",
+    "Execution Message": "Saving the reference picture"
    },
    "title": "Reference image (saved)",
    "widgets_values": [
@@ -5876,7 +5918,7 @@
      325,
      "choice",
      {
-      "description": "Balanced is the recommended mode"
+      "description": "Balanced is recommended"
      }
     ],
     [

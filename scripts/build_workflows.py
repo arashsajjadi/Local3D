@@ -216,6 +216,27 @@ def load_presets() -> dict:
     return json.loads(PRESETS.read_text(encoding="utf-8"))
 
 
+# App Mode shows node.properties["Execution Message"] while that node runs: real stages, not a fake progress bar
+IMAGE_STAGES = {
+    122: "Preparing your picture", 192: "Removing background", 312: "Preparing your picture",
+    56: "Estimating the camera", 298: "Reading your picture", 299: "Reading your picture",
+    118: "Loading models", 15: "Loading models", 117: "Loading models", 55: "Loading models", 193: "Loading models",
+    40: "Loading models", 319: "Loading models",
+    3: "Generating coarse geometry", 119: "Generating coarse geometry", 87: "Generating coarse geometry",
+    91: "Refining geometry", 18: "Refining geometry", 94: "Refining geometry", 23: "Refining geometry", 92: "Refining geometry",
+    98: "Generating materials", 12: "Generating materials", 93: "Generating materials",
+    202: "Cleaning up the mesh", 241: "Cleaning up the mesh", 186: "Simplifying the mesh", 238: "Processing the mesh",
+    196: "Unwrapping textures", 147: "Baking colour textures", 224: "Baking surface detail", 233: "Baking shading",
+    210: "Packing the model", 260: "Packing the model", 285: "Packing the model", 322: "Saving the model",
+}
+
+
+def describe_stages(g: Graph, stages: dict):
+    for nid, msg in stages.items():
+        if nid in g.nodes:
+            g.nodes[nid].setdefault("properties", {})["Execution Message"] = msg
+
+
 def _image_graph():
     """Patch the official template; returns (graph, ids) so the prompt app can reuse the 3D half."""
     P = load_presets()["parameters"]
@@ -316,6 +337,7 @@ def _image_graph():
     g.group("Background handling", X + 780, Y + 200, 740, 800, "#b58b2a")
 
     enrich_upstream_models(g)
+    describe_stages(g, IMAGE_STAGES)
     ids = {"model": model, "quality": quality, "background": background, "seed": seed, "bg_nodes": [inv, auto_mask, bg_is_remove, bg_is_keep, sw_remove]}
     return g, ids
 
@@ -325,7 +347,7 @@ def build_image_app() -> dict:
     inputs = [  # descriptions stay under ~34 characters: App Mode shows them on a single line
         [122, "image", {"description": "Drop ONE object, fully in frame"}],
         [ids["model"], "choice", {"description": "Auto = Pixal3D (recommended)"}],
-        [ids["quality"], "choice", {"description": "Balanced is the recommended mode"}],
+        [ids["quality"], "choice", {"description": "Balanced is recommended"}],
         [ids["background"], "choice", {"description": "Auto removes it. Keep = cutout"}],
         [ids["seed"], "value", {"description": "Same seed = same result"}],
     ]
@@ -428,6 +450,8 @@ def add_reference_stage(g: Graph, prompt: int, friendly: int, seed: int, batch_s
                    inputs=[{"name": "samples", "type": "LATENT"}, {"name": "vae", "type": "VAE"}], outputs=[{"name": "IMAGE", "type": "IMAGE"}])
     g.connect(sample, 0, decode, "samples")
     g.connect(vae, 0, decode, "vae")
+    describe_stages(g, {unet: "Loading the picture model", clip: "Loading the picture model", vae: "Loading the picture model",
+                        enc: "Reading your prompt", sample: "Drawing the reference picture", decode: "Finishing the picture"})
     g.group("Reference image (FLUX.2 klein 4B, 4 steps)", x - 40, y - 80, 1440, 1100, "#3f789e")
     return decode
 
@@ -457,12 +481,13 @@ def build_prompt_app(variant: str = "blackwell") -> dict:
     ref = g.add("SaveImage", title="Reference image (saved)", pos=(X - 450, Y + 640), size=(320, 280),
                 widgets=["Local3D_reference"], inputs=[{"name": "images", "type": "IMAGE"}], outputs=[{"name": "images", "type": "IMAGE"}])
     g.connect(decode, 0, ref, "images")
+    describe_stages(g, {ref: "Saving the reference picture"})
     g.nodes[322]["widgets_values"][0] = "models/prompt"
     inputs = [
         [prompt, "value", {"description": "Describe ONE object"}],
         [friendly, "value", {"description": "Adds framing that helps 3D"}],
         [ids["model"], "choice", {"description": "Auto = Pixal3D (recommended)"}],
-        [ids["quality"], "choice", {"description": "Balanced is the recommended mode"}],
+        [ids["quality"], "choice", {"description": "Balanced is recommended"}],
         [ids["seed"], "value", {"description": "Same seed = same result"}],
     ]
     note(g, "## Local3D — Prompt to 3D\n\nPrompt → reference image (FLUX.2 klein 4B) → 3D model. "
@@ -486,6 +511,7 @@ def build_reference_app(variant: str = "blackwell") -> dict:
     out = g.add("SaveImage", title="Reference pictures", pos=(X + 1480, Y + 540), size=(320, 280),
                 widgets=["Local3D_reference"], inputs=[{"name": "images", "type": "IMAGE"}], outputs=[{"name": "images", "type": "IMAGE"}])
     g.connect(decode, 0, out, "images")
+    describe_stages(g, {out: "Saving the pictures"})
     note(g, "## Local3D — Reference pictures\n\nMake a few reference pictures from a prompt, pick the best one, then open "
             "**Image to 3D** and choose it there. Pictures are saved as `Local3D_reference_*.png`.", (X, Y - 330), (700, 200))
     inputs = [
