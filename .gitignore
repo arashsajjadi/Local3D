@@ -1,0 +1,162 @@
+# ---------------------------------------------------------------------------
+# Local3D .gitignore - deliberately strict.
+# This repository ships workflows, apps, docs and small scripts ONLY.
+# Model weights, generated assets, caches and machine-specific files must
+# never be committed. Models are downloaded at runtime by Comfy's own
+# model-download mechanism (see docs/MODELS.md).
+# ---------------------------------------------------------------------------
+
+# --- Model weights & caches -------------------------------------------------
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+*.bin
+*.gguf
+*.onnx
+*.pkl
+*.npz
+*.npy
+*.sft
+*.part
+*.partial
+*.incomplete
+*.download
+models/
+Local3DModels/
+.cache/
+huggingface/
+hf_cache/
+.huggingface/
+.comfy_cache/
+
+# --- Generated output & user data ---------------------------------------------
+output/
+outputs/
+input/
+temp/
+tmp/
+scratch/
+# Generated 3D assets (the tiny, hand-picked example assets live under
+# assets/examples/ and are re-included explicitly below)
+*.glb
+*.gltf
+*.obj
+*.stl
+*.ply
+*.fbx
+*.usd
+*.usdz
+*.3mf
+*.blend
+*.blend1
+# Generated / user images, video and audio are ignored everywhere EXCEPT in
+# assets/ and docs/, where small curated, legally-safe files (screenshots,
+# thumbnails, sample inputs, icon) are deliberately committed.
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.bmp
+*.tif
+*.tiff
+*.exr
+*.hdr
+*.mp4
+*.webm
+*.mov
+*.wav
+*.mp3
+!assets/**/*.png
+!assets/**/*.jpg
+!assets/**/*.jpeg
+!assets/**/*.webp
+!assets/**/*.gif
+!docs/**/*.png
+!docs/**/*.jpg
+!docs/**/*.webp
+!docs/**/*.gif
+# ...but never let heavy 3D/model formats in, even under assets/
+
+# --- Python / Node / build ---------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.python-version
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+dist/
+build/
+release/
+*.7z
+*.zip
+*.exe
+*.msi
+*.msix
+*.rar
+*.tar
+*.tar.gz
+*.whl
+
+# --- Secrets & machine-specific config ---------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+*.cer
+*.crt
+id_rsa*
+id_ed25519*
+secrets.*
+credentials*
+token*.txt
+.npmrc
+.pypirc
+.netrc
+config.local.*
+*.local.json
+*.local.yaml
+*.local.yml
+extra_model_paths.yaml
+extra_models_config.yaml
+
+# --- Logs, dumps, crash data --------------------------------------------------
+*.log
+logs/
+*.dmp
+*.mdmp
+*.stackdump
+crash*/
+core.*
+hs_err_pid*
+
+# --- Editors / OS ------------------------------------------------------------
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# --- Claude / agent tooling (local only) ------------------------------------
+.claude/
