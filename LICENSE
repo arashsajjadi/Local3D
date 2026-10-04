@@ -19,8 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-NOTE: This license covers only the files in this repository (workflows, apps,
-documentation and scripts). It does NOT cover the upstream runtime software
-(e.g. ComfyUI) or any AI model weights that the workflows download, each of
-which has its own license. See THIRD_PARTY_NOTICES.md and docs/MODELS.md.

@@ -3,12 +3,15 @@ Local3D turns a photo or a text prompt into a textured 3D model (GLB) on your ow
 This installer is small. On first start Local3D asks before it downloads:
 
   - the ComfyUI runtime (about 2 GB, official release, checksum-verified)
-  - AI model files (about 15 GB, plus about 7 GB if you add Prompt to 3D)
+  - AI model files (about 15 GB, plus 7 to 16 GB if you add Prompt to 3D, depending on your graphics card)
 
 Everything stays on this PC. After the models are downloaded, generation works offline.
 
 You need an NVIDIA graphics card (RTX 20-series or newer; 12 GB or more of video memory is recommended)
 and an up-to-date NVIDIA driver.
+
+Local3D itself is MIT-licensed. The downloaded software and models have their own licenses (listed in THIRD_PARTY_NOTICES.md in the
+install folder), including Meta's DINOv3 license for one required model file; downloading them means you accept those terms.
 
 Local3D is an independent project and is not affiliated with or endorsed by Comfy Org, Microsoft, Tencent,
 Meta, Black Forest Labs or any other company whose open models and software it runs.
