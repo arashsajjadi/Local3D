@@ -7,9 +7,9 @@ ComfyUI portable build): resumable transfers, pinned revisions, size + SHA-256 v
 
 Examples (run with the portable build's python, or any python that has huggingface_hub):
 
-    python provision_models.py --models-dir D:\\Local3DModels --check
-    python provision_models.py --models-dir D:\\Local3DModels --pack core --pack prompt
-    python provision_models.py --models-dir D:\\Local3DModels --json      # JSON lines for the launcher
+    python provision_models.py --models-dir D:\\Models\\Local3D --check
+    python provision_models.py --models-dir D:\\Models\\Local3D --pack core --pack prompt
+    python provision_models.py --models-dir D:\\Models\\Local3D --json      # JSON lines for the launcher
 
 Exit codes: 0 ok, 1 unexpected error, 2 not enough disk space, 3 network problem, 4 hash mismatch.
 """
@@ -27,6 +27,11 @@ import traceback
 from pathlib import Path
 
 EXIT_OK, EXIT_ERROR, EXIT_DISK, EXIT_NETWORK, EXIT_HASH = 0, 1, 2, 3, 4
+
+# This process is the only part of Local3D that talks to the internet: no telemetry, and public files need no token.
+os.environ["HF_HUB_DISABLE_TELEMETRY"] = "1"
+os.environ["DO_NOT_TRACK"] = "1"
+os.environ.pop("HF_HUB_OFFLINE", None)
 DISK_MARGIN = 3 * 2**30  # keep 3 GiB free after the downloads
 DEFAULT_MANIFEST = Path(__file__).resolve().parent.parent / "data" / "models.json"
 
@@ -168,11 +173,14 @@ def download_one(f: dict, models_dir: Path, cache: VerifyCache, rep: Reporter):
     from huggingface_hub import hf_hub_download
 
     dest = models_dir / f["dest"]
+    state = status_of(f, models_dir, cache)
+    if state == "ok":   # already hashed and unchanged: nothing to do, nothing to report
+        return
     dest.parent.mkdir(parents=True, exist_ok=True)
     rep.event("file_start", id=f["id"], label=f["label"], size=f["size"])
     rep.say(f"[{f['id']}] {f['label']} ({gb(f['size'])})")
 
-    if status_of(f, models_dir, cache) == "missing":
+    if state == "missing":
         staging = models_dir / ".local3d" / "staging" / f["repo"].replace("/", "__")
         try:
             got = Path(
@@ -187,9 +195,10 @@ def download_one(f: dict, models_dir: Path, cache: VerifyCache, rep: Reporter):
             raise Failure(EXIT_NETWORK, "Could not download from huggingface.co. Check your internet connection and run again; the download resumes where it stopped.", f"{type(e).__name__}: {e}")
         except Exception as e:  # network stack exceptions vary by version (httpx, requests, hf errors)
             raise Failure(EXIT_NETWORK, "Could not download from huggingface.co. Check your internet connection and run again; the download resumes where it stopped.", f"{type(e).__name__}: {e}")
-        if got.stat().st_size != f["size"]:
+        got_size = got.stat().st_size
+        if got_size != f["size"]:
             got.unlink(missing_ok=True)
-            raise Failure(EXIT_HASH, f"Downloaded file {f['id']} has the wrong size; it was discarded. Run again.", f"expected {f['size']}, got {got.stat().st_size}")
+            raise Failure(EXIT_HASH, f"Downloaded file {f['id']} has the wrong size; it was discarded. Run again.", f"expected {f['size']}, got {got_size}")
         os.replace(got, dest)
 
     rep.event("verify", id=f["id"])
