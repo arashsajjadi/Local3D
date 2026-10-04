@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "comment": "Single source of truth for the Fast / Balanced / Maximum quality presets. scripts/build_workflows.py writes these values into the apps. Maximum equals the official Comfy-Org template defaults (the validated upstream ceiling); Fast and Balanced only reduce memory/time drivers and are measured in docs/PRESETS.md.",
+  "levels": ["Fast", "Balanced", "Maximum"],
+  "parameters": {
+    "cascade_resolution": [1024, 1536, 1536],
+    "remesh_resolution": [512, 768, 768],
+    "max_faces": [100000, 300000, 700000],
+    "texture_size": [2048, 2048, 4096],
+    "normal_map_size": [1024, 2048, 2048],
+    "ao_map_size": [512, 1024, 1024]
+  },
+  "documentation": {
+    "cascade_resolution": "Trellis2UpsampleStage.target_resolution - voxel resolution of the refined shape. Upstream default 1536; Pixal3D's own low-VRAM mode uses 1024.",
+    "remesh_resolution": "RemeshMesh.resolution - voxel grid of the clean-up remesh. Upstream default 768.",
+    "max_faces": "DecimateMesh.target_face_count - polygon budget of the exported mesh. Upstream default 700000.",
+    "texture_size": "UnwrapMesh.resolution and BakeTextureFromVoxel.texture_size - base colour / metallic / roughness atlas. Upstream default 4096.",
+    "normal_map_size": "BakeNormalMapFromMesh.resolution. Upstream default 2048.",
+    "ao_map_size": "BakeAmbientOcclusion.resolution. Upstream default 1024."
+  }
+}

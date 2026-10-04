@@ -1,0 +1,9 @@
+{
+  "_comment": "Default ComfyUI frontend settings, merged into user/default/comfy.settings.json on first run (a user's own choices are never overwritten). Keys starting with _ are ignored.",
+  "Comfy.TutorialCompleted": true,
+  "Comfy.OnboardingCoachmarks.Seen": ["appMode"],
+  "Comfy.WidgetControlMode": "before",
+  "Comfy.Notification.ShowVersionUpdates": false,
+  "Comfy.Workflow.Persist": false,
+  "Comfy.Workflow.ShowMissingModelsWarning": true
+}
