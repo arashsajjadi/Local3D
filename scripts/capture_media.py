@@ -77,19 +77,28 @@ class Page:
         self.call("Input.dispatchMouseEvent", type="mouseReleased", x=x1, y=y1, button="left")
 
 
-def save_gif(frames: list[Image.Image], path: str, width: int = 880, first_ms=1500, ms=170, last_ms=2800, max_frames: int = 34):
+def save_gif(frames: list[Image.Image], path: str, width: int = 880, first_ms=1500, ms=170, last_ms=2800, max_frames: int = 40, min_change: float = 0.0004):
+    """Keep a frame when more than `min_change` of its pixels differ from the last kept frame (a changed stage caption is a
+    tiny area, so the test counts changed pixels instead of averaging them), then thin evenly to `max_frames`."""
     import numpy as np
+
+    def small(f):
+        return np.asarray(f.resize((720, 450))).astype(np.int16)
+
     kept = [frames[0]]
+    last = small(frames[0])
     for f in frames[1:]:
-        if float(np.abs(np.asarray(f.resize((160, 100))).astype(np.int16) - np.asarray(kept[-1].resize((160, 100))).astype(np.int16)).mean()) > 0.8:
+        cur = small(f)
+        if float((np.abs(cur - last).max(axis=2) > 24).mean()) > min_change:
             kept.append(f)
+            last = cur
     if len(kept) > max_frames:   # keep the first and the last few, thin the middle
         step = (len(kept) - 6) / (max_frames - 6)
         kept = kept[:1] + [kept[1 + int(i * step)] for i in range(max_frames - 6)] + kept[-5:]
-    small = [f.resize((width, int(f.height * width / f.width)), Image.LANCZOS).convert("P", palette=Image.ADAPTIVE, colors=64) for f in kept]
-    durations = [first_ms] + [ms] * (len(small) - 2) + [last_ms]
-    small[0].save(path, save_all=True, append_images=small[1:], duration=durations, loop=0, optimize=True, disposal=2)
-    return len(small)
+    out = [f.resize((width, int(f.height * width / f.width)), Image.LANCZOS).convert("P", palette=Image.ADAPTIVE, colors=64) for f in kept]
+    durations = [first_ms] + [ms] * (len(out) - 2) + [last_ms]
+    out[0].save(path, save_all=True, append_images=out[1:], duration=durations, loop=0, optimize=True, disposal=2)
+    return len(out)
 
 
 def main():
@@ -101,8 +110,9 @@ def main():
     ap.add_argument("--template", default="Local3D_Prompt_to_3D.app", help="for mode 'app': which app to open")
     args = ap.parse_args()
     page = Page(args.port)
-    if args.mode == "app":
-        page.call("Page.navigate", url=f"{page.base}/?template={args.template}&source=local3d_pack&mode=linear")
+    if args.mode in ("app", "run"):   # start from a freshly opened app, not from the last result
+        template = args.template if args.mode == "app" else "Local3D_Image_to_3D.app"
+        page.call("Page.navigate", url=f"{page.base}/?template={template}&source=local3d_pack&mode=linear")
         time.sleep(4)
     page.wait_ready()
     if args.mode in ("shot", "app"):

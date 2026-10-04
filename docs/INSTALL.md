@@ -28,6 +28,9 @@ The installer is only about 2 MB. It does not download anything.
    * *Image to 3D* (15.2 GB) is required.
    * *Prompt to 3D* reference pictures (6.6 GB on RTX 50-series, 12.5 GB on RTX 40-series, 16.1 GB on older cards) is optional.
    Use **Change folder...** to put them on another drive. Downloads can be interrupted at any time and resume.
+
+   ![The first-run model download window](images/first-run-models.png)
+
 3. The **app window** opens. The very first start of the engine takes about half a minute longer than later ones.
 
 You never see a console window, a Python install, a model folder or a node graph.
@@ -39,6 +42,9 @@ You never see a console window, a Python install, a model folder or a node graph
   the most GPU memory.
 * **Prompt to 3D**: *Start > Local3D tools > Prompt to 3D*, or use the *Apps* button in the left bar of the window.
   Type what you want and press **Run**.
+
+  ![Prompt to 3D, ready to run](images/app-prompt-ready.png)
+
 * **Reference pictures** makes up to four candidates in seconds. Pick the best, then choose it in *Image to 3D*. If the new
   pictures are not in that app's picture list yet, press **R** (refresh) or reopen the app.
 
