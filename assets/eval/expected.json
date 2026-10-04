@@ -1,0 +1,46 @@
+{
+ "portrait_woman": {
+  "subject": "Character bust",
+  "note": null
+ },
+ "glasses_man": {
+  "subject": "Character bust",
+  "note": null
+ },
+ "raised_hand_woman": {
+  "subject": "Character bust",
+  "note": null
+ },
+ "comic_wizard": {
+  "subject": "Object",
+  "note": "person"
+ },
+ "full_body_walker": {
+  "subject": "Object",
+  "note": "person"
+ },
+ "figurine_fox": {
+  "subject": "Object",
+  "note": null
+ },
+ "toy_astronaut": {
+  "subject": "Object",
+  "note": "toy"
+ },
+ "bicycle_wheel": {
+  "subject": "Object",
+  "note": null
+ },
+ "fern_plant": {
+  "subject": "Object",
+  "note": null
+ },
+ "comic_general": {
+  "subject": "Character bust",
+  "note": null
+ },
+ "armored_knight": {
+  "subject": "Character bust",
+  "note": null
+ }
+}
