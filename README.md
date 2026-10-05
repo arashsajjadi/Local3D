@@ -50,13 +50,15 @@ The **Subject** control overrules it.
 | --- | --- |
 | a product, tool, plant, **toy or figurine** | **Object**: the whole picture goes to Pixal3D, as before |
 | a person or character, head and shoulders or half length, **in a tall or tightly framed picture** | **Character bust**: the picture is cut below the chest *before* the background is removed, so the face and hands reach the model at a higher resolution |
-| a half-length figure in a square picture, a full-length figure, a hidden face | **Object**, with a note under the model saying why. Choose *Character bust* to crop to the upper body yourself |
+| a half-length figure in a square picture, a full-length figure, a hidden face | **Object**, with a note in the Subject report saying why. Choose *Character bust* to crop to the upper body yourself |
 | thin or open shapes (spokes, leaves, wire) | choose **Complex** to try TRELLIS.2 as a second opinion: on our test fern it kept finer fronds but turned them grey, on a bicycle wheel it did worse than Pixal3D |
 | two or four real views of the same subject | open **Character from views** (*Start > Local3D tools*) |
 
+![The prepared picture with the Subject report under it, in the real app: Character bust, face 0.64, person 0.92, cut below the chest](docs/images/app-subject-report.png)
+
 ![A comic general and an armoured knight (synthetic pictures made for this project): the picture, v0.1.2, v0.2.0, and the same two as clay without textures](docs/images/characters-before-after.jpg)
 
-Both pictures were made for this project, both models ran at Balanced with the same seed. In 0.1.2 the whole figure shares the model's input, so the
+Both characters in this figure are synthetic pictures made for this project; both versions ran at Balanced with the same seed. In 0.1.2 the whole figure shares the model's input, so the
 face gets only a small part of it; in 0.2.0 the bust fills it. What still goes wrong, honestly:
 
 * A bust ends below the chest on purpose. The lower body is cut away; choose *Object* to keep the whole figure.
