@@ -35,6 +35,10 @@ the evidence for the fix are in [docs/CHARACTER_FAILURE_ANALYSIS.md](docs/CHARAC
 - *Object* pictures take the same path as in 0.1.x; the extra look at the picture costs about two seconds. A Character bust takes about 1.5 to 2 times as long
   as the whole picture and can use up to about 1.5 GB more graphics memory, because it fills more of the model's input.
 
+### Fixed
+- On a fresh install the very first start could stop with "the process cannot access the file" while finishing the unpacking of the runtime (antivirus software
+  briefly holding its temporary folder). That step now retries and never fails a start over a leftover folder.
+
 ### Notes
 - Full-length figures stay on the Object workflow (their faces are too small to crop to); choose *Character bust* to crop to the upper body yourself.
 - Not added, with reasons: generated extra views (measured worse than a good single view), Hunyuan3D-2mv, HumanNOVA, PSHuman, DiGS-Avatar,
