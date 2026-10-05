@@ -16,8 +16,8 @@ the face and hand reached the model at low resolution) and, for one model, a **f
 1. Keep **Pixal3D** as the one default for objects *and* characters. No candidate we could run beat it on this picture.
 2. Add **input-aware routing** to *Image to 3D*, from two small detectors that ship with ComfyUI's core nodes: RT-DETR (person)
    and MediaPipe (face). They run first, on the original picture, and Local3D prints what they found and what it decided.
-3. Add a real **Character bust** workflow: detect, cut the picture below the chest, remove the background and frame the
-   *bust* (not the whole picture), run Pixal3D, say plainly that the hidden surfaces are inferred.
+3. Add a real **Character bust** workflow: detect, cut the picture below the chest *when that makes the subject larger for the model*, remove the background and
+   frame the *bust* (not the whole picture), run Pixal3D, say plainly that the hidden surfaces are inferred.
 4. A **Subject** control (Auto, Object, Character bust, Complex) lets the user overrule Auto. Auto never silently picks a
    high-impact route from weak evidence: when the signals disagree it keeps the plain Object workflow and says so.
 5. Real extra views beat invented ones: an optional **Character from views** app feeds two or four *real* views to
@@ -31,9 +31,9 @@ the face and hand reached the model at low resolution) and, for one model, a **f
 | --- | --- | --- | --- | --- |
 | **Rigid object, product, prop** | mug, chair, tool, car | no face, no person | **Object**: Pixal3D, whole picture | Subject = Object |
 | **Toy, doll, figurine, statue** | vinyl toy, ceramic fox, bust of marble | a face but **no person** (the person detector does not fire), or neither | **Object**: whole figure, so legs and base are kept. A note says "a face but no person: this may be a toy, doll or statue" | Subject = Character bust crops to the upper body |
-| **Human or stylised character, head and shoulders or half length** | portrait, comic, game art | a face (>= 0.5) that is >= 9 % of the picture height, **and** a person (>= 0.6) or a face filling >= 35 % of the height | **Character bust**: bust cut (below) then Pixal3D | Subject = Object keeps the whole picture |
+| **Human or stylised character, head and shoulders or half length** | portrait, comic, game art | a face (>= 0.5) that is >= 9 % of the picture height, **and** a person (>= 0.6) or a face filling >= 35 % of the height | **Character bust**: Pixal3D, after a bust cut when the cut makes the subject >= 1.25 times larger for the model (tall or tightly framed pictures); a picture that is already a bust, or a square one, stays whole | Subject = Object keeps the whole picture |
 | **Person without a large, clear face** | full-length figure, helmet or hood, beard and hat, a comic with a hidden face | a person (>= 0.6) but the face score is < 0.5 or the face is under 9 % of the picture height | **Object**, whole picture, with the note "not sure: a person, but no large clear face". Expect softer hands and face on a full-length figure | Subject = Character bust crops to the upper body |
-| **Thin or open shapes** | bicycle wheel, fern, wire, cloth | cannot be detected reliably by a light detector | Never automatic. The user picks **Complex**: TRELLIS.2 (it handles open, thin geometry; it turned a full-bleed character into a plane, which is why it is never chosen silently for people) | Subject = Complex, or Model = TRELLIS.2 |
+| **Thin or open shapes** | bicycle wheel, fern, wire, cloth | cannot be detected reliably by a light detector | Never automatic. The user picks **Complex**, which runs TRELLIS.2 as a *second opinion*: on a fern it kept finer fronds but drifted to grey, on a bicycle wheel it doubled the rim and was worse than Pixal3D (see *Thin and open shapes*); it also turned a full-bleed character into a plane, which is why it is never chosen silently for people | Subject = Complex, or Model = TRELLIS.2 |
 | **Real views available** | turnaround sheet, photos from several sides | the user supplies them | **Character from views** app: Pixal3D multi-view, real views, nothing invented | n/a |
 
 Rules that hold in every row: nothing is downloaded or generated without a visible step; a *generated* picture is never
@@ -51,6 +51,7 @@ All local, all Comfy Core nodes, all in `data/presets.json` ("routing"):
 | close portrait | face height / picture height | >= 0.35 | a head that large may fill the frame so completely that the person detector fails |
 | bust-sized face | face height / picture height | >= 0.09 | below that the figure is full length; cutting it to a bust would remove the legs, so Auto keeps it as Object |
 | bust cut line | face top + **2.7** face heights | skipped when it would remove less than 5 % of the picture | measured in the failure analysis (2.2 too tight, 3.2 less facial detail). Choosing Character bust yourself cuts whenever a face is found |
+| cut pays (Auto only) | longer side of the person's box before the cut / after it | >= **1.25** | the model sees a *square* crop of the subject, so only the longer side counts: cutting a tall picture helps (officer 1.6), cutting a square one changes nothing (1.0) and only costs time and memory. See *When the bust cut helps* |
 
 What the detectors reported for the pictures used to set and check these rules (face score / person score):
 
@@ -62,20 +63,23 @@ What the detectors reported for the pictures used to set and check these rules (
 | `raised_hand_woman` | 0.96 | 0.96 | Character bust, whole picture |
 | `comic_wizard` (face hidden by beard and hat) | 0.42 | 0.94 | Object + "not sure" note |
 | `full_body_walker` (small face) | 0.48 | 0.94 | Object + "not sure" note |
+| `comic_general`, `armored_knight` (square, half length) | 0.67, 0.91 | 0.91, 0.88 | Character bust, whole picture (the cut would not help) |
+| `comic_general_tall`, `armored_knight_tall` | 0.64, 0.86 | 0.92, 0.87 | Character bust, cut at row 597 and 632 of 1344 |
 | `toy_astronaut` | 0.90 | 0.00 | Object + toy note |
 | `figurine_fox`, `bicycle_wheel`, `fern_plant` | 0.00 | 0.00 | Object |
 
-Honest limits of this calibration: ten pictures, not a benchmark. The face and person minimums were fixed before the
-evaluation set existed; the "a face needs a person (or a very large face)" rule was added after the first run sent a vinyl toy
-to the bust workflow and cut its legs off (face 0.90, person 0.00). `comic_wizard` shows the cost of caution: Auto does not
+Honest limits of this calibration: fourteen pictures, not a benchmark. The face and person minimums were fixed before the
+evaluation set existed. Two rules came from what the first runs showed: "a face needs a person (or a very large face)" after a vinyl toy
+was sent to the bust workflow and lost its legs (face 0.90, person 0.00), and "the cut has to make the subject larger" after square pictures
+showed no consistent gain from it (next section). `comic_wizard` shows the cost of caution: Auto does not
 guess, it says "not sure" and one click on *Character bust* fixes it. The pictures are in `assets/eval/` and
 `python scripts/check_routing.py <runtime> <models>` re-checks every answer in seconds (no 3D generation).
 
 ## What the Character bust workflow does
 
 1. **Looks at the original picture** (before any cut-out): person and face detectors, about 2 seconds.
-2. **Cuts the picture below the chest** (rows 0 to face top + 2.7 face heights) when the face is large enough. The cut is made
-   on the picture *and* on the user's own transparency, if they supplied one, so both stay aligned.
+2. **Cuts the picture below the chest** (rows 0 to face top + 2.7 face heights) when the face is large enough *and* the cut makes the subject at least 1.25 times
+   larger for the model (or when the user chose Character bust). The cut is made on the picture *and* on the user's own transparency, if they supplied one, so both stay aligned.
 3. **Removes the background of the bust** (BiRefNet) and **frames the bust** (crop-to-mask, padding) instead of the whole picture.
    Order matters: the old order framed the whole picture first, which is why the face arrived at about 136 px.
 4. **Pixal3D** builds the shape and textures with the user's Quality, Output and Seed, exactly as for objects.
@@ -93,6 +97,56 @@ Hidden surfaces (the back and the far side) are inferred, not measured.
 ```
 
 It is a **static textured bust**, not a rigged avatar: there is no skeleton, no blendshapes and no SMPL body.
+
+## When the bust cut helps
+
+The first version cut every Character bust. Two things then showed that the cut is not always worth making.
+
+**The mechanism.** Pixal3D's preparation cuts the subject out, crops the cut-out's box with a little padding to a *square* and resizes it to 1024 px. Only the
+**longer side** of the subject's box sets the scale. The officer picture is tall (937 x 1679): cutting it below the chest turns a 1506 px tall box into a 903 px one, so the
+longer side drops to the 932 px width and everything gets 1.6 times larger. A square picture is the opposite case: the figure is already as wide as it is tall, the longer side
+stays the width, and the cut changes the scale by nothing.
+
+**The measurements** (synthetic characters, *Balanced*, the same seed for both routes, whole picture against bust):
+
+| Picture | Face and hand | Time, whole to bust | GPU memory in use at peak |
+| --- | --- | --- | --- |
+| comic general, **tall** (768 x 1344) | clearly better face and hand in the bust (the jacket shows brown texture stains) | 137 s to 286 s | 13.1 to 14.6 GB |
+| armoured knight, **tall** | clearly better: eyes, lashes, hair and fist are modelled | 204 s to 374 s | 14.3 to 14.5 GB |
+| comic general, **square**, seeds 1234 and 2 | slightly cleaner face and hand in both seeds | 207 s to 230 s; 293 s to 292 s | 13.8 to 14.5 GB; 14.0 to 14.3 GB |
+| armoured knight, **square**, seeds 1234 and 2 | worse at seed 1234 (blocky helmet and armour), about equal at seed 2 | 252 s to 285 s; 428 s to 409 s | 14.4 to **15.4** GB; 14.1 to 14.5 GB |
+
+So: tall pictures gain clearly (at about twice the time and up to 1.5 GB more memory), square ones gain little or nothing, can lose, and throw the lower body away for it.
+Under **Auto** the cut is therefore made only when it makes the subject at least **1.25 times larger** for the model, measured from the person box; **choosing Character bust
+yourself always cuts**. The report says when a character is kept whole ("cutting below the chest would not make the subject larger for the model"). Two seeds per square picture
+are few: read "no consistent gain" as "not worth the cost and the lost lower body", not as "never better".
+
+## Regression: objects and people that stay whole
+
+The routing must not damage what already worked. Each picture was run through the new *Image to 3D* app (Subject: Auto) and through the v0.1.2 app, *Balanced*, the same seed:
+
+| Picture | Auto's answer | Triangles, new / 0.1.2 | Bounding box |
+| --- | --- | --- | --- |
+| `figurine_fox` | Object | 299 956 / 299 966 | same to 0.1 mm |
+| `toy_astronaut` | Object (toy note) | 299 725 / 299 747 | same to 0.2 mm |
+| `bicycle_wheel` | Object | 297 513 / 297 448 | same to 0.3 mm |
+| `fern_plant` | Object | 298 020 / 297 937 | same to 0.4 mm |
+| `raised_hand_woman` | Character bust, whole picture | 299 610 / 299 599 | same to 0.3 mm |
+
+The new route reproduces the 0.1.2 result for every picture that stays whole (the small differences, such as 11 against 7 components on the astronaut, are GPU
+non-determinism), and the step before generation adds about two seconds. The one picture where a user overrules Auto, `comic_wizard` (a hidden face, so Auto says "not sure" and keeps the
+whole picture): choosing *Character bust* gave a sharper face and hands and cut the robe's hem, in a square picture, as the rule predicts (a modest difference).
+
+## Thin and open shapes
+
+Two synthetic pictures, *Balanced*, same seed, Pixal3D (what *Auto* uses) against TRELLIS.2 (what *Complex* uses):
+
+| Picture | Pixal3D | TRELLIS.2 |
+| --- | --- | --- |
+| potted fern (thin feathery fronds) | green and plausible, but the fronds merge into broader leaves | **finer fronds**, closer to the picture's shape, but **grey and speckled** instead of green |
+| bicycle wheel (about 36 spokes) | a rim, a tyre and radiating spokes, chaotic near the hub | a **doubled rim** (two discs crossing) and messier spokes: worse |
+
+So *Complex* is a way to try a second model, not a promised improvement. The label in the app says it uses TRELLIS.2 so that nobody expects more.
 
 ## Candidates evaluated
 
@@ -144,7 +198,9 @@ about 3 GB of the card during these runs; "GPU memory in use" is the whole card,
 Reading it: the bust workflow needs **the same memory** as the object workflow (about 11.5 GB above the 3 GB other programs held, with
 dynamic VRAM using whatever is free) and about **1.5 times the time** on this picture. The extra time is the point: the bust fills more of the model's
 input frame than the whole picture does, so there are more occupied voxels to refine, mesh and bake. For pictures that stay on the Object
-workflow the only added cost is the two seconds of detection. For the generated-view experiment that was not shipped: one view from the image-editing model took
+workflow the only added cost is the two seconds of detection. Across the 26 runs of the regression set (new and 0.1.2 apps, *Balanced*, 14 different pictures) the time ran from 106 s to 428 s, the card's memory in use peaked between 12.8 and 15.5 GB (other programs held 2.4 to 4.0 GB
+before each run, so the engine's own peak was about 10.3 to 12.6 GB) and the engine's RAM between 5.0 and 11.8 GB. The two routes overlap: the highest peaks (15.4 to 15.5 GB) came from the whole-picture route on a fern and a toy as well as from
+the bust route on an armoured knight, and run-to-run time varies by tens of percent on this shared card, so only the large differences (the tall pictures: about twice the time) mean anything. For the generated-view experiment that was not shipped: one view from the image-editing model took
 14 to 22 s at 15.3 GB (the card was full), and Pixal3D's multi-view stage 190 to 271 s at 13.6 to 15.3 GB.
 
 ## Quality comparison
@@ -192,7 +248,7 @@ tried and **not shipped**. Measured on the officer bust (Pixal3D, Balanced, same
 | Signed-distance remesh (SDF, with QEF) | 158 k | 1 530 (83 % outside the largest) | 44 040 (9.3 %) | much worse: this mode needs a consistently oriented closed input surface, which the generated mesh is not |
 | UDF, then *Fill Holes* (up to 1 024 boundary vertices) | 291 k | 445 | 1 619 | closed only 72 edges: the remaining holes are slits and thin gaps where braid leaves, glasses parts and ribbons meet, not clean loops |
 
-So the core nodes cannot turn this output into a printable solid, and a "print mode" that only *sounds* printable would be dishonest
+(Seed 1234 was the untidiest: with seeds 2 and 3 the shipped route had 123 and 39 components and 293 and 142 open edges.) So the core nodes cannot turn this output into a printable solid, and a "print mode" that only *sounds* printable would be dishonest
 (the same conclusion as upstream issue #16147 about inner shells, already noted in [QUALITY.md](QUALITY.md)). What does hold: the bust ends in a closed, smoothly
 rounded base (its colour there is arbitrary, because the picture shows nothing of it) and the high-resolution model is kept apart from
 the optimised one: run once with *High fidelity* for the master, then again with *Game asset* (the generated shape is cached, so
@@ -219,12 +275,12 @@ territory limits stated at the download prompt.
 ## The twelve decisions
 
 1. **Rigid objects:** Pixal3D on the whole picture (*Object*). It stayed closest to the picture in the eight-object evaluation ([QUALITY.md](QUALITY.md)).
-2. **Complex, thin or open shapes:** TRELLIS.2, **only by the user's choice** (*Complex*, or *Model: TRELLIS.2*). Upstream positions it for open and thin
-   geometry; in our own evaluation both models kept spindles and open tops, so its edge is modest, and it returned a plane for a full-bleed character.
-   Nothing detects "thin" reliably with a light detector, so Auto never sends a picture there.
+2. **Complex, thin or open shapes:** TRELLIS.2 **as a second opinion, only by the user's choice** (*Complex*, or *Model: TRELLIS.2*). Upstream positions it for open and thin
+   geometry; in our tests it is not an upgrade: on a potted fern it kept finer fronds but drifted to grey, on a bicycle wheel it doubled the rim and was worse than Pixal3D, and on
+   a full-bleed character it returned a plane. Nothing detects "thin" reliably with a light detector, so Auto never sends a picture there.
 3. **Toys and figurines:** *Object*, whole figure, so legs and base survive. A face detected without a person adds the note "a face but no person: this may be a toy,
    doll or statue".
-4. **Real human busts:** *Character bust*: cut below the chest, remove the background, frame the bust, Pixal3D.
+4. **Real human busts:** *Character bust*: cut below the chest (when that makes the subject larger for the model), remove the background, frame the bust, Pixal3D.
 5. **Stylised human and character busts:** the same workflow. It was measured on a comic officer (private picture) and checked on synthetic comic and armoured characters.
 6. **Single-image fallback:** the best crop of the one picture goes to Pixal3D; the back and the far side are labelled as inferred in the report, and the seed
    decides the rest. Nothing is invented from other models.
@@ -238,7 +294,8 @@ territory limits stated at the download prompt.
 11. **Why the others were rejected:** PSHuman needs over 40 GB; DiGS-Avatar outputs Gaussian avatars, not GLB; Unique3D, Wonder3D and Era3D want frontal rest-pose input, work at low
     resolution and (Era3D) are AGPL-3.0; SAM 3D Body gives an unclothed body prior; Qwen-Image 2.1 is non-commercial. The table above has the sources.
 12. **Peak VRAM and timings on this RTX 5080 (16 GB):** 14 to 14.6 GB of the card in use at peak with about 3 GB held by other programs, 8.5 GB of engine RAM,
-    Object 131 to 161 s, Character bust 227 s warm, detection 2 s, TRELLIS.2 78 s. Details in *Hardware, measured*.
+    Object 131 to 161 s, Character bust 227 s warm on the officer (1.5 times the whole picture, up to 2 times on tall synthetic pictures), detection 2 s, TRELLIS.2 78 s;
+    the highest peak seen was 15.4 GB. Details in *Hardware, measured*.
 
 ## What would change this
 

@@ -32,7 +32,7 @@ benchmark; see [QUALITY.md](QUALITY.md) for the eight-object evaluation.
 | Output here | UV-unwrapped mesh with base colour, metallic, roughness, normal and ambient-occlusion maps, packed in one GLB | same |
 | Time (Fast / Balanced / Maximum) | 38 s / 81 s / 111 s | 53 s / 137 s / 145 s |
 | GLB size / triangles (Balanced) | 30 MB / 299 k | 30 MB / 295 k |
-| Known limits | guesses the hidden back side; may shrink or merge very thin parts | slower here; guesses the hidden back side; can drift on flat or vector artwork (upstream note) |
+| Known limits | guesses the hidden back side; may shrink or merge very thin parts (a fern's fronds merged into broader leaves) | slower here; guesses the hidden back side; can drift on flat or vector artwork (upstream note) and in colour (a green fern came out grey); on a full-bleed character it made a plane, and on a bicycle wheel it doubled the rim |
 | Choose it when | you want the result to look like your picture | the object is intricate, thin or has holes and Pixal3D loses parts |
 
 Neither is "better": try the other when a result disappoints. **Auto always means Pixal3D**; Local3D never switches to a

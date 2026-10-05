@@ -81,6 +81,9 @@ by whom ("Auto picked it" or "your choice"), and how the picture was framed. Sta
 * **The report says "not sure: a person, but no large clear face":** Auto kept the whole picture (the plain *Object* workflow) because it could not be
   sure the subject is a bust (the face may be hidden by a beard, a hat or a helmet, small, or heavily stylised). If it is a person you
   want cropped to a bust, choose *Character bust*.
+* **The bust was cut and I wanted the whole figure:** set **Subject** to *Object*. The report says "cut below the chest, rows 0 to N of M kept" when it cropped.
+* **A half-length character was not cropped:** Auto crops only when that makes the subject at least 25 % larger for the model, which is what happens in a tall picture. In a
+  square picture the figure is already as wide as it is tall, so cropping would change nothing and cost the lower body; the report says so. Choose *Character bust* to crop anyway.
 * **A toy, doll or statue lost its legs:** that is what *Character bust* does to a figure. Auto normally keeps these whole ("a face but no person:
   this may be a toy, doll or statue"); if you chose *Character bust* yourself, set *Subject* back to *Auto* or *Object*.
 * **The back of the head, the far side, the colour of lenses or the top of a cap differ from run to run:** nothing in a single picture

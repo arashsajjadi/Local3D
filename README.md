@@ -5,6 +5,7 @@
 - **Local and private.** After a one-time download of the models, your pictures, prompts and 3D models never leave your PC. No account, no Local3D telemetry.
 - **Simple.** Drop a picture (or type a prompt), pick a quality, press **Run**. No node graph, no Python, no model folders.
 - **Open models.** Pixal3D and TRELLIS.2 build the 3D model; FLUX.2 klein draws reference pictures. All run through official ComfyUI.
+- **It looks before it builds.** Drop a person or a character and Local3D crops to a bust, so the face and hands get more of the model's resolution; it tells you what it decided and why, and you can overrule it.
 - **Real assets.** A UV-unwrapped mesh with PBR (realistic material) textures (base colour, metallic, roughness, normal, occlusion) in one `.glb` file, a standard 3D format that opens in Blender, game engines and most viewers.
 
 ![Local3D turning a picture of a robot into a 3D model: removing the background, building the shape, baking textures, then the finished model in the viewer](docs/images/demo.gif)
@@ -32,11 +33,39 @@ More detail: [docs/INSTALL.md](docs/INSTALL.md). Something wrong? [docs/TROUBLES
 | **Image to 3D** | turn one picture into a textured 3D model | Fast 38 s, **Balanced 81 s**, Maximum 111 s |
 | **Prompt to 3D** | describe an object; Local3D draws a reference picture, then builds the model | Fast about 50 s, Balanced 100 to 190 s |
 | **Reference Pictures** | make 1, 2 or 4 candidate pictures from a prompt, then pick the best for *Image to 3D* | about 6 s for four |
+| **Character from views** | build a model from 2 or 4 *real* views of the same subject (front, left, back, right): the back is measured, not guessed | about 3 to 5 minutes |
 
-Controls: **Model** (Auto = Pixal3D, or TRELLIS.2), **Quality** (Fast, Balanced, Maximum), **Output** (High fidelity, or Game asset with
+Controls: **Subject** (Auto, Object, Character bust, Complex: see below), **Model** (Auto = Pixal3D, or TRELLIS.2), **Quality** (Fast, Balanced, Maximum), **Output** (High fidelity, or Game asset with
 about 30k triangles, for games and apps), **Background** (Auto, Remove, Keep your own transparent PNG) and **Seed**. Times were measured on one machine, not promised: the first row is Pixal3D with models already loaded; TRELLIS.2 and the first run after starting are slower (see [docs/QUALITY.md](docs/QUALITY.md)).
 
 Single-picture 3D *estimates* the sides it cannot see. Show the whole object on a simple background, and treat the back as a good guess.
+
+## People, characters and toys
+
+A picture of a person is a different problem from a picture of a mug, so *Image to 3D* looks first. Two small detectors that run on your PC
+(about two seconds) check for a person and a face, and a plain-language **Subject report** under the model says what they found and what Local3D did.
+The **Subject** control overrules it.
+
+| You drop | Local3D does |
+| --- | --- |
+| a product, tool, plant, **toy or figurine** | **Object**: the whole picture goes to Pixal3D, as before |
+| a person or character, head and shoulders or half length, **in a tall or tightly framed picture** | **Character bust**: the picture is cut below the chest *before* the background is removed, so the face and hands reach the model at a higher resolution |
+| a half-length figure in a square picture, a full-length figure, a hidden face | **Object**, with a note under the model saying why. Choose *Character bust* to crop to the upper body yourself |
+| thin or open shapes (spokes, leaves, wire) | choose **Complex** to try TRELLIS.2 as a second opinion: on our test fern it kept finer fronds but turned them grey, on a bicycle wheel it did worse than Pixal3D |
+| two or four real views of the same subject | open **Character from views** (*Start > Local3D tools*) |
+
+![A comic general and an armoured knight (synthetic pictures made for this project): the picture, v0.1.2, v0.2.0, and the same two as clay without textures](docs/images/characters-before-after.jpg)
+
+Both pictures were made for this project, both models ran at Balanced with the same seed. In 0.1.2 the whole figure shares the model's input, so the
+face gets only a small part of it; in 0.2.0 the bust fills it. What still goes wrong, honestly:
+
+* A bust ends below the chest on purpose. The lower body is cut away; choose *Object* to keep the whole figure.
+* The hand is better, not solved: the thumb and the fingertips are modelled, but fingers can still be partly fused.
+* The back and the far side are still a guess from one picture, and the colour of lenses, the back of the head and some textures change with the seed.
+  Shiny metal can show blocky reflections; the general's jacket above shows brown stains. Use *Character from views* when you have real views.
+* A bust takes about 1.5 to 2 times as long as the whole picture, because it fills more of the model's input.
+
+How it was decided, measured and checked (including what was tried and left out): [docs/CHARACTER_ROUTING_DECISION.md](docs/CHARACTER_ROUTING_DECISION.md).
 
 ## Supported models
 
@@ -45,9 +74,11 @@ Single-picture 3D *estimates* the sides it cannot see. Show the whole object on 
 | [Pixal3D](https://huggingface.co/TencentARC/Pixal3D) | image to 3D, default | MIT | in the 15 GB pack |
 | [TRELLIS.2](https://github.com/microsoft/TRELLIS.2) | image to 3D, alternative for intricate or thin objects | MIT | in the 15 GB pack |
 | [FLUX.2 klein 4B](https://huggingface.co/black-forest-labs/FLUX.2-klein-4b-nvfp4) | reference pictures for prompts | Apache-2.0 | optional, 6.6 to 16 GB by GPU |
+| [RT-DETR v4](https://github.com/RT-DETRs/RT-DETRv4), [MediaPipe](https://github.com/google-ai-edge/mediapipe) | find a person and a face (subject routing) | Apache-2.0 | in the 15 GB pack (130 MB) |
+| Pixal3D multi-view model | *Character from views* | MIT | optional, 5.6 GB, asked for when you first open that app |
 
 Model licenses differ from this project's MIT license; the DINOv3 encoder both 3D models need is under Meta's own license.
-See [docs/MODELS.md](docs/MODELS.md) (including why Hunyuan3D is not in v0.1.0) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+See [docs/MODELS.md](docs/MODELS.md) (including why Hunyuan3D and the human-specific models are not included) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ## Example results
 

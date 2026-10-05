@@ -58,16 +58,16 @@ All with Pixal3D, *Balanced*, same seed unless stated; renders from six angles, 
 
 ## Measurements
 
-NVIDIA RTX 5080 (16 GB), Windows 11, ComfyUI 0.38.0 (see the decision record for timings and memory).
+NVIDIA RTX 5080 (16 GB), Windows 11, ComfyUI 0.38.0, *Balanced*, seeds 1234, 2 and 3 (see the decision record for timings and memory).
 
 | Result | Triangles | Components | Open edges | Bounding box W x H x D |
 | --- | --- | --- | --- | --- |
-| Whole picture, Pixal3D | 297 k | 78 (1.2 % floating) | 78 | 0.54 x 0.94 x 0.46 m |
-| Bust cut, Pixal3D | 290 k | 426 (7.4 % floating) | 1 565 (0.18 %) | 0.86 x 0.89 x 0.51 m |
+| Whole picture, Pixal3D (3 seeds) | 293 to 297 k | 74 to 168 | 41 to 97 | 0.53 to 0.54 x 0.93 to 0.94 x 0.46 to 0.47 m |
+| Bust cut, Pixal3D (3 seeds) | 290 to 296 k | 39 to 426 | 142 to 1 565 | 0.85 to 0.86 x 0.89 to 0.91 x 0.51 to 0.60 m |
 | Whole picture, TRELLIS.2 | 300 k | 1 | 0 | 1.00 x 1.00 x 0.003 m (a plane) |
 
-The bust result has more small floating fragments (thin braid leaves, ribbons, glasses parts) because it carries more
-fine detail; the largest component still holds 93 % of the triangles. Neither Pixal3D result is watertight (see "3D printing" in the
+The bust results carry more small fragments and open edges (thin braid leaves, ribbons and glasses parts become separate pieces), and how many depends strongly
+on the seed: seed 1234 had 426 components (7.4 % of the triangles outside the largest), seeds 2 and 3 had 123 and 39. Neither Pixal3D route is watertight (see "3D printing" in the
 decision record).
 
 ## Repeat it
