@@ -216,7 +216,7 @@ MODEL_OPTIONS = ["Auto — Recommended", "Pixal3D — Best match to reference", 
 QUALITY_OPTIONS = ["Fast — quick preview", "Balanced — recommended", "Maximum — most detail, 16 GB GPU"]
 INTENT_OPTIONS = ["High fidelity — keep all detail", "Game asset — about 30k triangles"]
 BACKGROUND_OPTIONS = ["Auto — recommended", "Remove — AI cutout only", "Keep — my transparent PNG"]
-SUBJECT_OPTIONS = ["Auto — recommended", "Object — products, toys, figurines", "Character bust — people", "Complex — thin or open shapes"]
+SUBJECT_OPTIONS = ["Auto — recommended", "Object — products, toys, figurines", "Character bust — people", "Complex — thin or open (TRELLIS.2)"]
 
 
 def load_presets() -> dict:
