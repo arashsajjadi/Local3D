@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Print GitHub release notes for a version: its CHANGELOG section plus the standard install footer.
 
-    python scripts/release_notes.py 0.1.2 --out release-notes.md
+    python scripts/release_notes.py 0.2.0 --out release-notes.md
 """
 import argparse
 import re
@@ -18,7 +18,8 @@ FOOTER = """
 1. Download **Local3D-Setup-{v}.exe** below (verify it with `SHA256SUMS.txt`; build provenance is attested on this release).
 2. Run it. Windows SmartScreen will warn because the installer is **not code-signed**: *More info* > *Run anyway*.
 3. Start **Local3D** from the Start menu. On first start it asks before downloading the ComfyUI runtime (about 2 GB)
-   and the model files (15 GB, plus 7 to 16 GB for Prompt to 3D). After that it works offline.
+   and the model files (15 GB, plus 7 to 16 GB for Prompt to 3D). *Character from views* asks for its own 5.6 GB model the first time
+   you open it. After that it works offline. Updating from an earlier version asks once for two small detectors (130 MB).
 
 ### Requirements
 
@@ -27,13 +28,13 @@ disk space on an RTX 50-series card (up to 36 GB on older cards), internet for t
 
 ### Models
 
-Pixal3D and TRELLIS.2 (image to 3D), FLUX.2 klein 4B (reference pictures). Licenses differ from Local3D's MIT license:
+Pixal3D and TRELLIS.2 (image to 3D), FLUX.2 klein 4B (reference pictures), RT-DETR and MediaPipe (they find a person and a face). Licenses differ from Local3D's MIT license:
 [THIRD_PARTY_NOTICES.md](https://github.com/arashsajjadi/Local3D/blob/v{v}/THIRD_PARTY_NOTICES.md).
 
 ### Known limitations
 
 See [docs/TROUBLESHOOTING.md](https://github.com/arashsajjadi/Local3D/blob/v{v}/docs/TROUBLESHOOTING.md) and the
-[quality notes](https://github.com/arashsajjadi/Local3D/blob/v{v}/docs/QUALITY.md). Single-picture 3D invents the sides it cannot see.
+[quality notes](https://github.com/arashsajjadi/Local3D/blob/v{v}/docs/QUALITY.md). Single-picture 3D invents the sides it cannot see; use *Character from views* when you have real views.
 """
 
 

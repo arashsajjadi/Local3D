@@ -25,7 +25,7 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 
 [assembly: AssemblyTitle("Local3D")]
-[assembly: AssemblyVersion("0.1.2.0")]
+[assembly: AssemblyVersion("0.2.0.0")]
 [assembly: AssemblyInformationalVersion("0.2.0")]
 [assembly: AssemblyProduct("Local3D")]
 [assembly: AssemblyCopyright("Copyright (c) 2026 Arash Sajjadi. MIT License.")]
@@ -34,7 +34,7 @@ namespace Local3D
 {
     internal static class Program
     {
-        public const string Version = "0.1.2";
+        public const string Version = "0.2.0";
 
         [STAThread]
         private static int Main(string[] args)
