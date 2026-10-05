@@ -296,7 +296,7 @@ territory limits stated at the download prompt.
     resolution and (Era3D) are AGPL-3.0; SAM 3D Body gives an unclothed body prior; Qwen-Image 2.1 is non-commercial. The table above has the sources.
 12. **Peak VRAM and timings on this RTX 5080 (16 GB):** 14 to 14.6 GB of the card in use at peak with about 3 GB held by other programs, 8.5 GB of engine RAM,
     Object 131 to 161 s, Character bust 227 s warm on the officer (1.5 times the whole picture, up to 2 times on tall synthetic pictures), detection 2 s, TRELLIS.2 78 s;
-    the highest peak seen was 15.4 GB. Details in *Hardware, measured*.
+    the highest peak seen in the 28 regression runs was 15.7 GB of the card's 16.3 GB (a whole-picture run of the comic wizard, 541 s). Details in *Hardware, measured*.
 
 ## What would change this
 
