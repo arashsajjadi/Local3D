@@ -183,11 +183,24 @@ class GraphWiring(unittest.TestCase):
             if n.get("title") == "Your cutout (alpha)":
                 self.assertEqual(source_of(n["id"], "mask"), "CropMask")  # and the user's own transparency is cropped alike
 
-    def test_the_report_is_an_app_output(self):
+    def test_the_report_is_written_under_the_prepared_image_that_is_an_app_output(self):
         outs = IMAGE_APP["extra"]["linearData"]["outputs"]
-        types = {n["id"]: n["type"] for n in IMAGE_APP["nodes"]}
-        self.assertIn("PreviewAny", [types[o] for o in outs])
-        self.assertIn("Save3DAdvanced", [types[o] for o in outs])
+        nodes = {n["id"]: n for n in IMAGE_APP["nodes"]}
+        links = {l[0]: l for l in IMAGE_APP["links"]}
+        self.assertEqual([nodes[o]["type"] for o in outs], ["Save3DAdvanced", "PreviewImage"])   # no third output: it changed the row's order on re-runs
+
+        def source_of(node_id: int, input_name: str):
+            inp = next(i for i in nodes[node_id]["inputs"] if i["name"] == input_name)
+            return nodes[links[inp["link"]][1]]
+
+        preview = nodes[outs[1]]
+        stitch = source_of(preview["id"], "images")
+        self.assertEqual(stitch["type"], "ImageStitch")
+        self.assertEqual(source_of(stitch["id"], "image1")["type"], "ImageCropToMask")            # what the model sees
+        self.assertEqual(source_of(stitch["id"], "image2")["type"], "TextOverlay")               # the report, drawn on a banner
+        # the text itself stays in the graph (full graph view, tools) and is not an app output
+        self.assertTrue(any(n["type"] == "PreviewAny" and "report" in n.get("title", "").lower() for n in IMAGE_APP["nodes"]))
+        self.assertNotIn("PreviewAny", [nodes[o]["type"] for o in outs])
 
     def test_the_subject_control_is_the_first_choice(self):
         data = IMAGE_APP["extra"]["linearData"]["inputs"]

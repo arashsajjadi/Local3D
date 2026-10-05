@@ -116,7 +116,8 @@ class Graph:
         link = [self._lid, src, s, dst, slot, typ]
         self.d["links"].append(link)
         self.links[self._lid] = link
-        self.nodes[src]["outputs"][s]["links"].append(self._lid)
+        out = self.nodes[src]["outputs"][s]
+        out["links"] = (out.get("links") or []) + [self._lid]   # the official templates store "links": null for an output nobody uses
         node["inputs"][slot]["link"] = self._lid
         return self._lid
 
@@ -396,14 +397,25 @@ def add_subject_routing(g: Graph, subject_combo: int, origin) -> dict:
                    widgets=["Subject: {a} ({b})\n{c}\n{d}\n{e}"], outputs=[{"name": "STRING", "type": "STRING"}])
     for name_, src_ in (("a", name), ("b", how), ("c", evidence), ("d", framing), ("e", note_text)):
         g.connect(src_, 0, report, f"values.{name_}", dtype="STRING")
-    shown = g.add("PreviewAny", title="Subject report (what Local3D decided and why)", pos=(x + 2180, ry), size=(420, 200),
-                  inputs=[{"name": "source", "type": "*"}], outputs=[{"name": "STRING", "type": "STRING"}])
-    g.connect(report, 0, shown, "source", dtype="STRING")
+    # The text for the full graph (and for tools). App Mode (frontend 1.53) lists picture, video, audio and 3D outputs but no text, and an extra
+    # picture output changed the order of the row on re-runs (and once raised a "Failed to load 3D model" alert), so the same text is written on
+    # a banner that is stitched under the "Prepared image" preview (see _image_graph): one picture shows what the model saw and what was decided.
+    text_out = g.add("PreviewAny", title="Subject report (text)", pos=(x + 2180, ry), size=(420, 200),
+                     inputs=[{"name": "source", "type": "*"}], outputs=[{"name": "STRING", "type": "STRING"}])
+    g.connect(report, 0, text_out, "source", dtype="STRING")
+    canvas = g.add("EmptyImage", title="Report banner", pos=(x + 2180, ry + 260), size=(320, 150), widgets=[1024, 400, 1, 1776415],
+                   outputs=[{"name": "IMAGE", "type": "IMAGE"}])
+    banner = g.add("TextOverlay", title="Write the report on the banner", pos=(x + 2540, ry + 260), size=(320, 250),
+                   widgets=["", 8.5, "#f2f2f2", "top", "left", False],
+                   inputs=[{"name": "images", "type": "IMAGE"}, {"name": "text", "type": "STRING", "widget": {"name": "text"}}],
+                   outputs=[{"name": "IMAGE", "type": "IMAGE"}])
+    g.connect(canvas, 0, banner, "images")
+    g.connect(report, 0, banner, "text", dtype="STRING", widget=True)
 
     g.group("Subject detection, bust framing and report (Local3D)", x - 40, y - 80, 2700, 2000, "#2a7f62")
     describe_stages(g, {rt_model: "Looking at your picture", mp_model: "Looking at your picture", rt: "Looking at your picture",
-                        mp: "Looking at your picture", crop_img: "Framing the subject", shown: "Writing the report"})
-    return {"subject": m_subject, "crop_img": crop_img, "crop_alpha": crop_alpha, "report": shown, "nodes_end": shown}
+                        mp: "Looking at your picture", crop_img: "Framing the subject", banner: "Writing the report"})
+    return {"subject": m_subject, "crop_img": crop_img, "crop_alpha": crop_alpha, "report": text_out, "banner": banner}
 
 
 # App Mode shows node.properties["Execution Message"] while that node runs: real stages, not a fake progress bar
@@ -544,6 +556,14 @@ def _image_graph(subject: bool = False):
     # ---- outputs / naming ---------------------------------------------------------------------
     g.nodes[322]["widgets_values"][0] = "models/image"   # -> <output folder>/models/image_00001.glb
     g.nodes[302]["title"] = "Prepared image (what the model sees)"
+    if route:   # the picture under the model also carries the report: what the model saw, and what was decided and why
+        g.nodes[302]["title"] = "Prepared image (what the model sees) and the Subject report"
+        stitch = g.add("ImageStitch", title="Prepared image + report", pos=(X + 1800, Y + 1500), size=(300, 150), widgets=["down", True, 0, "white"],
+                       inputs=[{"name": "image1", "type": "IMAGE"}, {"name": "image2", "type": "IMAGE", "shape": 7}],
+                       outputs=[{"name": "IMAGE", "type": "IMAGE"}])
+        g.connect(312, 0, stitch, "image1")
+        g.connect(route["banner"], 0, stitch, "image2")
+        g.connect(stitch, 0, 302, "images")
     g.nodes[122]["widgets_values"][0] = "Local3D_example_robot.jpg"  # copied into the input folder on first run
     g.label_widget(122, "image", "Image", "COMBO")
 
@@ -577,7 +597,7 @@ def build_image_app() -> dict:
         [ids["background"], "choice", {"description": "Keep needs a transparent PNG"}],
         [ids["seed"], "value", {"description": "Same seed = same result"}],
     ]
-    app_meta(g, "image-to-3d", inputs, [322, 302, ids["report"]])
+    app_meta(g, "image-to-3d", inputs, [322, 302])
     return g.finish("image-to-3d")
 
 

@@ -50,7 +50,7 @@ All apps use **Comfy Core nodes only** (enforced by `scripts/validate.py` agains
 * **Subject routing** is part of *Image to 3D*, not a separate app: `Subject` (Auto, Object, Character bust, Complex) is another
   *Custom Combo*. Before anything else two small detectors (RT-DETR person, MediaPipe face; both Comfy Core nodes) look at the
   original picture, *Math Expression* tables decide the subject, and *Crop* nodes cut picture and cut-out to a bust when that is
-  what the picture shows. A *Preview Any* node prints a plain-language report of what was found and chosen (an app output). See
+  what the picture shows. A plain-language report of what was found and chosen is written by a *Preview Any* node (visible in the full graph) and also drawn on a banner (*Empty Image* + *Draw Text Overlay*) that an *Image Stitch* node attaches under the "prepared image" preview, because App Mode (frontend 1.53) lists picture, video, audio and 3D outputs but no text, and a third picture output reordered the row on re-runs. See
   [CHARACTER_ROUTING_DECISION.md](CHARACTER_ROUTING_DECISION.md).
 * **Character from views** is the official *Pixal3D multi-view* template with the same controls: two or four real views in,
   one model out (a *Switch* node chooses between the two-view and four-view conditioning, so only one branch runs).

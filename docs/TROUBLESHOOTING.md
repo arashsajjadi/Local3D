@@ -71,7 +71,7 @@ the old *Maximum* settings; if you have 12 GB or less, start with *Fast* or *Bal
 
 ### A person or character comes out wrong
 
-Under the model, *Image to 3D* prints a **Subject report**: what the two detectors found (scores from 0 to 1), which subject was chosen and
+*Image to 3D* writes a **Subject report** under the *prepared picture* (the second picture in the row under the model: click it): what the two detectors found (scores from 0 to 1), which subject was chosen and
 by whom ("Auto picked it" or "your choice"), and how the picture was framed. Start there.
 
 * **The hand, face or glasses are soft or fused:** the model sees the picture at about 1 000 px, so a face that is a small part of

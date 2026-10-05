@@ -19,7 +19,7 @@ the evidence for the fix are in [docs/CHARACTER_FAILURE_ANALYSIS.md](docs/CHARAC
   makes the subject larger for the model (tall or tightly framed pictures; in a square picture the cut would change nothing and cost time and
   memory, so the picture stays whole). On the test picture (a comic officer saluting) the hand now reaches the visor with a thumb and stepped
   fingertips instead of a flat paddle at the ear, and the face, glasses frames, cap braid and epaulettes come out as shapes; fingers can still be partly fused.
-- **Subject report** next to the result, in plain words: what was detected (with scores), what was chosen and by whom, how the
+- **Subject report**, written under the prepared picture in the row under the result, in plain words: what was detected (with scores), what was chosen and by whom, how the
   picture was framed, and that the back and far side are inferred. When Auto is not sure (a person without a clear face, a face
   without a person such as a toy) it keeps the plain Object workflow and says so; one click on *Character bust* overrules it.
 - **Character from views** app (*Start > Local3D tools*): build a model from two or four **real** views of the same subject (front, left, back,

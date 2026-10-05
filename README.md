@@ -43,7 +43,7 @@ Single-picture 3D *estimates* the sides it cannot see. Show the whole object on 
 ## People, characters and toys
 
 A picture of a person is a different problem from a picture of a mug, so *Image to 3D* looks first. Two small detectors that run on your PC
-(about two seconds) check for a person and a face, and a plain-language **Subject report** under the model says what they found and what Local3D did.
+(about two seconds) check for a person and a face, and a plain-language **Subject report** (written under the *prepared picture*, the second picture in the row under the model: click it) says what they found and what Local3D did.
 The **Subject** control overrules it.
 
 | You drop | Local3D does |

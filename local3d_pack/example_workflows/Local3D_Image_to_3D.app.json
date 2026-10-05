@@ -1,8 +1,8 @@
 {
  "id": "39f5fdc0-0b0f-5871-a2e5-263a05bafa71",
  "revision": 0,
- "last_node_id": 404,
- "last_link_id": 1428,
+ "last_node_id": 407,
+ "last_link_id": 1433,
  "nodes": [
   {
    "id": 3,
@@ -42,7 +42,7 @@
     {
      "name": "seed",
      "type": "INT",
-     "link": 1412,
+     "link": 1414,
      "widget": {
       "name": "seed"
      }
@@ -166,7 +166,7 @@
     {
      "name": "seed",
      "type": "INT",
-     "link": 1415,
+     "link": 1417,
      "widget": {
       "name": "seed"
      }
@@ -293,7 +293,7 @@
     {
      "name": "seed",
      "type": "INT",
-     "link": 1413,
+     "link": 1415,
      "widget": {
       "name": "seed"
      }
@@ -371,7 +371,7 @@
     {
      "name": "seed",
      "type": "INT",
-     "link": 1414,
+     "link": 1416,
      "widget": {
       "name": "seed"
      }
@@ -802,7 +802,7 @@
     {
      "name": "target_resolution",
      "type": "INT",
-     "link": 1398,
+     "link": 1400,
      "widget": {
       "name": "target_resolution"
      }
@@ -1277,7 +1277,7 @@
      "widget": {
       "name": "texture_size"
      },
-     "link": 1411
+     "link": 1413
     }
    ],
    "outputs": [
@@ -1376,7 +1376,7 @@
     {
      "name": "target_face_count",
      "type": "INT",
-     "link": 1403,
+     "link": 1405,
      "widget": {
       "name": "target_face_count"
      }
@@ -1431,7 +1431,7 @@
     {
      "name": "image",
      "type": "IMAGE",
-     "link": 1417
+     "link": 1419
     }
    ],
    "outputs": [
@@ -1439,8 +1439,8 @@
      "name": "mask",
      "type": "MASK",
      "links": [
-      1419,
-      1424
+      1421,
+      1426
      ]
     }
    ],
@@ -1525,7 +1525,7 @@
      "widget": {
       "name": "resolution"
      },
-     "link": 1410
+     "link": 1412
     }
    ],
    "outputs": [
@@ -1816,7 +1816,7 @@
     {
      "name": "resolution",
      "type": "INT",
-     "link": 1407,
+     "link": 1409,
      "widget": {
       "name": "resolution"
      }
@@ -1913,7 +1913,7 @@
     {
      "name": "resolution",
      "type": "INT",
-     "link": 1409,
+     "link": 1411,
      "widget": {
       "name": "resolution"
      }
@@ -2053,7 +2053,7 @@
     {
      "name": "resolution",
      "type": "INT",
-     "link": 1400,
+     "link": 1402,
      "widget": {
       "name": "resolution"
      }
@@ -2378,17 +2378,17 @@
     {
      "name": "on_false",
      "type": "MASK",
-     "link": 1426
+     "link": 1428
     },
     {
      "name": "on_true",
      "type": "MASK",
-     "link": 1427
+     "link": 1429
     },
     {
      "name": "switch",
      "type": "BOOLEAN",
-     "link": 1428,
+     "link": 1430,
      "widget": {
       "name": "switch"
      }
@@ -2851,7 +2851,7 @@
     {
      "name": "images",
      "type": "IMAGE",
-     "link": 1259
+     "link": 1433
     }
    ],
    "outputs": [
@@ -2870,7 +2870,7 @@
     "ver": "0.33.0",
     "Node name for S&R": "PreviewImage"
    },
-   "title": "Prepared image (what the model sees)"
+   "title": "Prepared image (what the model sees) and the Subject report"
   },
   {
    "id": 303,
@@ -2926,7 +2926,7 @@
     {
      "name": "images",
      "type": "IMAGE",
-     "link": 1418
+     "link": 1420
     },
     {
      "name": "masks",
@@ -2939,7 +2939,7 @@
      "name": "images",
      "type": "IMAGE",
      "links": [
-      1259
+      1431
      ]
     }
    ],
@@ -3022,7 +3022,7 @@
      "widget": {
       "name": "switch"
      },
-     "link": 1394
+     "link": 1396
     }
    ],
    "outputs": [
@@ -3078,7 +3078,7 @@
      "widget": {
       "name": "switch"
      },
-     "link": 1395
+     "link": 1397
     }
    ],
    "outputs": [
@@ -3134,7 +3134,7 @@
      "widget": {
       "name": "switch"
      },
-     "link": 1396
+     "link": 1398
     }
    ],
    "outputs": [
@@ -3402,7 +3402,7 @@
      "type": "INT",
      "localized_name": "INDEX",
      "links": [
-      1392
+      1394
      ]
     }
    ],
@@ -3460,12 +3460,12 @@
      "type": "INT",
      "localized_name": "INDEX",
      "links": [
-      1397,
       1399,
       1401,
-      1404,
+      1403,
       1406,
-      1408
+      1408,
+      1410
      ]
     }
    ],
@@ -3523,8 +3523,8 @@
      "type": "INT",
      "localized_name": "INDEX",
      "links": [
-      1421,
-      1422
+      1423,
+      1424
      ]
     }
    ],
@@ -3582,8 +3582,8 @@
      "type": "INT",
      "localized_name": "INDEX",
      "links": [
-      1402,
-      1405
+      1404,
+      1407
      ]
     }
    ],
@@ -3634,10 +3634,10 @@
      "type": "INT",
      "localized_name": "INT",
      "links": [
-      1412,
-      1413,
       1414,
-      1415
+      1415,
+      1416,
+      1417
      ]
     }
    ],
@@ -4949,7 +4949,7 @@
       1336,
       1346,
       1347,
-      1393
+      1395
      ]
     },
     {
@@ -5242,8 +5242,8 @@
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
-      1417,
-      1418
+      1419,
+      1420
      ]
     }
    ],
@@ -5309,7 +5309,7 @@
      "name": "MASK",
      "type": "MASK",
      "links": [
-      1416
+      1418
      ]
     }
    ],
@@ -6803,7 +6803,8 @@
      "name": "STRING",
      "type": "STRING",
      "links": [
-      1391
+      1391,
+      1393
      ]
     }
    ],
@@ -6848,13 +6849,103 @@
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.38.0",
-    "Node name for S&R": "PreviewAny",
-    "Execution Message": "Writing the report"
+    "Node name for S&R": "PreviewAny"
    },
-   "title": "Subject report (what Local3D decided and why)"
+   "title": "Subject report (text)"
   },
   {
    "id": 392,
+   "type": "EmptyImage",
+   "pos": [
+    -2920,
+    1320
+   ],
+   "size": [
+    320,
+    150
+   ],
+   "flags": {},
+   "order": 392,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      1392
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "EmptyImage"
+   },
+   "title": "Report banner",
+   "widgets_values": [
+    1024,
+    400,
+    1,
+    1776415
+   ]
+  },
+  {
+   "id": 393,
+   "type": "TextOverlay",
+   "pos": [
+    -2560,
+    1320
+   ],
+   "size": [
+    320,
+    250
+   ],
+   "flags": {},
+   "order": 393,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 1392
+    },
+    {
+     "name": "text",
+     "type": "STRING",
+     "widget": {
+      "name": "text"
+     },
+     "link": 1393
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      1432
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "TextOverlay",
+    "Execution Message": "Writing the report"
+   },
+   "title": "Write the report on the banner",
+   "widgets_values": [
+    "",
+    8.5,
+    "#f2f2f2",
+    "top",
+    "left",
+    false
+   ]
+  },
+  {
+   "id": 394,
    "type": "ComfyMathExpression",
    "pos": [
     -5100,
@@ -6865,7 +6956,7 @@
     120
    ],
    "flags": {},
-   "order": 392,
+   "order": 394,
    "mode": 0,
    "inputs": [
     {
@@ -6873,7 +6964,7 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1392
+     "link": 1394
     },
     {
      "label": "b",
@@ -6881,7 +6972,7 @@
      "name": "values.b",
      "type": "FLOAT,INT,BOOLEAN",
      "shape": 7,
-     "link": 1393
+     "link": 1395
     }
    ],
    "outputs": [
@@ -6902,9 +6993,9 @@
      "name": "BOOL",
      "type": "BOOLEAN",
      "links": [
-      1394,
-      1395,
-      1396
+      1396,
+      1397,
+      1398
      ]
     }
    ],
@@ -6919,7 +7010,7 @@
    ]
   },
   {
-   "id": 393,
+   "id": 395,
    "type": "ComfyMathExpression",
    "pos": [
     -4700,
@@ -6930,62 +7021,7 @@
     120
    ],
    "flags": {},
-   "order": 393,
-   "mode": 0,
-   "inputs": [
-    {
-     "label": "a",
-     "localized_name": "values.a",
-     "name": "values.a",
-     "type": "FLOAT,INT,BOOLEAN",
-     "link": 1397
-    }
-   ],
-   "outputs": [
-    {
-     "localized_name": "FLOAT",
-     "name": "FLOAT",
-     "type": "FLOAT",
-     "links": []
-    },
-    {
-     "localized_name": "INT",
-     "name": "INT",
-     "type": "INT",
-     "links": [
-      1398
-     ]
-    },
-    {
-     "localized_name": "BOOL",
-     "name": "BOOL",
-     "type": "BOOLEAN",
-     "links": []
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "ComfyMathExpression"
-   },
-   "title": "Preset: cascade resolution",
-   "widgets_values": [
-    "1024 if a == 0 else (1536 if a == 1 else (1536))"
-   ]
-  },
-  {
-   "id": 394,
-   "type": "ComfyMathExpression",
-   "pos": [
-    -4700,
-    -1170
-   ],
-   "size": [
-    360,
-    120
-   ],
-   "flags": {},
-   "order": 394,
+   "order": 395,
    "mode": 0,
    "inputs": [
     {
@@ -7023,24 +7059,24 @@
     "ver": "0.38.0",
     "Node name for S&R": "ComfyMathExpression"
    },
-   "title": "Preset: remesh resolution",
+   "title": "Preset: cascade resolution",
    "widgets_values": [
-    "512 if a == 0 else (768 if a == 1 else (768))"
+    "1024 if a == 0 else (1536 if a == 1 else (1536))"
    ]
   },
   {
-   "id": 395,
+   "id": 396,
    "type": "ComfyMathExpression",
    "pos": [
     -4700,
-    -1020
+    -1170
    ],
    "size": [
     360,
     120
    ],
    "flags": {},
-   "order": 395,
+   "order": 396,
    "mode": 0,
    "inputs": [
     {
@@ -7049,14 +7085,6 @@
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
      "link": 1401
-    },
-    {
-     "label": "b",
-     "localized_name": "values.b",
-     "name": "values.b",
-     "type": "FLOAT,INT,BOOLEAN",
-     "shape": 7,
-     "link": 1402
     }
    ],
    "outputs": [
@@ -7071,7 +7099,70 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      1403
+      1402
+     ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "title": "Preset: remesh resolution",
+   "widgets_values": [
+    "512 if a == 0 else (768 if a == 1 else (768))"
+   ]
+  },
+  {
+   "id": 397,
+   "type": "ComfyMathExpression",
+   "pos": [
+    -4700,
+    -1020
+   ],
+   "size": [
+    360,
+    120
+   ],
+   "flags": {},
+   "order": 397,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1403
+    },
+    {
+     "label": "b",
+     "localized_name": "values.b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "shape": 7,
+     "link": 1404
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      1405
      ]
     },
     {
@@ -7092,7 +7183,7 @@
    ]
   },
   {
-   "id": 396,
+   "id": 398,
    "type": "ComfyMathExpression",
    "pos": [
     -4700,
@@ -7103,7 +7194,7 @@
     120
    ],
    "flags": {},
-   "order": 396,
+   "order": 398,
    "mode": 0,
    "inputs": [
     {
@@ -7111,7 +7202,7 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1404
+     "link": 1406
     },
     {
      "label": "b",
@@ -7119,7 +7210,7 @@
      "name": "values.b",
      "type": "FLOAT,INT,BOOLEAN",
      "shape": 7,
-     "link": 1405
+     "link": 1407
     }
    ],
    "outputs": [
@@ -7134,8 +7225,8 @@
      "name": "INT",
      "type": "INT",
      "links": [
-      1410,
-      1411
+      1412,
+      1413
      ]
     },
     {
@@ -7156,7 +7247,7 @@
    ]
   },
   {
-   "id": 397,
+   "id": 399,
    "type": "ComfyMathExpression",
    "pos": [
     -4700,
@@ -7167,62 +7258,7 @@
     120
    ],
    "flags": {},
-   "order": 397,
-   "mode": 0,
-   "inputs": [
-    {
-     "label": "a",
-     "localized_name": "values.a",
-     "name": "values.a",
-     "type": "FLOAT,INT,BOOLEAN",
-     "link": 1406
-    }
-   ],
-   "outputs": [
-    {
-     "localized_name": "FLOAT",
-     "name": "FLOAT",
-     "type": "FLOAT",
-     "links": []
-    },
-    {
-     "localized_name": "INT",
-     "name": "INT",
-     "type": "INT",
-     "links": [
-      1407
-     ]
-    },
-    {
-     "localized_name": "BOOL",
-     "name": "BOOL",
-     "type": "BOOLEAN",
-     "links": []
-    }
-   ],
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.38.0",
-    "Node name for S&R": "ComfyMathExpression"
-   },
-   "title": "Preset: normal map size",
-   "widgets_values": [
-    "1024 if a == 0 else (2048 if a == 1 else (2048))"
-   ]
-  },
-  {
-   "id": 398,
-   "type": "ComfyMathExpression",
-   "pos": [
-    -4700,
-    -570
-   ],
-   "size": [
-    360,
-    120
-   ],
-   "flags": {},
-   "order": 398,
+   "order": 399,
    "mode": 0,
    "inputs": [
     {
@@ -7260,13 +7296,68 @@
     "ver": "0.38.0",
     "Node name for S&R": "ComfyMathExpression"
    },
+   "title": "Preset: normal map size",
+   "widgets_values": [
+    "1024 if a == 0 else (2048 if a == 1 else (2048))"
+   ]
+  },
+  {
+   "id": 400,
+   "type": "ComfyMathExpression",
+   "pos": [
+    -4700,
+    -570
+   ],
+   "size": [
+    360,
+    120
+   ],
+   "flags": {},
+   "order": 400,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1410
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      1411
+     ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ComfyMathExpression"
+   },
    "title": "Preset: AO map size",
    "widgets_values": [
     "512 if a == 0 else (1024 if a == 1 else (1024))"
    ]
   },
   {
-   "id": 399,
+   "id": 401,
    "type": "InvertMask",
    "pos": [
     -4300,
@@ -7277,13 +7368,13 @@
     60
    ],
    "flags": {},
-   "order": 399,
+   "order": 401,
    "mode": 0,
    "inputs": [
     {
      "name": "mask",
      "type": "MASK",
-     "link": 1416
+     "link": 1418
     }
    ],
    "outputs": [
@@ -7291,8 +7382,8 @@
      "name": "MASK",
      "type": "MASK",
      "links": [
-      1420,
-      1427
+      1422,
+      1429
      ]
     }
    ],
@@ -7304,7 +7395,7 @@
    "title": "Your cutout (alpha)"
   },
   {
-   "id": 400,
+   "id": 402,
    "type": "MaskComposite",
    "pos": [
     -4300,
@@ -7315,18 +7406,18 @@
     160
    ],
    "flags": {},
-   "order": 400,
+   "order": 402,
    "mode": 0,
    "inputs": [
     {
      "name": "destination",
      "type": "MASK",
-     "link": 1419
+     "link": 1421
     },
     {
      "name": "source",
      "type": "MASK",
-     "link": 1420
+     "link": 1422
     }
    ],
    "outputs": [
@@ -7334,7 +7425,7 @@
      "name": "MASK",
      "type": "MASK",
      "links": [
-      1423
+      1425
      ]
     }
    ],
@@ -7351,7 +7442,7 @@
    ]
   },
   {
-   "id": 401,
+   "id": 403,
    "type": "ComfyMathExpression",
    "pos": [
     -4300,
@@ -7362,7 +7453,7 @@
     120
    ],
    "flags": {},
-   "order": 401,
+   "order": 403,
    "mode": 0,
    "inputs": [
     {
@@ -7370,7 +7461,7 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1421
+     "link": 1423
     }
    ],
    "outputs": [
@@ -7391,7 +7482,7 @@
      "name": "BOOL",
      "type": "BOOLEAN",
      "links": [
-      1425
+      1427
      ]
     }
    ],
@@ -7406,7 +7497,7 @@
    ]
   },
   {
-   "id": 402,
+   "id": 404,
    "type": "ComfyMathExpression",
    "pos": [
     -4300,
@@ -7417,7 +7508,7 @@
     120
    ],
    "flags": {},
-   "order": 402,
+   "order": 404,
    "mode": 0,
    "inputs": [
     {
@@ -7425,7 +7516,7 @@
      "localized_name": "values.a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 1422
+     "link": 1424
     }
    ],
    "outputs": [
@@ -7446,7 +7537,7 @@
      "name": "BOOL",
      "type": "BOOLEAN",
      "links": [
-      1428
+      1430
      ]
     }
    ],
@@ -7461,7 +7552,7 @@
    ]
   },
   {
-   "id": 403,
+   "id": 405,
    "type": "ComfySwitchNode",
    "pos": [
     -3900,
@@ -7472,23 +7563,23 @@
     110
    ],
    "flags": {},
-   "order": 403,
+   "order": 405,
    "mode": 0,
    "inputs": [
     {
      "name": "on_false",
      "type": "MASK",
-     "link": 1423
+     "link": 1425
     },
     {
      "name": "on_true",
      "type": "MASK",
-     "link": 1424
+     "link": 1426
     },
     {
      "name": "switch",
      "type": "BOOLEAN",
-     "link": 1425,
+     "link": 1427,
      "widget": {
       "name": "switch"
      }
@@ -7499,7 +7590,7 @@
      "name": "output",
      "type": "MASK",
      "links": [
-      1426
+      1428
      ]
     }
    ],
@@ -7514,7 +7605,56 @@
    ]
   },
   {
-   "id": 404,
+   "id": 406,
+   "type": "ImageStitch",
+   "pos": [
+    -3300,
+    -60
+   ],
+   "size": [
+    300,
+    150
+   ],
+   "flags": {},
+   "order": 406,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": 1431
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "shape": 7,
+     "link": 1432
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      1433
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.38.0",
+    "Node name for S&R": "ImageStitch"
+   },
+   "title": "Prepared image + report",
+   "widgets_values": [
+    "down",
+    true,
+    0,
+    "white"
+   ]
+  },
+  {
+   "id": 407,
    "type": "MarkdownNote",
    "pos": [
     -5100,
@@ -7525,7 +7665,7 @@
     260
    ],
    "flags": {},
-   "order": 404,
+   "order": 407,
    "mode": 0,
    "inputs": [],
    "outputs": [],
@@ -8054,14 +8194,6 @@
    119,
    1,
    "VAE"
-  ],
-  [
-   1259,
-   312,
-   0,
-   302,
-   0,
-   "IMAGE"
   ],
   [
    1265,
@@ -9033,113 +9165,113 @@
   ],
   [
    1392,
+   392,
+   0,
+   393,
+   0,
+   "IMAGE"
+  ],
+  [
+   1393,
+   390,
+   0,
+   393,
+   1,
+   "STRING"
+  ],
+  [
+   1394,
    324,
    1,
-   392,
+   394,
    0,
    "INT"
   ],
   [
-   1393,
+   1395,
    356,
    1,
-   392,
+   394,
    1,
    "INT"
   ],
   [
-   1394,
-   392,
+   1396,
+   394,
    2,
    314,
    2,
    "BOOLEAN"
   ],
   [
-   1395,
-   392,
+   1397,
+   394,
    2,
    315,
    2,
    "BOOLEAN"
   ],
   [
-   1396,
-   392,
+   1398,
+   394,
    2,
    318,
    2,
    "BOOLEAN"
   ],
   [
-   1397,
+   1399,
    325,
    1,
-   393,
+   395,
    0,
    "INT"
   ],
   [
-   1398,
-   393,
+   1400,
+   395,
    1,
    94,
    4,
    "INT"
   ],
   [
-   1399,
+   1401,
    325,
    1,
-   394,
+   396,
    0,
    "INT"
   ],
   [
-   1400,
-   394,
+   1402,
+   396,
    1,
    241,
    1,
    "INT"
   ],
   [
-   1401,
+   1403,
    325,
    1,
-   395,
+   397,
    0,
-   "INT"
-  ],
-  [
-   1402,
-   327,
-   1,
-   395,
-   1,
-   "INT"
-  ],
-  [
-   1403,
-   395,
-   1,
-   186,
-   1,
    "INT"
   ],
   [
    1404,
-   325,
+   327,
    1,
-   396,
-   0,
+   397,
+   1,
    "INT"
   ],
   [
    1405,
-   327,
+   397,
    1,
-   396,
+   186,
    1,
    "INT"
   ],
@@ -9147,71 +9279,71 @@
    1406,
    325,
    1,
-   397,
+   398,
    0,
    "INT"
   ],
   [
    1407,
-   397,
+   327,
    1,
-   224,
-   2,
+   398,
+   1,
    "INT"
   ],
   [
    1408,
    325,
    1,
-   398,
+   399,
    0,
    "INT"
   ],
   [
    1409,
-   398,
+   399,
+   1,
+   224,
+   2,
+   "INT"
+  ],
+  [
+   1410,
+   325,
+   1,
+   400,
+   0,
+   "INT"
+  ],
+  [
+   1411,
+   400,
    1,
    233,
    2,
    "INT"
   ],
   [
-   1410,
-   396,
+   1412,
+   398,
    1,
    196,
    1,
    "INT"
   ],
   [
-   1411,
-   396,
+   1413,
+   398,
    1,
    147,
    3,
    "INT"
   ],
   [
-   1412,
-   328,
-   0,
-   3,
-   4,
-   "INT"
-  ],
-  [
-   1413,
-   328,
-   0,
-   18,
-   4,
-   "INT"
-  ],
-  [
    1414,
    328,
    0,
-   23,
+   3,
    4,
    "INT"
   ],
@@ -9219,20 +9351,36 @@
    1415,
    328,
    0,
-   12,
+   18,
    4,
    "INT"
   ],
   [
    1416,
+   328,
+   0,
+   23,
+   4,
+   "INT"
+  ],
+  [
+   1417,
+   328,
+   0,
+   12,
+   4,
+   "INT"
+  ],
+  [
+   1418,
    361,
    0,
-   399,
+   401,
    0,
    "MASK"
   ],
   [
-   1417,
+   1419,
    360,
    0,
    192,
@@ -9240,7 +9388,7 @@
    "IMAGE"
   ],
   [
-   1418,
+   1420,
    360,
    0,
    312,
@@ -9248,84 +9396,108 @@
    "IMAGE"
   ],
   [
-   1419,
+   1421,
    192,
    0,
-   400,
+   402,
    0,
    "MASK"
-  ],
-  [
-   1420,
-   399,
-   0,
-   400,
-   1,
-   "MASK"
-  ],
-  [
-   1421,
-   326,
-   1,
-   401,
-   0,
-   "INT"
   ],
   [
    1422,
+   401,
+   0,
+   402,
+   1,
+   "MASK"
+  ],
+  [
+   1423,
    326,
    1,
-   402,
+   403,
    0,
    "INT"
   ],
   [
-   1423,
-   400,
-   0,
-   403,
-   0,
-   "MASK"
-  ],
-  [
    1424,
-   192,
-   0,
-   403,
+   326,
    1,
-   "MASK"
+   404,
+   0,
+   "INT"
   ],
   [
    1425,
-   401,
-   2,
-   403,
-   2,
-   "BOOLEAN"
+   402,
+   0,
+   405,
+   0,
+   "MASK"
   ],
   [
    1426,
-   403,
+   192,
    0,
-   248,
-   0,
+   405,
+   1,
    "MASK"
   ],
   [
    1427,
-   399,
+   403,
+   2,
+   405,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   1428,
+   405,
+   0,
+   248,
+   0,
+   "MASK"
+  ],
+  [
+   1429,
+   401,
    0,
    248,
    1,
    "MASK"
   ],
   [
-   1428,
-   402,
+   1430,
+   404,
    2,
    248,
    2,
    "BOOLEAN"
+  ],
+  [
+   1431,
+   312,
+   0,
+   406,
+   0,
+   "IMAGE"
+  ],
+  [
+   1432,
+   393,
+   0,
+   406,
+   1,
+   "IMAGE"
+  ],
+  [
+   1433,
+   406,
+   0,
+   302,
+   0,
+   "IMAGE"
   ]
  ],
  "groups": [
@@ -9588,8 +9760,7 @@
    ],
    "outputs": [
     322,
-    302,
-    391
+    302
    ]
   },
   "local3d": {

@@ -100,7 +100,7 @@ def check_data():
 
 
 # ---------------------------------------------------------------------------------------------- workflows
-OUTPUT_TYPES = {"SaveImage", "Save3DAdvanced", "SaveGLB", "PreviewAny"}   # PreviewAny: the text report of Subject routing
+OUTPUT_TYPES = {"SaveImage", "Save3DAdvanced", "SaveGLB", "PreviewImage"}   # App Mode shows picture and 3D outputs; text (PreviewAny) is not listed
 WIDGET_FOR_TYPE = {"CustomCombo": "choice", "PrimitiveInt": "value", "PrimitiveStringMultiline": "value",
                    "PrimitiveBoolean": "value", "LoadImage": "image"}
 
@@ -157,8 +157,8 @@ def check_app(rel: str, d: dict):
         n = nodes.get(nid)
         if n is None:
             err(f"{rel}: app output refers to missing node {nid}")
-        elif n["type"] not in OUTPUT_TYPES and n["type"] != "PreviewImage":
-            err(f"{rel}: app output #{nid} is {n['type']}; use a Save node (3D only renders from SaveGLB/Save3DAdvanced)")
+        elif n["type"] not in OUTPUT_TYPES:
+            err(f"{rel}: app output #{nid} is {n['type']}; use a picture or Save node (3D only renders from SaveGLB/Save3DAdvanced, and App Mode lists no text outputs)")
     if not any(nodes[o]["type"] in {"Save3DAdvanced", "SaveGLB", "SaveImage"} for o in data.get("outputs", []) if o in nodes):
         err(f"{rel}: no Save output")
     if extra.get("local3d", {}).get("version") is None:

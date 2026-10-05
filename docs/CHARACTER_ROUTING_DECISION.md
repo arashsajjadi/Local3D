@@ -83,7 +83,7 @@ guess, it says "not sure" and one click on *Character bust* fixes it. The pictur
 3. **Removes the background of the bust** (BiRefNet) and **frames the bust** (crop-to-mask, padding) instead of the whole picture.
    Order matters: the old order framed the whole picture first, which is why the face arrived at about 136 px.
 4. **Pixal3D** builds the shape and textures with the user's Quality, Output and Seed, exactly as for objects.
-5. **Writes a report** next to the model, in plain words: what was detected (with scores), which subject was chosen and by
+5. **Writes a report** under the "prepared picture" in the row under the model (App Mode shows pictures but no text outputs), in plain words: what was detected (with scores), which subject was chosen and by
    whom ("Auto picked it" / "your choice"), the framing (full picture, or the cut rows), a reminder that the back and far
    side are inferred, and, when relevant, the "not sure" or "toy, doll or statue" note.
 
