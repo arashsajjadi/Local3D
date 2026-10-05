@@ -643,7 +643,7 @@ namespace Local3D
             }
             form.Set("Unpacking the runtime...", "About a minute");
             string tmp = Path.Combine(folder, "_unpack");
-            if (Directory.Exists(tmp)) Directory.Delete(tmp, true);
+            if (!Fs.TryDeleteDirectory(tmp, 20)) tmp = Path.Combine(folder, "_unpack" + DateTime.Now.Ticks);   // a leftover that cannot be removed: use a fresh folder
             Directory.CreateDirectory(tmp);
             Process tar = Proc.Start("tar.exe", "-xf " + Proc.Q(archive) + " -C " + Proc.Q(tmp), folder, null);
             AddChild(tar);
@@ -653,7 +653,7 @@ namespace Local3D
             if (unpackCode != 0 && File.Exists(sevenZip))   // an installed 7-Zip can read the archive when Windows' own tar cannot
             {
                 Log.Write("tar.exe failed (" + unpackCode + "); trying 7-Zip");
-                if (Directory.Exists(tmp)) Directory.Delete(tmp, true);
+                if (!Fs.TryDeleteDirectory(tmp, 20)) tmp = Path.Combine(folder, "_unpack" + DateTime.Now.Ticks);
                 Directory.CreateDirectory(tmp);
                 Process sz = Proc.Start(sevenZip, "x -y -o" + Proc.Q(tmp) + " " + Proc.Q(archive), folder, null);
                 AddChild(sz);
@@ -669,10 +669,10 @@ namespace Local3D
                 return false;
             }
             string target = Path.Combine(folder, "ComfyUI_windows_portable");
-            if (Directory.Exists(target)) Directory.Delete(target, true);
+            if (!Fs.TryDeleteDirectory(target, 20)) Log.Write("could not remove the old runtime folder; the move below will say why");
             Directory.Move(Path.Combine(tmp, "ComfyUI_windows_portable"), target);
-            Directory.Delete(tmp, true);
-            File.Delete(archive);
+            if (!Fs.TryDeleteDirectory(tmp, 20)) Log.Write("left the temporary folder " + tmp + " behind (still in use)");
+            try { File.Delete(archive); } catch (Exception) { Log.Write("left the downloaded archive behind (still in use)"); }
             File.WriteAllText(marker, new JavaScriptSerializer().Serialize(new Dictionary<string, object> { { "tag", env.RuntimeTag } }));
             Log.Write("Runtime installed: " + env.RuntimeTag);
             return true;
@@ -1189,6 +1189,23 @@ namespace Local3D
             foreach (string f in Directory.GetFiles(from)) File.Copy(f, Path.Combine(to, Path.GetFileName(f)), true);
             foreach (string d in Directory.GetDirectories(from))
                 if (!string.Equals(Path.GetFileName(d), skipDir, StringComparison.OrdinalIgnoreCase)) CopyDir(d, Path.Combine(to, Path.GetFileName(d)), skipDir);
+        }
+    }
+
+    internal static class Fs
+    {
+        // Antivirus software and the search indexer sometimes hold a folder that was written a moment ago: try again for a few
+        // seconds instead of failing a start over a temporary folder. Returns false when the folder is still there afterwards.
+        public static bool TryDeleteDirectory(string path, int attempts)
+        {
+            for (int i = 0; i < attempts; i++)
+            {
+                try { if (!Directory.Exists(path)) return true; Directory.Delete(path, true); return true; }
+                catch (IOException) { }
+                catch (UnauthorizedAccessException) { }
+                Thread.Sleep(500);
+            }
+            return !Directory.Exists(path);
         }
     }
 
