@@ -108,6 +108,17 @@ visibly wrong; it is an upstream cosmetic issue.
 Known geometry limits (upstream, not specific to Local3D): the hidden back side is *estimated*; thin parts can merge or
 disappear; meshes can contain an inner shell (invisible when viewing, relevant for 3D printing, ComfyUI issue #16147).
 
+## People and characters (v0.2)
+
+Measured in full in [CHARACTER_FAILURE_ANALYSIS.md](CHARACTER_FAILURE_ANALYSIS.md) and [CHARACTER_ROUTING_DECISION.md](CHARACTER_ROUTING_DECISION.md); the short version:
+
+* On a comic officer picture (private), a rubric of seven criteria scored by a blind second reviewer went from **52.7 to 62.8 of 100** with the Character bust workflow
+  (hand 3.5 to 5.3, face 5.0 to 6.5, glasses 4.7 to 6.2; the back got slightly worse, 7.2 to 5.8). TRELLIS.2 on the same picture made a flat plane.
+* On synthetic tall pictures the bust shows a clearly better face and hand than the whole figure, at about twice the time; in square pictures the cut gave no consistent gain, so Auto leaves them whole.
+* Pictures that stay on the old route reproduce the 0.1.x result: triangle counts and bounding boxes agree within 0.1 %.
+* Timing on the RTX 5080 (*Balanced*) varies with the picture and with what else uses the card (106 to 541 s over 28 runs). The bust took about 1.5 to 2 times as long as the
+  whole picture on the officer and on the tall pictures, and about the same on square ones. *Character from views*: 294 s (four views) and 436 s (front and back).
+
 ## Reference pictures for Prompt to 3D
 
 A pretty picture is not automatically a good 3D reference. The 3D models first cut the object out, centre it and

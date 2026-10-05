@@ -6,7 +6,7 @@
 | --- | --- |
 | **Windows** | 10 (version 2004) or 11, 64-bit. Microsoft Edge (already part of Windows). Tested on Windows 11 only; the runtime is unpacked with Windows' own `tar.exe`, which needs a reasonably current Windows 10 (or a free 7-Zip) to open its `.7z` archive |
 | **Graphics card** | NVIDIA RTX 20-series or newer with an up-to-date driver (580 or newer recommended). 12 GB of video memory or more is recommended; 16 GB is the comfortable target. Local3D is developed and tested on an RTX 5080 (16 GB). AMD, Intel and Apple GPUs are not supported yet |
-| **Memory** | tested with 64 GB of RAM; lower amounts have not been measured |
+| **Memory** | tested with 64 GB of RAM; lower amounts have not been measured. The engine used 5 to 12 GB of RAM while generating, and up to about 17 GB for *Character from views* |
 | **Disk space** | about **26 GB** in total on an RTX 50-series card: 7.4 GB while the runtime unpacks (4.4 GB afterwards), **15.3 GB** for the 3D models and 6.6 GB for *Prompt to 3D*; the prompt files are 12.5 GB on RTX 40-series and 16.1 GB on older cards (up to about 36 GB in total). The optional *Character from views* model adds 5.6 GB. Local3D also keeps 3 GB spare. Models can go on any drive |
 | **Internet** | for the first start only (about 2 GB runtime + models). After that, generation works offline |
 

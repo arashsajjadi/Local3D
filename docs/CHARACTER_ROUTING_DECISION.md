@@ -194,13 +194,14 @@ about 3 GB of the card during these runs; "GPU memory in use" is the whole card,
 | **Object**, whole picture (the v0.1.x behaviour) | 131 s, 147 s, 161 s | 14.2, 14.6, 14.6 GB | 8.4 to 8.5 GB |
 | **Character bust** (Auto) | 227 s warm; 211 s and 257 s as the first run after starting | 14.4, 14.5, 14.0 GB | 8.5 to 8.6 GB |
 | TRELLIS.2, whole picture (the plane) | 78 s | 12.6 GB | n/m |
+| **Character from views**, the shipped example views: all four / front and back only | 294 s / 436 s | 14.3 / 14.3 GB | **16.7** / 13.8 GB |
 
 Reading it: the bust workflow needs **the same memory** as the object workflow (about 11.5 GB above the 3 GB other programs held, with
 dynamic VRAM using whatever is free) and about **1.5 times the time** on this picture. The extra time is the point: the bust fills more of the model's
 input frame than the whole picture does, so there are more occupied voxels to refine, mesh and bake. For pictures that stay on the Object
-workflow the only added cost is the two seconds of detection. Across the 26 runs of the regression set (new and 0.1.2 apps, *Balanced*, 14 different pictures) the time ran from 106 s to 428 s, the card's memory in use peaked between 12.8 and 15.5 GB (other programs held 2.4 to 4.0 GB
-before each run, so the engine's own peak was about 10.3 to 12.6 GB) and the engine's RAM between 5.0 and 11.8 GB. The two routes overlap: the highest peaks (15.4 to 15.5 GB) came from the whole-picture route on a fern and a toy as well as from
-the bust route on an armoured knight, and run-to-run time varies by tens of percent on this shared card, so only the large differences (the tall pictures: about twice the time) mean anything. For the generated-view experiment that was not shipped: one view from the image-editing model took
+workflow the only added cost is the two seconds of detection. Across the 28 runs of the regression set (new and 0.1.2 apps, *Balanced*, 14 different pictures) the time ran from 106 s to 541 s, the card's memory in use peaked between 12.8 and 15.7 GB (other programs held 2.4 to 4.1 GB
+before each run, so the engine's own peak was about 10.3 to 12.9 GB) and the engine's RAM between 5.0 and 11.8 GB. The two routes overlap: the highest peaks (15.4 to 15.7 GB) came from the whole-picture route on a fern, a toy and a wizard as well as from
+the bust route on an armoured knight and on the wizard, and run-to-run time varies by tens of percent on this shared card, so only the large differences (the tall pictures: about twice the time) mean anything. For the generated-view experiment that was not shipped: one view from the image-editing model took
 14 to 22 s at 15.3 GB (the card was full), and Pixal3D's multi-view stage 190 to 271 s at 13.6 to 15.3 GB.
 
 ## Quality comparison

@@ -33,7 +33,7 @@ More detail: [docs/INSTALL.md](docs/INSTALL.md). Something wrong? [docs/TROUBLES
 | **Image to 3D** | turn one picture into a textured 3D model | Fast 38 s, **Balanced 81 s**, Maximum 111 s |
 | **Prompt to 3D** | describe an object; Local3D draws a reference picture, then builds the model | Fast about 50 s, Balanced 100 to 190 s |
 | **Reference Pictures** | make 1, 2 or 4 candidate pictures from a prompt, then pick the best for *Image to 3D* | about 6 s for four |
-| **Character from views** | build a model from 2 or 4 *real* views of the same subject (front, left, back, right): the back is measured, not guessed | about 3 to 5 minutes |
+| **Character from views** | build a model from 2 or 4 *real* views of the same subject (front, left, back, right): the back is measured, not guessed | about 5 to 7 minutes (its RAM use peaked at about 17 GB here) |
 
 Controls: **Subject** (Auto, Object, Character bust, Complex: see below), **Model** (Auto = Pixal3D, or TRELLIS.2), **Quality** (Fast, Balanced, Maximum), **Output** (High fidelity, or Game asset with
 about 30k triangles, for games and apps), **Background** (Auto, Remove, Keep your own transparent PNG) and **Seed**. Times were measured on one machine, not promised: the first row is Pixal3D with models already loaded; TRELLIS.2 and the first run after starting are slower (see [docs/QUALITY.md](docs/QUALITY.md)).
