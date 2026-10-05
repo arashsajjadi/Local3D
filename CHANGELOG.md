@@ -28,7 +28,7 @@ the evidence for the fix are in [docs/CHARACTER_FAILURE_ANALYSIS.md](docs/CHARAC
 - The download dialog lists every model pack that is missing with its size, marks an update to an installed pack, and lets each optional pack be
   declined separately and offered again later (*Start > Local3D tools > Download more models*).
 - Developer tools: `scripts/check_routing.py` (what Auto decides for the evaluation pictures, in seconds), `scripts/mesh_report.py`
-  (triangles, components, open edges, watertightness of a GLB), `scripts/render_glb_views.py`, eleven evaluation pictures in `assets/eval/`.
+  (triangles, components, open edges, watertightness of a GLB), `scripts/render_glb_views.py`, thirteen evaluation pictures in `assets/eval/`.
 
 ### Changed
 - The required model pack grows by 130 MB (the two detectors). Existing installs are asked before anything is downloaded.
@@ -41,6 +41,8 @@ the evidence for the fix are in [docs/CHARACTER_FAILURE_ANALYSIS.md](docs/CHARAC
 
 ### Notes
 - Full-length figures stay on the Object workflow (their faces are too small to crop to); choose *Character bust* to crop to the upper body yourself.
+- *Complex* is a second opinion, not an upgrade: on test pictures TRELLIS.2 kept finer fern fronds but drifted to grey, and did worse than Pixal3D on a bicycle wheel.
+- Tested on a Windows 11 PC with an RTX 5080 (16 GB) only; the multi-view app needs a lot of RAM (about 17 GB peak there).
 - Not added, with reasons: generated extra views (measured worse than a good single view), Hunyuan3D-2mv, HumanNOVA, PSHuman, DiGS-Avatar,
   Unique3D / Wonder3D / Era3D, SAM 3D Body. A 3D-print mode was tried and not shipped: the clean-up steps ComfyUI's core nodes offer made the meshes worse, not watertight.
 
